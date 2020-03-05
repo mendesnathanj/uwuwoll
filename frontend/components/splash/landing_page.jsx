@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const LandingPage = () => (
   <div className='splash'>
-    <img className="splash-girl" src={ window.splashGirl } />
+    {/* <img className="splash-girl" src={ window.splashGirl } /> */}
     <div className="splash-content">
       <h1 className="splash-title">uwuwoll</h1>
       <p className="splash-tagline">The number one website for all your anime streaming needs</p>
