@@ -1,0 +1,26 @@
+# == Schema Information
+#
+# Table name: episodes
+#
+#  id          :bigint           not null, primary key
+#  title       :string           not null
+#  description :text             not null
+#  episode_num :integer          not null
+#  season_id   :integer          not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  description: MyText
+  episode_num: 1
+  season_id: 1
+
+two:
+  title: MyString
+  description: MyText
+  episode_num: 1
+  season_id: 1

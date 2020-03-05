@@ -1,0 +1,22 @@
+$dirs: 't', 'r', 'b', 'l';
+$sizes: 1em, 1.25em, 1.5em, 1.75em, 2em;
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@each $dir in $dirs {
+  @for $i from 1 through length($sizes) {
+    $size: nth($sizes, $i);
+
+    @if $dir == t {
+      .mt-#{i} {
+        margin-top: $size;
+      }
+      .pt-#{i} {
+        padding-top: $size;
+      }
+    }
+  }
+}

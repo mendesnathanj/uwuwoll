@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Open+Sans&display=swap');
+
+$title-fonts: 'Montserrat', sans-serif;
+$body-fonts: 'Open Sans', sans-serif;
+$body-color: #7b737e;
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $title-fonts;
+  color: $body-color;
+}
+
+p, span, div, ul, ol, button {
+  font-family: $body-fonts;
+  color: $body-color;
+  font-size: 1.05em;
+}
