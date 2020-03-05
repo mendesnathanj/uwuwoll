@@ -8,12 +8,12 @@ import AnimeIndexContainer from "./anime/anime_index_container";
 import AnimePageContainer from './anime/anime_page_container';
 import EpisodePageContainer from './episodes/episode_page_container';
 import QueueContainer from './queue/queue_container';
-import SplashPage from '../components/splash/splash_page';
+import LandingPage from './splash/landing_page';
 
 
 const App = () => {
   return (
-    <div className='app'>
+    <div className='row app'>
       <NavbarContainer />
       <Switch>
         <ProtectedRoute path={`/anime/:animeId/episodes/:episodeId`} component={EpisodePageContainer} />
@@ -22,7 +22,7 @@ const App = () => {
         <AuthRoute path="/login" component={LoginFormContainer} />
         <AuthRoute path="/signup" component={SignupFormContainer} />
         <ProtectedRoute path="/anime" component={AnimeIndexContainer} />
-        <AuthRoute path='/' component={SplashPage} />
+        <AuthRoute path='/' component={LandingPage} />
       </Switch>
     </div>
   );
