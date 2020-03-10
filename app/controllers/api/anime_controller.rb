@@ -1,10 +1,9 @@
 class Api::AnimeController < ApplicationController
   def index
-    @anime = Anime.all.includes(:episodes)
-    # @anime = Anime.select('animes.*, COUNT(episodes.id) AS episode_count').joins(:episodes).group('animes.id')
+    @anime = Anime.all.includes(:episodes, seasons: :episodes)
   end
 
   def show
-    @anime = Anime.includes(:episodes).find_by(id: params[:id])
+    @anime = Anime.includes(:episodes, seasons: :episodes).friendly.find(params[:id])
   end
 end

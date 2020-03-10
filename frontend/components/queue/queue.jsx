@@ -8,8 +8,16 @@ class Queue extends React.Component {
 
   render() {
     const savedAnime = this.props.savedAnime.map(anime => {
-      const episodes = anime.episodeIds.map(id => this.props.episodes[id])
-                        .map(ep => <div><Link to={`/anime/${anime.id}/episodes/${ep.id}`}>{ ep.title }</Link></div>);
+      const episodes = anime.episodeIds
+        .map(id => this.props.episodes[id])
+        .map(ep => (
+          <div>
+            <span>
+              <i className="light-grey far fa-star"></i>
+            </span>
+            <Link to={`/anime/${anime.slug}/${ep.slug}`}>{ep.title}</Link>
+          </div>
+        ));
 
       return (
         <div>
@@ -23,7 +31,7 @@ class Queue extends React.Component {
     return (
       <div>
         <div>hewwo i'm the quwu</div>
-        { savedAnime }
+        {savedAnime}
       </div>
     );
   }

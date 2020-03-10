@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (bootstrap) bootstrap.remove();
   }
 
+  document.querySelector('script#image-script').remove();
 
   const store = configureStore(preloadedState);
 

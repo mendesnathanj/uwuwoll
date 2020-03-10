@@ -12,7 +12,9 @@ const seasonsReducer = (state = { }, action) => {
 
       return newState;
 
-    case RECEIVE_ANIME:
+  case RECEIVE_ANIME:
+      if (!action.payload.seasons) return state;
+
       Object.values(action.payload.seasons).forEach(season => {
         newState[season.id] = season;
       });

@@ -15,7 +15,7 @@ end
 json.anime do
   @list.saved_anime.each do |saved_anime|
     json.set! saved_anime.anime_id do
-      json.extract! saved_anime.anime, :id, :title
+      json.extract! saved_anime.anime, :id, :title, :slug
       json.episode_ids saved_anime.anime.episode_ids
     end
   end
@@ -24,7 +24,7 @@ end
 json.episodes do
   @list.episodes.each do |episode|
     json.set! episode.id do
-      json.extract! episode, :id, :title, :description, :episode_num
+      json.extract! episode, :id, :title, :description, :episode_num, :slug
     end
   end
 end

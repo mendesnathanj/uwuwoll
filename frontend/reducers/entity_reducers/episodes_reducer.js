@@ -1,5 +1,6 @@
 import { RECEIVE_ALL_ANIME, RECEIVE_ANIME } from "../../actions/anime_actions";
 import { RECEIVE_LIST } from '../../actions/lists_actions';
+import { RECEIVE_EPISODE } from "../../actions/episode_actions";
 
 const episodesReducer = (state = {}, action) => {
   Object.freeze(state);
@@ -23,6 +24,9 @@ const episodesReducer = (state = {}, action) => {
     case RECEIVE_LIST:
       if (!action.payload.episodes) return state;
 
+      return Object.assign(newState, action.payload.episodes);
+
+    case RECEIVE_EPISODE:
       return Object.assign(newState, action.payload.episodes);
     default:
       return state;

@@ -1,0 +1,38 @@
+.landing {
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  background: image-url('landing-img.png');
+  background-color: #EF9958;
+  background-size: cover;
+  background-repeat: repeat;
+  padding: 10px;
+  width: 100%;
+  height: 100vh;
+}
+
+.landing-content {
+  margin-top: 1em;
+  width: 50%;
+}
+
+.landing-title {
+  font-size: 2em;
+  font-weight: 800;
+  color: #fff;
+}
+
+.mini-white-logo-container {
+  vertical-align: middle;
+}
+
+.white-logo-mini {
+  width: 52px;
+  height: auto;
+}
+
+.landing-tagline {
+  font-size: 1em;
+  font-weight: 700;
+  color: #fff;
+}

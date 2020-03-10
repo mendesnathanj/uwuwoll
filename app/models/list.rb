@@ -10,6 +10,6 @@
 
 class List < ApplicationRecord
   belongs_to :user
-  has_many :saved_anime
+  has_many :saved_anime, dependent: :destroy
   has_many :episodes, through: :saved_anime
 end

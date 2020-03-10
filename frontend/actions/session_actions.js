@@ -36,8 +36,3 @@ export const signup = user => dispatch => (
     .then(user => dispatch(receiveCurrentUser(user)),
           errs => dispatch(receiveErrors(errs.responseJSON)))
 );
-
-// export const loginAsGuest = () => dispatch => {
-//   const user = { username: 'wyansawms', password: 'password' };
-//   login(user);
-// }

@@ -1,0 +1,93 @@
+@import '../abstracts/variables';
+@import '../base/typography';
+
+.active {
+  color: $primary-orange;
+}
+
+.nav {
+  width: 100%;
+  padding: 1em 1.5em;
+}
+
+.nav-list {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.nav-home-link-logo {
+  width: 50px;
+  height: auto;
+  margin-right: -5px;
+  vertical-align: middle;
+}
+
+.nav-home-link {
+  font-size: 1.2em;
+  margin-right: auto;
+  font-family: $title-fonts;
+  font-weight: 700;
+  color: $primary-orange;
+  transition: all 200ms ease-in-out;
+}
+
+.nav-home-link:hover {
+  transform: scale(1.1);
+}
+
+
+.fa-orange {
+  color: $primary-orange;
+  font-size: 1.3em;
+}
+
+.nav-li {
+  position: relative;
+  margin-right: 1.5em;
+}
+
+.nav-li:last-child {
+  margin-right: 1.2em;
+}
+
+.nav-li .fa-orange {
+  transition: all 200ms ease-in-out;
+}
+
+.nav-li:hover .fa-orange {
+  transform: scale(1.1);
+}
+
+.nav-text {
+  font-family: $title-fonts;
+  font-weight: 700;
+  font-size: 0.4em;
+  position: absolute;
+  bottom: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.search-bar {
+  border: none;
+  border-radius: 30px;
+  padding: 18px;
+  min-width: 250px;
+  font-family: $title-fonts;
+  font-weight: 700;
+  color: #8C8C8C;
+  letter-spacing: 0.05em;
+}
+
+.search-bar::placeholder {
+  color: #b2b2b2;
+}
+
+.search-bar:focus {
+  outline: none;
+}
+
+.search-bar-container {
+  margin-top: 8px;
+}

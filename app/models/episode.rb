@@ -4,21 +4,25 @@
 #
 #  id          :bigint           not null, primary key
 #  title       :string           not null
-#  description :text             not null
+#  description :text
 #  episode_num :integer          not null
-#  season_id   :integer          not null
+#  season_id   :integer
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  anime_id    :integer          not null
 #
 
 class Episode < ApplicationRecord
-  validates :title, :description, :episode_num, presence: true
-  validates :episode_num, uniqueness: { scope: :season_id }
+  extend FriendlyId
 
-  belongs_to :season
-  has_one :anime, through: :season
+  friendly_id :title, use: :slugged
 
-  def anime
-    Anime.find_by(id: season.anime_id)
-  end
+  validates :title, :episode_num, presence: true
+  validates :episode_num, uniqueness: { scope: :anime_id }
+
+  belongs_to :season, optional: true
+  belongs_to :anime
+
+  has_one_attached :video
+  has_one_attached :thumbnail
 end

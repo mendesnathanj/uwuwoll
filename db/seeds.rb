@@ -1,185 +1,160 @@
+SEED_EPISODES = true
+SEED_POSTERS = true
+ANIME_LIMIT = 5
+EPISODE_LIMIT = 16
+RESEED_EVERYTHING = true
+
+
+
+
+
+return unless RESEED_EVERYTHING
+
+puts 'Destroying all tables'
+List.destroy_all
+SavedAnime.destroy_all
+Episode.destroy_all
+Season.destroy_all
+Anime.destroy_all
+User.destroy_all
+
 
 puts 'Creating Users'
-User.destroy_all
-List.destroy_all
-
 u1 = User.create(username: 'uwukween', email: 'uwukween@uwu.com', password: 'password')
 u2 = User.create(username: 'wyansawms', email: 'wyansawms@awms.com', password: 'password')
 u3 = User.create(username: 'weactkween', email: 'weactkween@weact.com', password: 'password')
-
-anime_titles = [
-  "Free!",
-  "Lucky Star",
-  "Elfen Lied",
-  "Log Horizon",
-  "Cardcaptor Sakura",
-  "Berserk (1997)",
-  "Magi: The Labyrinth of Magic",
-  "Hellsing: Ultimate",
-  "The Pet Girl of Sakurasou",
-  "Katekyō Hitman Reborn!",
-  "Yu Yu Hakusho",
-  "Yona of the Dawn",
-  "Charlotte",
-  "Seraph of the End",
-  "Akame ga Kill!",
-  "When They Cry ",
-  "Hyouka",
-  "Ghost In The Shell (1995)",
-  "Kuroko no Basket",
-  "Terror In Resonance ",
-  "Natsume Yuujinchou",
-  "Pokemon",
-  "Akira (1988)",
-  "Mushishi",
-  "Dragon Ball",
-  "Another",
-  "Spice And Wolf",
-  "FLCL (Fooly Cooly)",
-  "Samurai Champloo",
-  "Monster",
-  "Shinsekai Yori",
-  "The Seven Deadly Sins",
-  "Baccano!",
-  "Bungou Stray Dogs",
-  "Miss Kobayashi's Dragon Maid",
-  "Code Geass (Season 2)",
-  "Sailor Moon",
-  "K-On!",
-  "Nichijou (My Ordinary Life)",
-  "Blue Exorcist",
-  "Love Live!",
-  "Anohana",
-  "Inuyasha",
-  "Wolf Children ",
-  "Howl's Moving Castle",
-  "High School DxD",
-  "Shokugeki No Soma (Food Wars)",
-  "Princess Mononoke",
-  "Bakemonogatari",
-  "Erased",
-  "Mirai Nikki",
-  "Psycho-Pass",
-  "Naruto Shippuden",
-  "Monogatari Series: Second Season",
-  "Durarara!!",
-  "Death Parade",
-  "Clannad",
-  "Kill La Kill ",
-  "Bleach",
-  "Full Metal Alchemist",
-  "Ouran High School Host Club",
-  "Fate/Zero",
-  "Soul Eater",
-  "Toradora",
-  "Mob Psycho 100",
-  "Dragon Ball Z",
-  "Noragami",
-  "Clannad: After Story",
-  "Konosuba",
-  "Black Butler",
-  "Angel Beats",
-  "Sword Art Online",
-  "Hunter x Hunter (2011)",
-  "Madoka Magica",
-  "Neon Genesis Evangelion",
-  "Yuri On Ice",
-  "Re: Zero",
-  "Spirited Away",
-  "JoJo's Bizarre Adventure",
-  "Gurren Lagann",
-  "Haikyuu!!",
-  "Gintama",
-  "Assassination Classroom",
-  "Hunter x Hunter",
-  "Cowboy Bebop",
-  "Tokyo Ghoul",
-  "Naruto",
-  "Fairy Tail",
-  "No Game No Life",
-  "Koe No Katachi (A Silent Voice)",
-  "One Punch Man",
-  "Code Geass",
-  "Your Lie in April",
-  "One Piece",
-  "Steins:Gate",
-  "Attack On Titan",
-  "Death Note",
-  "Your Name",
-  "Boku No Hero Academia",
-  "Full Metal Alchemist: Brotherhood"
-]
-
-publishers = [
-  'Sentai Filmworks',
-  'Funimation',
-  'Aniplex of America',
-  'Viz Media',
-  'Discotek Media',
-  'AnimEigo',
-  'Media Blasters',
-  'Pierrot',
-  'Studio Ghibli',
-  'Toei Animation'
-]
-
-season_titles = [
-  'Season 2: Electric Boogaloo',
-  'In/Spectre: Season 1',
-  '2nd Season',
-  'Land vs. Air',
-  'To The Top',
-  'Stardust Crusaders',
-  'Diamond is Unbreakable',
-  'Golden Wind',
-  'A Certain Scientific Railgun T',
-  'A Certain Scientific Railgun S',
-  'Starting Life in Another World',
-  'Welcome to Demon School! Iruma-kun',
-  'Somali and the Forest Spirit',
-  'Room Camp',
-  'Asteroid in Love',
-  'Second BEAT!',
-]
-
-puts 'Creating Anime'
-Anime.destroy_all
-
-animes = anime_titles.map do |title|
-  description = Faker::Lorem.paragraph(sentence_count: 4,
-                                       supplemental: true,
-                                       random_sentences_to_add: 4)
-
-  Anime.create(title: title, description: description, publisher: publishers.sample)
-end
+u4 = User.create(username: 'scwott', email: 'scwott@uwu.com', password: 'password')
 
 
-puts 'Creating Seasons'
-Season.destroy_all
+# Seed anime data
+BASE_URL = 'https://www.crunchyroll.com'
 
-seasons = []
-animes.each do |anime|
-  rand(1..4).times do |i|
-    seasons << Season.create(title: season_titles.sample,
-                             anime_id: anime.id,
-                             season_num: i + 1)
+main_page = Nokogiri::HTML.parse(open('https://www.crunchyroll.com/videos/anime'))
+sleep(1)
+
+small_portraits = main_page.css('a.portrait-element img.portrait')
+anime_hrefs = main_page.css('a.portrait-element').map { |h| h[:href] }
+
+small_portraits.length.times do |i|
+  anime_num = i
+  break if anime_num >= ANIME_LIMIT
+
+  # all information for an anime
+  small_portrait = small_portraits[i]
+  anime_page = anime_hrefs[i]
+
+  anime_page = BASE_URL + anime_page
+  anime_page = Nokogiri::HTML.parse(open(anime_page))
+  sleep(0.2)
+
+  large_portrait = anime_page.css('.portrait').first
+
+  title = small_portrait[:alt]
+
+  description = anime_page.css('span.more').first
+  description = anime_page.css('span.trunc-desc').first if description.nil?
+  description = description.text.strip
+
+  publisher = anime_page.search('.detail-heading ~ .text-link').first.text.strip
+
+  puts "Creating anime: #{title}..."
+  anime = Anime.create(title: title, description: description, publisher: publisher)
+
+  if SEED_POSTERS
+    file_name_base = title.downcase.gsub(/[!',\-\.\/":]/, '').split.join('_') + '.jpg'
+    file_name_small = 'small_' + file_name_base
+    file_name_large = 'large_' + file_name_base
+    small_file = small_portrait[:src].nil? ? small_portrait.values.last : small_portrait[:src]
+    large_file = large_portrait[:src].nil? ? large_portrait.values.last : large_portrait[:src]
+    anime.small_poster.attach(io: open(small_file), filename: file_name_small)
+    anime.large_poster.attach(io: open(large_file), filename: file_name_large)
+  end
+
+  # now get all information for a season
+  season_tags = anime_page.css('.season-dropdown').reverse
+
+  episode_num = 1
+  if season_tags.length.positive? # if there are seasons, then create them
+    season_tags.each_with_index do |season_tag, j|
+      season_title = season_tag.text
+
+      puts "Creating season: #{season_title}..."
+      season = Season.create(title: season_title, anime_id: anime.id, season_num: j + 1)
+
+      if season_title.include?("'")
+        hquery = ".season-dropdown[title=\"#{season_title}\"] ~ .portrait-grid .portrait-element"
+        tquery = ".season-dropdown[title=\"#{season_title}\"] ~ .portrait-grid img.landscape"
+      else
+        hquery = ".season-dropdown[title='#{season_title}'] ~ .portrait-grid .portrait-element"
+        tquery = ".season-dropdown[title='#{season_title}'] ~ .portrait-grid img.landscape"
+      end
+
+      episode_hrefs = anime_page.search(hquery).reverse.map { |h| h[:href] }
+      episode_thumbnail_tags = anime_page.search(tquery).reverse
+
+      episode_hrefs.length.times do |k|
+        break if episode_num >= EPISODE_LIMIT
+
+        episode_href = episode_hrefs[k]
+        episode_thumbnail = episode_thumbnail_tags[k]
+
+        episode_title = episode_thumbnail[:alt]
+
+        description_page = Nokogiri::HTML.parse(open(BASE_URL + episode_href))
+        sleep(0.2)
+
+        description = description_page.css('.description')
+        description = description.first.children.map { |child| child.text.strip }.join[0...-4]
+
+        puts "Creating episode #{episode_num}: #{episode_title}..."
+        episode = Episode.create(title: episode_title, description: description, episode_num: episode_num, season_id: season.id, anime_id: anime.id)
+        episode_num += 1
+
+        # if SEED_EPISODES
+        #   file_name_base = episode_title.downcase.gsub(/[!',\-\.\/":]/, '').split.join('_') + '.jpg'
+        #   file_name_thumbnail = 'thumb_' + file_name_base
+        #   thumbnail_file = episode_thumbnail[:src].nil? ? episode_thumbnail.values.last : episode_thumbnail[:src]
+        #   episode.thumbnail.attach(io: open(thumbnail_file), filename: file_name_thumbnail)
+        # end
+      end
+
+      break if episode_num >= EPISODE_LIMIT
+    end
+  else
+    episode_hrefs = anime_page.search(".season .portrait-element").reverse.map { |h| h[:href] }
+    episode_thumbnail_tags = anime_page.search(".season img.landscape").reverse
+
+    episode_hrefs.length.times do |k|
+      episode_href = episode_hrefs[k]
+      episode_thumbnail = episode_thumbnail_tags[k]
+
+      episode_title = episode_thumbnail[:alt]
+
+      description_page = Nokogiri::HTML.parse(open(BASE_URL + episode_href))
+      sleep(0.2)
+
+      description = description_page.css('.description')
+      description = description.first.children.map { |child| child.text.strip }.join[0...-4]
+
+      puts "Creating episode #{episode_num}: #{episode_title}..."
+      episode = Episode.create(title: episode_title, description: description, episode_num: episode_num, season_id: nil, anime_id: anime.id)
+      episode_num += 1
+
+      break if episode_num >= EPISODE_LIMIT
+
+      if SEED_EPISODES
+        file_name_base = episode_title.downcase.gsub(/[!',\-\.\/":]/, '').split.join('_') + '.jpg'
+        file_name_thumbnail = 'thumb_' + file_name_base
+        thumbnail_file = episode_thumbnail[:src].nil? ? episode_thumbnail.values.last : episode_thumbnail[:src]
+        episode.thumbnail.attach(io: open(thumbnail_file), filename: file_name_thumbnail)
+      end
+    end
   end
 end
 
-
-puts 'Creating Episodes'
-Episode.destroy_all
-
-episodes = []
-seasons.each do |season|
-  rand(6..12).times do |i|
-    title = Faker::Lorem.words(number: rand(1..3)).join(' ')
-    description = Faker::Lorem.paragraph(sentence_count: 4,
-                                         supplemental: true,
-                                         random_sentences_to_add: 4)
-    episodes << Episode.create(title: title,
-                               season_id: season.id,
-                               episode_num: i + 1,
-                               description: description)
-  end
+# Seed saved anime
+anime = Anime.all
+User.all.each do |user|
+  # rand(5..15).times { user.save_anime(anime.sample) }
+  1.times { user.save_anime(anime.sample) }
 end

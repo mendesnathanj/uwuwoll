@@ -7,7 +7,7 @@ class Api::SessionsController < ApplicationController
       login!(@user)
       render '/api/users/show'
     else
-      render json: ['Invalid credentials'], status: :unauthorized
+      render json: ['wuh woh wong wogin!'], status: :unauthorized
     end
   end
 
@@ -16,7 +16,7 @@ class Api::SessionsController < ApplicationController
       logout!
       render json: { }
     else
-      render json: ['Please login to logout'], status: :not_found
+      render json: ['pwease wogin to wogout'], status: :not_found
     end
   end
 end

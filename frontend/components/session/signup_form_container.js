@@ -1,15 +1,16 @@
 import { connect } from 'react-redux';
 import { signup } from '../../actions/session_actions';
-import SignupForm from './signup_form';
+import { withRouter } from 'react-router-dom';
+import SessionForm from './session_form';
 
 
 const mstp = () => ({
-  formType: 'Sign up'
+  formType: 'sign up!'
 });
 
 const mdtp = dispatch => ({
-  signup: user => dispatch(signup(user))
+  action: user => dispatch(signup(user))
 });
 
 
-export default connect(mstp, mdtp)(SignupForm);
+export default withRouter(connect(mstp, mdtp)(SessionForm));

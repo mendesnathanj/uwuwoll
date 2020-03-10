@@ -11,22 +11,19 @@
 #
 
 class Anime < ApplicationRecord
+  extend FriendlyId
+
+  friendly_id :title, use: :slugged
+
   validates :title, :description, :publisher, presence: true
 
   has_many :seasons, dependent: :destroy
-  has_many :episodes, through: :seasons
+  has_many :episodes
 
-  # def latest_season
-  #   seasons.max_by { |season| season.season_num }
-  # end
+  has_one_attached :large_poster
+  has_one_attached :small_poster
 
-  # # generating n + 1 queries for some reason
-  # def recent_episodes
-  #   latest_season.episodes.order(episode_num: :desc).limit(2)
-  # end
-
-  # also generates n + 1 queries
-  # def episode_count
-  #   episodes.count
-  # end
+  def episode_count
+    episodes.length
+  end
 end

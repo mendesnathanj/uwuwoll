@@ -63,6 +63,9 @@ end
 
 gem 'jquery-rails'
 gem 'aws-sdk-s3'
+gem 'friendly_id'
+gem 'fast_jsonapi'
+gem 'jbuilder_pagination', require: 'jbuilder/pagination'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

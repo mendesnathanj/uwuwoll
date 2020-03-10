@@ -5,9 +5,9 @@ export const fetchAllAnime = () => (
   })
 );
 
-export const fetchAnime = animeId => (
+export const fetchAnime = slug => (
   $.ajax({
     method: 'GET',
-    url: `/api/anime/${animeId}`
+    url: `/api/anime/${slug}`
   })
 );

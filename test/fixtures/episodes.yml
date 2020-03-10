@@ -4,11 +4,12 @@
 #
 #  id          :bigint           not null, primary key
 #  title       :string           not null
-#  description :text             not null
+#  description :text
 #  episode_num :integer          not null
-#  season_id   :integer          not null
+#  season_id   :integer
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  anime_id    :integer          not null
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

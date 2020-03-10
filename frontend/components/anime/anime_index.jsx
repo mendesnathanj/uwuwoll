@@ -7,20 +7,17 @@ class AnimeIndex extends React.Component {
   }
 
   render() {
-    const animeItems = this.props.anime.map(anime => {
-
-      return <AnimeIndexItem key={anime.id} anime={anime} />
-    });
+    const animeItems = this.props.anime.map(anime =>  <AnimeIndexItem key={anime.id} anime={anime} /> );
 
     return (
-      <div>
-        <ul>
-          { animeItems }
-        </ul>
+      <div className="anime-container">
+        <div className="header-container">
+          <h1 className="anime-header">Anime</h1>
+        </div>
+        <ul className="anime-container">{ animeItems }</ul>
       </div>
     );
   }
 }
-
 
 export default AnimeIndex;

@@ -20,6 +20,6 @@ export const fetchAllAnime = () => dispatch => (
   AnimeUtils.fetchAllAnime().then(payload => dispatch(receiveAllAnime(payload)))
 );
 
-export const fetchAnime = animeId => dispatch => (
-  AnimeUtils.fetchAnime(animeId).then(payload => dispatch(receiveAnime(payload)))
+export const fetchAnime = slug => dispatch => (
+  AnimeUtils.fetchAnime(slug).then(payload => dispatch(receiveAnime(payload)))
 );

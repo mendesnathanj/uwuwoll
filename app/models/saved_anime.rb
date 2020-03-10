@@ -11,6 +11,8 @@
 #
 
 class SavedAnime < ApplicationRecord
+  validates :anime_id, uniqueness: { scope: :list_id }
+  
   belongs_to :list
   belongs_to :anime
 

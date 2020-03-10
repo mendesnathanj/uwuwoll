@@ -1,12 +1,17 @@
 import { connect } from 'react-redux';
 import { login } from '../../actions/session_actions';
-import LoginForm from './login_form';
+import { withRouter } from "react-router-dom";
+import SessionForm from "./session_form";
 
+
+const mstp = () => ({
+  formType: 'wogin!'
+});
 
 const mdtp = dispatch => ({
-  login: user => dispatch(login(user)),
+  action: user => dispatch(login(user)),
   loginAsGuest: () => dispatch(login({ identifier: 'wyansawms', password: 'password' }))
 });
 
 
-export default connect(null, mdtp)(LoginForm);
+export default withRouter(connect(mstp, mdtp)(SessionForm));

@@ -2,19 +2,38 @@ export const findCurrentUser = state => (
   state.session.id ? state.entities.users[state.session.id] : null
 );
 
-export const findAnime = (state, animeId) => (
-  state.entities.anime[animeId]
-);
+export const findAnime = (state, slug) => {
+  if (!state.slugs.anime[slug]) return undefined;
+  return state.entities.anime[state.slugs.anime[slug].id]
+};
 
-export const findSeasonsFromAnimeId = (state, animeId) => {
-  const anime = findAnime(state, animeId);
+export const findRandomAnime = state => {
+  let anime = Object.values(state.entities.anime);
+  if (anime.length === 0) return '';
+
+  let randomAnime = anime[Math.floor(Math.random() * anime.length)];
+
+  let episode = Object.values(state.entities.episodes).find(ep => {
+    let season = state.entities.seasons[ep.seasonId];
+    return (
+      ep.episodeNum === 1 &&
+      ep.animeId === randomAnime.id &&
+      (ep.seasonId === null || season.seasonNum === 1 )
+    );
+  });
+
+  return `/anime/${randomAnime.slug}/${episode.slug}`;
+}
+
+export const findSeasonsFromAnimeSlug = (state, slug) => {
+  const anime = findAnime(state, slug);
   if (!anime) return [ ];
 
   return anime.seasonIds.map(id => state.entities.seasons[id]);
 };
 
-export const findEpisodesFromAnimeId = (state, animeId) => {
-  const anime = findAnime(state, animeId);
+export const findEpisodesFromAnimeSlug = (state, slug) => {
+  const anime = findAnime(state, slug);
   if (!anime) return [ ];
 
   return anime.episodeIds.map(id => state.entities.episodes[id]);

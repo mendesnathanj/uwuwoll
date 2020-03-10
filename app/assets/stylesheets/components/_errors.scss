@@ -1,0 +1,82 @@
+@import '../base/typography';
+
+@keyframes animateErrorsIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.errors-container {
+  position: absolute;
+  width: 70%;
+  padding: 15px;
+  min-height: 80px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border-radius: 15px;
+  top: 2%;
+  background-color: #FFA8A8;
+  z-index: 2;
+  animation: 300ms ease-in-out 0s 1 animateErrorsIn;
+}
+
+.errors-wrapper-multi-item, .errors-wrapper-single-item {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  min-height: 80px;
+}
+
+.errors-wrapper-multi-item {
+  justify-content: flex-start;
+}
+
+.errors-wrapper-single-item {
+  justify-content: center;
+}
+
+.error-item-mid, .error-item-left {
+  color: #fff;
+  font-family: $title-fonts;
+  font-weight: 600;
+  font-size: 0.7em;
+  flex-basis: 100%;
+  padding: 5px;
+}
+
+.error-item-left {
+}
+
+.error-item-mid {
+  text-align: center;
+}
+
+.close-container {
+  position: absolute;
+  top: -3px;
+  right: 3px;
+  color: #fff;
+  padding: 8px;
+  cursor: pointer;
+}
+
+@keyframes animateCloseHover {
+  0% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1.0);
+  }
+}
+
+.close-container:hover > .fas {
+  animation: 300ms ease-in-out 0s 1 animateCloseHover;
+}

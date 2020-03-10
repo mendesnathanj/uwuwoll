@@ -1,21 +1,90 @@
 @import '../abstracts/variables';
+@import '../base/typography';
+
+
+@keyframes animateFormIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .form {
-  padding: 15px;
-  border: 1px solid #eee;
-  border-radius: 5px;
+  padding: 30px 15px;
+  width: 100%;
+  max-width: 560px;
+  animation: 750ms ease-in-out 0s 1 animateFormIn;
+}
+
+.input-container {
+  position: relative;
+  width: 80%;
+  margin: 2em auto;
+  text-align: center;
+}
+
+.form-btn-container {
+  margin-top: 4em;
+  display: flex;
+  justify-content: space-around;
 }
 
 .form-input {
   width: 100%;
-  padding: 5px;
-  border: 1px solid #ddd;
-  border-radius: 3px;
-  margin-bottom: 1.25em;
+  border: none;
+  padding: 15px 10px;
+  border-bottom: 1px solid #fff;
+  font-weight: 600;
+  letter-spacing: 1px;
+  font-family: $title-fonts;
+  font-size: 0.7em;
+  color: #fff;
+  background: none;
+}
+
+.form-input:focus + .floating-label,
+.form-input:not(:placeholder-shown) + .floating-label {
+ transform: scale(0.75) translateY(-40px) translateX(-15px);
+}
+
+.form-input:focus + .floating-email-label,
+.form-input:not(:placeholder-shown) + .floating-email-label {
+ transform: scale(0.75) translateY(-40px) translateX(-9px);
+}
+
+.form-input:focus + .dual-floating-label,
+.form-input:not(:placeholder-shown) + .dual-floating-label {
+ transform: scale(0.75) translateY(-40px) translateX(-27px);
+}
+
+.floating-label, .floating-email-label, .dual-floating-label {
+  color: #fff;
+  opacity: 0.8;
+  font-family: $title-fonts;
+  font-weight: 600;
+  font-size: 0.7em;
+  letter-spacing: 1px;
+  position: absolute;
+  top: 17px;
+  left: 10px;
+  transition: all 300ms ease-in-out;
+  pointer-events: none;
+}
+
+.form-input::placeholder {
+  color: #fff;
+  opacity: 0.65;
+  font-weight: 600;
+  letter-spacing: 1px;
 }
 
 .form-input:focus {
   outline: none !important;
-  border: 1px solid #23bbe6;
 }
 
 .form-label {
@@ -37,4 +106,111 @@
 .btn-orange:hover {
   background-color: $primary-orange;
   color: #fff;
+}
+
+.form-btn {
+  font-family: $title-fonts;
+  font-weight: 600;
+  font-size: 0.8em;
+  width: 110px;
+  height: 50px;
+  border-radius: 35px;
+  border: 2px solid #fff;
+  background: none;
+  color: #fff;
+  cursor: pointer;
+  transition: all 300ms ease-in;
+}
+
+.larger-btn {
+  width: 140px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-btn:hover {
+  color: rgba(247, 140, 37, 0.75);
+  border: none;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.form-btn:focus {
+  outline: 0;
+}
+
+.form-container {
+  position: relative;
+  margin-top: 1em;
+  max-width: 560px;
+}
+
+.form-container:after {
+  content: '';
+  position: absolute;
+  display: block;
+  background-color: #fff;
+  opacity: 0.1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  max-width: 560px;
+  border-radius: 10px;
+  pointer-events: none;
+}
+
+.form-title {
+  font-family: $body-fonts;
+  font-weight: bold;
+  color: #fff;
+  font-size: 0.9em;
+  text-align: center;
+  margin-top: 1em;
+  margin-bottom: 3em;
+}
+
+.form-cta {
+  display: inherit;
+  font-weight: 600;
+  font-size: 0.7em;
+  font-family: $title-fonts;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+  transition: all 1s ease-in-out;
+  text-decoration: none;
+}
+
+.form-cta:after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 49%;
+  bottom: -6px;
+  width: 0px;
+  height: 1px;
+  transform: scaleY(1.5);
+  opacity: 0;
+  background-color: #fff;
+  transition: all 300ms ease-in-out;
+}
+
+.cta-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3em;
+}
+
+
+.cta-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.form-cta:hover:after {
+  width: 100%;
+  left: 0;
+  opacity: 1;
 }

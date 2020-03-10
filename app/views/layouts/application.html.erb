@@ -5,13 +5,16 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <%= favicon_link_tag 'favicon.ico' %>
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
-    <script>
-      window.splashGirl = "<%= image_url('splash-girl.png') %>"
+    <script src="https://kit.fontawesome.com/baca0284a6.js" crossorigin="anonymous"></script>
+    <script id="image-script">
+      window.splashGirl = "<%= image_url('landing-img.png') %>"
+      window.whiteLogo = "<%= image_url('wogo_white.png') %>"
+      window.orangeLogo = "<%= image_url('wogo_owange.png') %>"
     </script>
   </head>
-
   <body>
     <%= yield %>
   </body>

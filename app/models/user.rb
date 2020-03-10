@@ -53,4 +53,8 @@ class User < ApplicationRecord
   def ensure_own_list!
     List.create!(user_id: id)
   end
+
+  def save_anime(anime)
+    SavedAnime.create(anime_id: anime.id, list_id: list.id)
+  end
 end
