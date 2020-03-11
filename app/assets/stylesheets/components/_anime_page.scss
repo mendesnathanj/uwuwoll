@@ -1,126 +1,138 @@
 @import '../abstracts//variables';
 @import '../base/typography';
 
+@keyframes animatePageIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
 
-.anime-container {
-  max-width: 900px;
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.anime-page-container {
+  width: 1000px;
   margin: 0 auto;
   margin-top: 1.5em;
   display: flex;
+  justify-content: space-between;
   flex-wrap: wrap;
+  animation: 750ms ease-in-out 0s 1 animatePageIn;
 }
 
-.anime-header {
-  font-family: $title-fonts;
-  font-weight: 700;
-  font-size: 2em;
-  color: #333;
-  padding-bottom: 4px;
+.left-col-anime-page {
+  width: 25%;
 }
 
-.header-container {
-  border-bottom: 2px solid #a8a8a8;
-  flex-basis: 100%;
+.right-col-anime-page {
+  width: 70%;
 }
 
-.anime-title {
-  display: flex;
-  justify-content: center;
-  font-weight: 700;
-  color: #333;
-  font-size: 0.75em;
-  padding-bottom: 5px;
-  min-height: 28px;
-  margin: 0 auto;
-}
-
-.title-text {
-  color: inherit;
-  white-space: nowrap;
-  overflow-x: hidden;
-  text-overflow: ellipsis;
-}
-
-.poster-container {
-  max-width: 170px;
-}
-
-.small-poster {
+.repsonsive-img {
   width: 100%;
   height: auto;
 }
 
-.poster-container {
-  padding: 5px;
+.anime-page-description {
+  margin-top: 20px;
+  color: #333;
+  font-family: $body-fonts;
+  font-weight: 600;
+  font-size: 0.8em;
+  line-height: 1.1em;
+}
+
+.anime-page-description:last-child {
+  margin-bottom: 100px;
+}
+
+
+.anime-page-header-container {
+  margin-bottom: 20px;
+}
+
+
+
+.season-title {
+  // position: relative;
   background-color: #fff;
-  border-radius: 5px;
-  margin-top: -2px;
-}
-
-.anime-item {
-  width: 20%;
-  max-width: 170px;
-  margin-left: 5px;
-  margin-right: 5px;
-  margin-bottom: 1.5em;
-  position: relative;
-}
-
-.title-bookmark {
-  margin-right: 8px;
+  padding: 16px;
+  border-radius: 4px;
+  margin-bottom: 0.5em;
+  font-weight: 700;
+  font-size: 0.8em;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.season-title-caret {
+  color: $primary-orange;
+  right: 3%;
+  font-size: 1.4em;
+  margin-left: auto;
+  transition: all 300ms ease-in-out;
+}
+
+.episode-wrapper {
+  width: 20%;
+  padding: 8px;
+  flex: 0 0 auto;
+}
+
+.episode-container {
+  background-color: #fff;
+  width: 100%;
+  max-width: 160px;
+  padding: 8px;
+  margin-bottom: 8px;
+  border-radius: 5px;
   transition: all 200ms ease-in-out;
 }
 
-
-.title-bookmark:hover {
-  transform: scale(1.1);
+.episode-container:hover {
+  transform: scale(1.05);
 }
 
-.poster-container:hover .hover-item {
-  opacity: 1;
-  z-index: 900;
+.episode-list {
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.hover-item {
-  opacity: 0;
-  position: absolute;
-  overflow: hidden;
-  padding: 16px;
-  border-radius: 5px;
-  width: 300px;
-  height: 200px;
-  background-color: rgba(0, 0, 0, .9);
-  top: 0;
-
-  z-index: -1;
-  transition: all 500ms ease-in-out;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.episode-thumbnail {
+  width: 100%;
+  height: auto;
 }
 
-.hover-item-left {
-  left: -185%;
-}
-
-.hover-item-right {
-  left: 110%;
-}
-
-.hover-title {
-  color: #fff;
+.episode-num {
   font-weight: 600;
-  font-size: 0.7em;
-  overflow: hidden;
+  font-size: 0.6em;
+  color: #666;
+  margin-top: 1em;
+}
+
+.episode-title {
+  font-weight: 600;
+  font-size: 0.4em;
+  color: #999;
+  margin-top: 1em;
+  padding-bottom: 6px;
   white-space: nowrap;
+  overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.hover-description {
-  margin-top: 10px;
-  color: #fff;
-  font-size: 0.7em;
+.episode-list-wrapper {
+  transition: all 300ms ease-in-out;
+  max-height: 800px;
   overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 1.1em;
+  height: auto;
+}
+
+.hide-episodes {
+  transition: all 300ms ease-in-out;
+  max-height: 0;
 }

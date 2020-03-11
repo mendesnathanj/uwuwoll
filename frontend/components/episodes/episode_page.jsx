@@ -1,5 +1,7 @@
 import React from 'react';
-import ReactPlayer from 'react-player';
+import { Link } from 'react-router-dom';
+import Carousel from './carousel';
+import Video from './video';
 
 
 class EpisodePage extends React.Component {
@@ -9,19 +11,16 @@ class EpisodePage extends React.Component {
 
   render() {
     if (!this.props.episode) return null;
+
+    let { episode, episodes, anime } = this.props;
+
     return (
-      <video width="640px" height="auto" autoPlay="autoplay" controls>
-        <source src={this.props.episode.videoUrl} />
-       </video>
-    )
-    // return (
-    //   <ReactPlayer
-    //     id="player"
-    //     playing={true}
-    //     url={this.props.episode.videoUrl}
-    //     controls
-    //   />
-    // );
+      <div className="episode-page-container">
+        <h1 className="episode-header"><Link className="anime-link" to={`/anime/${anime.slug}`}>{ anime.title }</Link> { `Episode ${ episode.episodeNum } - ${ episode.title }` }</h1>
+        <Video src={ episode.video } />
+        <Carousel currentEpisodeId={ episode.id } animeSlug={ anime.slug } episodes={ episodes } />
+      </div>
+    );
   }
 }
 

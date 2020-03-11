@@ -1,0 +1,49 @@
+.episode-page-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 1.5em auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.episode-carousel {
+  display: flex;
+  overflow-x: auto;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.episode-carousel .episode-wrapper {
+  width: 12%;
+}
+
+.episode-container.active {
+  border: 2px solid $primary-orange;
+}
+
+.episode-video {
+  width: 100%;
+  min-width: 450px;
+  max-width: 900px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.episode-video:focus {
+  outline: 0;
+}
+
+.episode-header {
+  font-size: 1.2em;
+  padding-bottom: 0.5em;
+}
+
+.anime-link {
+  position: relative;
+  color: #38a3d9;
+}
+
+.anime-link:after {
+  bottom: -1px;
+  background-color: #38a3d9;
+}

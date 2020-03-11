@@ -182,18 +182,21 @@
   text-decoration: none;
 }
 
-.form-cta:after {
+.form-cta:after, .anime-link:after {
   content: '';
   display: block;
   position: absolute;
   left: 49%;
-  bottom: -6px;
   width: 0px;
   height: 1px;
   transform: scaleY(1.5);
   opacity: 0;
-  background-color: #fff;
   transition: all 300ms ease-in-out;
+}
+
+.form-cta:after {
+  background-color: #fff;
+  bottom: -6px;
 }
 
 .cta-container {
@@ -209,7 +212,7 @@
   display: inline-block;
 }
 
-.form-cta:hover:after {
+.form-cta:hover:after, .anime-link:hover:after {
   width: 100%;
   left: 0;
   opacity: 1;

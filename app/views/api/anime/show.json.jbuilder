@@ -1,7 +1,7 @@
 json.anime do
   json.extract! @anime, :id, :title, :description, :publisher, :slug
   json.season_ids @anime.season_ids.reverse
-  json.episode_ids @anime.episode_ids.sort
+  json.episode_ids @anime.episode_ids.sort.reverse
   json.large_poster url_for(@anime.large_poster)
   json.small_poster url_for(@anime.small_poster)
   json.episode_count @anime.episodes.length
@@ -17,13 +17,19 @@ json.seasons do
 end
 
 json.episodes do
-  @anime.episodes.with_attached_video.sort.each do |episode|
+  @anime.episodes.with_attached_thumbnail.with_attached_video.sort.each do |episode|
     json.set! episode.id do
       json.extract! episode, :id, :title, :description, :episode_num, :anime_id, :season_id, :slug
-      if episode.video.attached?
-        json.video_url url_for(episode.video)
+      if episode.thumbnail.attached?
+        json.thumbnail url_for(episode.thumbnail)
       else
-        json.video_url nil
+        json.thumbnail nil
+      end
+
+      if episode.video.attached?
+        json.video url_for(episode.video)
+      else
+        json.video nil
       end
     end
   end

@@ -1,0 +1,141 @@
+@import '../abstracts//variables';
+@import '../base/typography';
+
+@keyframes animateAnimeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.anime-container {
+  width: 900px;
+  margin: 0 auto;
+  margin-top: 1.5em;
+  display: flex;
+  flex-wrap: wrap;
+  animation: 750ms ease-in-out 0s 1 animateAnimeIn;
+}
+
+.anime-header, .episode-header {
+  font-family: $title-fonts;
+  font-weight: 700;
+  font-size: 2em;
+  color: #333;
+  padding-bottom: 4px;
+}
+
+.header-container {
+  border-bottom: 2px solid #a8a8a8;
+  flex-basis: 100%;
+}
+
+.anime-title {
+  display: flex;
+  justify-content: center;
+  font-weight: 700;
+  color: #333;
+  font-size: 0.75em;
+  padding-bottom: 5px;
+  min-height: 28px;
+  margin: 0 auto;
+}
+
+.title-text {
+  color: inherit;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+}
+
+.poster-container {
+  max-width: 170px;
+}
+
+.small-poster {
+  width: 100%;
+  height: auto;
+}
+
+.poster-container, .large-poster-container {
+  padding: 5px;
+  background-color: #fff;
+  border-radius: 5px;
+  margin-top: -2px;
+}
+
+.large-poster-container {
+  margin-top: 0;
+}
+
+.anime-item {
+  width: 20%;
+  max-width: 170px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 1.5em;
+  position: relative;
+}
+
+.title-bookmark {
+  margin-right: 8px;
+  cursor: pointer;
+  transition: all 200ms ease-in-out;
+}
+
+
+.title-bookmark:hover {
+  transform: scale(1.1);
+}
+
+.poster-container:hover .hover-item {
+  opacity: 1;
+  z-index: 900;
+}
+
+.hover-item {
+  opacity: 0;
+  position: absolute;
+  overflow: hidden;
+  padding: 16px;
+  border-radius: 5px;
+  width: 300px;
+  height: 200px;
+  background-color: rgba(0, 0, 0, .9);
+  top: 0;
+
+  z-index: -1;
+  transition: all 500ms ease-in-out;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+}
+
+.hover-item-left {
+  left: -185%;
+}
+
+.hover-item-right {
+  left: 104%;
+}
+
+.hover-title {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.7em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.hover-description {
+  margin-top: 10px;
+  color: #fff;
+  font-size: 0.7em;
+  line-height: 1.1em;
+}

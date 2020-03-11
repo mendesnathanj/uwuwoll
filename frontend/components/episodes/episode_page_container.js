@@ -1,14 +1,15 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import EpisodePage from './episode_page';
-import { findAnime } from '../../reducers/selectors';
+import { findAnime, findEpisode, findEpisodesFromAnimeSlug } from '../../reducers/selectors';
 import { fetchAnime } from '../../actions/anime_actions';
 
 
 const mstp = (state, ownProps) => {
   return {
-    episode: Object.values(state.entities.episodes).find(ep => ep.slug === ownProps.match.params.episodeSlug),
-    anime: findAnime(state, ownProps.match.params.animeSlug)
+    episode: findEpisode(state, ownProps.match.params.episodeSlug),
+    anime: findAnime(state, ownProps.match.params.animeSlug),
+    episodes: findEpisodesFromAnimeSlug(state, ownProps.match.params.animeSlug)
   }
 };
 

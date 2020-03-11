@@ -1,6 +1,6 @@
 SEED_EPISODES = true
 SEED_POSTERS = true
-ANIME_LIMIT = 5
+ANIME_LIMIT = 2
 EPISODE_LIMIT = 16
 RESEED_EVERYTHING = true
 
@@ -47,7 +47,7 @@ small_portraits.length.times do |i|
   anime_page = Nokogiri::HTML.parse(open(anime_page))
   sleep(0.2)
 
-  large_portrait = anime_page.css('.portrait').first
+  large_portrait = anime_page.css('.poster').first
 
   title = small_portrait[:alt]
 
@@ -110,12 +110,12 @@ small_portraits.length.times do |i|
         episode = Episode.create(title: episode_title, description: description, episode_num: episode_num, season_id: season.id, anime_id: anime.id)
         episode_num += 1
 
-        # if SEED_EPISODES
-        #   file_name_base = episode_title.downcase.gsub(/[!',\-\.\/":]/, '').split.join('_') + '.jpg'
-        #   file_name_thumbnail = 'thumb_' + file_name_base
-        #   thumbnail_file = episode_thumbnail[:src].nil? ? episode_thumbnail.values.last : episode_thumbnail[:src]
-        #   episode.thumbnail.attach(io: open(thumbnail_file), filename: file_name_thumbnail)
-        # end
+        if SEED_EPISODES
+          file_name_base = episode_title.downcase.gsub(/[!',\-\.\/":]/, '').split.join('_') + '.jpg'
+          file_name_thumbnail = 'thumb_' + file_name_base
+          thumbnail_file = episode_thumbnail[:src].nil? ? episode_thumbnail.values.last : episode_thumbnail[:src]
+          episode.thumbnail.attach(io: open(thumbnail_file), filename: file_name_thumbnail)
+        end
       end
 
       break if episode_num >= EPISODE_LIMIT

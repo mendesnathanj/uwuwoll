@@ -1,5 +1,5 @@
 import { RECEIVE_EPISODE } from '../../actions/episode_actions';
-import { RECEIVE_ALL_ANIME } from '../../actions/anime_actions';
+import { RECEIVE_ALL_ANIME, RECEIVE_ANIME } from '../../actions/anime_actions';
 
 
 const episodeSlugsReducer = (state = { }, action) => {
@@ -9,6 +9,8 @@ const episodeSlugsReducer = (state = { }, action) => {
     case RECEIVE_EPISODE:
       return Object.assign({}, state, action.payload.slugs.episodes);
     case RECEIVE_ALL_ANIME:
+      return Object.assign({}, state, action.payload.slugs.episodes);
+    case RECEIVE_ANIME:
       return Object.assign({}, state, action.payload.slugs.episodes);
 
     default:

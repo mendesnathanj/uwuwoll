@@ -7,6 +7,12 @@ export const findAnime = (state, slug) => {
   return state.entities.anime[state.slugs.anime[slug].id]
 };
 
+export const findEpisode = (state, slug) => {
+  if (!state.slugs.episodes[slug]) return undefined;
+
+  return state.entities.episodes[state.slugs.episodes[slug].id];
+}
+
 export const findRandomAnime = state => {
   let anime = Object.values(state.entities.anime);
   if (anime.length === 0) return '';
@@ -21,6 +27,8 @@ export const findRandomAnime = state => {
       (ep.seasonId === null || season.seasonNum === 1 )
     );
   });
+
+  if (!episode) return '';
 
   return `/anime/${randomAnime.slug}/${episode.slug}`;
 }
