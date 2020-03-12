@@ -1,7 +1,7 @@
 SEED_EPISODES = true
 SEED_POSTERS = true
-ANIME_LIMIT = 1
-EPISODE_LIMIT = 2
+ANIME_LIMIT = 100
+EPISODE_LIMIT = 20
 RESEED_EVERYTHING = true
 
 BUCKET = 'https://uwuwoll-seeds.s3-us-west-1.amazonaws.com/'
@@ -74,6 +74,7 @@ small_portraits.length.times do |i|
   season_tags = anime_page.css('.season-dropdown').reverse
 
   episode_num = 1
+  episode_limit = rand(14..EPISODE_LIMIT)
   if season_tags.length.positive? # if there are seasons, then create them
     season_tags.each_with_index do |season_tag, j|
       season_title = season_tag.text
@@ -93,7 +94,7 @@ small_portraits.length.times do |i|
       episode_thumbnail_tags = anime_page.search(tquery).reverse
 
       episode_hrefs.length.times do |k|
-        break if episode_num >= EPISODE_LIMIT
+        break if episode_num >= episode_limit
 
         episode_href = episode_hrefs[k]
         episode_thumbnail = episode_thumbnail_tags[k]
@@ -121,7 +122,7 @@ small_portraits.length.times do |i|
         end
       end
 
-      break if episode_num >= EPISODE_LIMIT
+      break if episode_num >= episode_limit
     end
   else
     episode_hrefs = anime_page.search(".season .portrait-element").reverse.map { |h| h[:href] }
@@ -143,7 +144,7 @@ small_portraits.length.times do |i|
       episode = Episode.create(title: episode_title, description: description, episode_num: episode_num, season_id: nil, anime_id: anime.id)
       episode_num += 1
 
-      break if episode_num >= EPISODE_LIMIT
+      break if episode_num >= episode_limit
 
       if SEED_EPISODES
         file_name_base = episode_title.downcase.gsub(/[!',\-\.\/":]/, '').split.join('_') + '.jpg'
