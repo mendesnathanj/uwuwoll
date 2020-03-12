@@ -1,7 +1,7 @@
 SEED_EPISODES = true
 SEED_POSTERS = true
-ANIME_LIMIT = 100
-EPISODE_LIMIT = 20
+ANIME_LIMIT = 1
+EPISODE_LIMIT = 2
 RESEED_EVERYTHING = true
 
 BUCKET = 'https://uwuwoll-seeds.s3-us-west-1.amazonaws.com/'
@@ -159,5 +159,4 @@ end
 anime = Anime.all
 User.all.each do |user|
   rand(5..15).times { user.save_anime(anime.sample) }
-  # 1.times { user.save_anime(anime.sample) }
 end
