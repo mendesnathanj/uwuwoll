@@ -105,13 +105,26 @@
   margin-top: 8px;
 }
 
+@keyframes animateSearchResultsOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
 .search-bar:placeholder-shown ~ .search-results {
   opacity: 0;
+  max-height: 0;
 }
 
 .search-results {
   position: absolute;
   width: 100%;
+  max-height: 500px;
+  overflow-y: scroll;
   top: 110%;
   left: 50%;
   opacity: 1;
