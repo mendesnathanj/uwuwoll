@@ -2968,7 +2968,9 @@ var findRandomAnime = function findRandomAnime(state) {
   var randomAnime = anime[Math.floor(Math.random() * anime.length)];
   var episode = Object.values(state.entities.episodes).find(function (ep) {
     var season = state.entities.seasons[ep.seasonId];
-    return ep.episodeNum === 1 && ep.animeId === randomAnime.id && (ep.seasonId === null || season.seasonNum === 1);
+    return ep.episodeNum === 1 && ep.animeId === randomAnime.id // &&
+    // (ep.seasonId === null || season.seasonNum === 1 )
+    ;
   });
   if (!episode) return '';
   return "/anime/".concat(randomAnime.slug, "/").concat(episode.slug);

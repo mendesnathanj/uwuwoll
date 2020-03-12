@@ -23,8 +23,9 @@ export const findRandomAnime = state => {
     let season = state.entities.seasons[ep.seasonId];
     return (
       ep.episodeNum === 1 &&
-      ep.animeId === randomAnime.id &&
-      (ep.seasonId === null || season.seasonNum === 1 )
+      ep.animeId === randomAnime.id
+      // &&
+      // (ep.seasonId === null || season.seasonNum === 1 )
       );
     });
 
