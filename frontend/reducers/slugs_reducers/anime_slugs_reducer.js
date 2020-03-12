@@ -17,10 +17,7 @@ const animeSlugsReducer = (state = {}, action) => {
       return Object.assign({}, state, action.payload.slugs.anime);
 
     case RECEIVE_NAVBAR_ITEMS:
-      let anime = Object.values(action.payload.slugs.anime).filter(anime => !newState[anime.id]);
-      anime.forEach(anime => newState[anime.id] = anime);
-
-    return newState;
+      return Object.assign({}, state, action.payload.slugs.anime);
 
     default:
       return state;

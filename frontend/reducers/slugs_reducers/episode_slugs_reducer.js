@@ -14,10 +14,7 @@ const episodeSlugsReducer = (state = { }, action) => {
     case RECEIVE_ANIME:
       return Object.assign({}, state, action.payload.slugs.episodes);
     case RECEIVE_NAVBAR_ITEMS:
-      let episodes = Object.values(action.payload.slugs.episodes).filter(episode => !newState[episode.id]);
-      episodes.forEach(episode => newState[episode.id] = episode);
-
-    return newState;
+      return Object.assign({}, state, action.payload.slugs.episodes);
 
     default:
       return state;

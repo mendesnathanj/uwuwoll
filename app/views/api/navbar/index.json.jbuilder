@@ -2,6 +2,8 @@ json.anime do
   @anime.each do |anime|
     json.set! anime.id do
       json.extract! anime, :id, :title, :slug
+      json.episode_ids anime.episode_ids
+      json.season_ids anime.season_ids
     end
   end
 end

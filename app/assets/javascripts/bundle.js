@@ -3146,13 +3146,7 @@ var animeSlugsReducer = function animeSlugsReducer() {
       return Object.assign({}, state, action.payload.slugs.anime);
 
     case _actions_navbar_actions__WEBPACK_IMPORTED_MODULE_2__["RECEIVE_NAVBAR_ITEMS"]:
-      var anime = Object.values(action.payload.slugs.anime).filter(function (anime) {
-        return !newState[anime.id];
-      });
-      anime.forEach(function (anime) {
-        return newState[anime.id] = anime;
-      });
-      return newState;
+      return Object.assign({}, state, action.payload.slugs.anime);
 
     default:
       return state;
@@ -3196,13 +3190,7 @@ var episodeSlugsReducer = function episodeSlugsReducer() {
       return Object.assign({}, state, action.payload.slugs.episodes);
 
     case _actions_navbar_actions__WEBPACK_IMPORTED_MODULE_2__["RECEIVE_NAVBAR_ITEMS"]:
-      var episodes = Object.values(action.payload.slugs.episodes).filter(function (episode) {
-        return !newState[episode.id];
-      });
-      episodes.forEach(function (episode) {
-        return newState[episode.id] = episode;
-      });
-      return newState;
+      return Object.assign({}, state, action.payload.slugs.episodes);
 
     default:
       return state;
