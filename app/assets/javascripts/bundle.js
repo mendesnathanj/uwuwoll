@@ -1772,14 +1772,6 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
         className: "nav-text"
       }, "queue")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "nav-li",
-        key: "random",
-        onClick: this.redirectToRandomAnime
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fa-orange fas fa-dice-two"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "nav-text"
-      }, "random")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "nav-li",
         key: "logout",
         onClick: function onClick() {
           return _this2.props.logout().then(function () {

@@ -81,14 +81,14 @@ class Navbar extends React.Component {
             </Link>
             <span className="nav-text">queue</span>
           </li>
-          <li
+          {/* <li
             className="nav-li"
             key="random"
             onClick={this.redirectToRandomAnime}
           >
             <i className="fa-orange fas fa-dice-two"></i>
             <span className="nav-text">random</span>
-          </li>
+          </li> */}
           <li
             className="nav-li"
             key="logout"
