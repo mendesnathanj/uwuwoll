@@ -24,6 +24,8 @@ export const findRandomAnime = state => {
 
   let episodesAnime = state.entities.anime[randomEpisode.animeId];
 
+  console.log(randomEpisode);
+  console.log(episodesAnime);
   return `/anime/${episodesAnime.slug}/${randomEpisode.slug}`;
 }
 
