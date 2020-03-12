@@ -2964,18 +2964,14 @@ var findEpisode = function findEpisode(state, slug) {
 };
 var findRandomAnime = function findRandomAnime(state) {
   var anime = Object.values(state.entities.anime);
-  if (anime.length === 0) return '';
-  var randomAnime = anime[Math.floor(Math.random() * anime.length)];
-  var episode = Object.values(state.entities.episodes).find(function (ep) {
-    var season = state.entities.seasons[ep.seasonId];
-    return ep.episodeNum === 1 && ep.animeId === randomAnime.id // &&
-    // (ep.seasonId === null || season.seasonNum === 1 )
-    ;
+  var episodes = Object.values(state.entities.episodes);
+  if (anime.length === 0 || episodes.length === 0) return '';
+  episodes = episodes.filter(function (episode) {
+    return episode.episodeNum === 1;
   });
-  console.log(randomAnime);
-  console.log(episode);
-  if (!episode) return '';
-  return "/anime/".concat(randomAnime.slug, "/").concat(episode.slug);
+  var randomEpisode = episodes[Math.floor(Math.random() * episodes.length)];
+  var episodesAnime = state.entities.anime[randomEpisode.animeId];
+  return "/anime/".concat(episodesAnime.slug, "/").concat(randomEpisode.slug);
 };
 var findSeasonsFromAnimeSlug = function findSeasonsFromAnimeSlug(state, slug) {
   var anime = findAnime(state, slug);

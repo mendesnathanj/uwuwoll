@@ -15,26 +15,16 @@ export const findEpisode = (state, slug) => {
 
 export const findRandomAnime = state => {
   let anime = Object.values(state.entities.anime);
-  if (anime.length === 0) return '';
+  let episodes = Object.values(state.entities.episodes);
 
-  let randomAnime = anime[Math.floor(Math.random() * anime.length)];
+  if (anime.length === 0 || episodes.length === 0) return '';
 
-  let episode = Object.values(state.entities.episodes).find(ep => {
-    let season = state.entities.seasons[ep.seasonId];
-    return (
-      ep.episodeNum === 1 &&
-      ep.animeId === randomAnime.id
-      // &&
-      // (ep.seasonId === null || season.seasonNum === 1 )
-      );
-    });
+  episodes = episodes.filter(episode => episode.episodeNum === 1);
+  let randomEpisode = episodes[Math.floor(Math.random() * episodes.length)];
 
-  console.log(randomAnime);
-  console.log(episode);
+  let episodesAnime = state.entities.anime[randomEpisode.animeId];
 
-  if (!episode) return '';
-
-  return `/anime/${randomAnime.slug}/${episode.slug}`;
+  return `/anime/${episodesAnime.slug}/${randomEpisode.slug}`;
 }
 
 export const findSeasonsFromAnimeSlug = (state, slug) => {
