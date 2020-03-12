@@ -2972,6 +2972,8 @@ var findRandomAnime = function findRandomAnime(state) {
     // (ep.seasonId === null || season.seasonNum === 1 )
     ;
   });
+  console.log(randomAnime);
+  console.log(episode);
   if (!episode) return '';
   return "/anime/".concat(randomAnime.slug, "/").concat(episode.slug);
 };

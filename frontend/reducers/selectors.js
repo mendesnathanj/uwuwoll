@@ -29,6 +29,9 @@ export const findRandomAnime = state => {
       );
     });
 
+  console.log(randomAnime);
+  console.log(episode);
+
   if (!episode) return '';
 
   return `/anime/${randomAnime.slug}/${episode.slug}`;
