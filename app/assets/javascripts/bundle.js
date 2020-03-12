@@ -2824,6 +2824,8 @@ var savedAnimeReducer = function savedAnimeReducer() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_anime_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/anime_actions */ "./frontend/actions/anime_actions.js");
+/* harmony import */ var _actions_navbar_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/navbar_actions */ "./frontend/actions/navbar_actions.js");
+
 
 
 var seasonsReducer = function seasonsReducer() {
@@ -2833,18 +2835,14 @@ var seasonsReducer = function seasonsReducer() {
   var newState = Object.assign({}, state);
 
   switch (action.type) {
-    case _actions_anime_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_ALL_ANIME"]:
-      Object.values(action.payload.seasons).forEach(function (season) {
-        if (!newState[season.id]) newState[season.id] = season;
-      });
-      return newState;
-
+    // case RECEIVE_ALL_ANIME:
+    //   return Object.assign({}, state, action.payload.seasons);
     case _actions_anime_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_ANIME"]:
       if (!action.payload.seasons) return state;
-      Object.values(action.payload.seasons).forEach(function (season) {
-        newState[season.id] = season;
-      });
-      return newState;
+      return Object.assign({}, state, action.payload.seasons);
+
+    case _actions_navbar_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_NAVBAR_ITEMS"]:
+      return Object.assign({}, state, action.payload.seasons);
 
     default:
       return state;

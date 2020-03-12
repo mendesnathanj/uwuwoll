@@ -6,6 +6,14 @@ json.anime do
   end
 end
 
+json.seasons do
+  Season.all.each do |season|
+    json.set! season.id do
+      json.extract! season, :id, :title, :season_num, :anime_id
+    end
+  end
+end
+
 
 json.episodes do
   @anime.each do |anime|
