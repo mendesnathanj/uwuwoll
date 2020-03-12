@@ -2004,8 +2004,8 @@ var Queue = /*#__PURE__*/function (_React$Component) {
       var displayName = currentUser.username.endsWith('s') ? "".concat(currentUser.username, "'") : "".concat(currentUser.username, "'s");
       var content;
 
-      if (!savedAnime) {
-        content = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_empty_queue_item__WEBPACK_IMPORTED_MODULE_2__["default"], null);
+      if (savedAnime === undefined) {
+        content = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
       } else {
         if (savedAnime.length === 0) {
           content = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_empty_queue_item__WEBPACK_IMPORTED_MODULE_2__["default"], null);

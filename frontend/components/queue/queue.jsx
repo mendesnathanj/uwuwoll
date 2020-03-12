@@ -15,8 +15,8 @@ class Queue extends React.Component {
     const displayName = currentUser.username.endsWith('s') ? `${currentUser.username}'` : `${currentUser.username}'s`;
 
     let content;
-    if (!savedAnime) {
-      content = <EmptyQueueItem />
+    if (savedAnime === undefined) {
+      content = <div></div>
     } else {
       if (savedAnime.length === 0) {
         content = <EmptyQueueItem />
