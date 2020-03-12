@@ -15,7 +15,7 @@ class EpisodePage extends React.Component {
   }
 
   render() {
-    if (!this.props.episode) return null;
+    if (this.props.episode === undefined) return null;
 
     let { episode, episodes, anime } = this.props;
 

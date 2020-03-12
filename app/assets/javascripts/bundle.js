@@ -1162,13 +1162,20 @@ var Carousel = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      // const episodes = this.props.episodes.reverse().map(episode => (
-      //   <EpisodeItem key={ episode.id } currentEpisodeId={ this.props.currentEpisodeId } animeSlug={ this.props.animeSlug } episode={ episode } />
-      // ));
+      var _this = this;
+
+      var episodes = this.props.episodes.reverse().map(function (episode) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_episode_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          key: episode.id,
+          currentEpisodeId: _this.props.currentEpisodeId,
+          animeSlug: _this.props.animeSlug,
+          episode: episode
+        });
+      });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "episode-carousel",
         className: "episode-carousel"
-      });
+      }, episodes);
     }
   }]);
 
@@ -1315,7 +1322,7 @@ var EpisodePage = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      if (!this.props.episode) return null;
+      if (this.props.episode === undefined) return null;
       var _this$props = this.props,
           episode = _this$props.episode,
           episodes = _this$props.episodes,
@@ -2956,8 +2963,6 @@ var findRandomAnime = function findRandomAnime(state) {
   });
   var randomEpisode = episodes[Math.floor(Math.random() * episodes.length)];
   var episodesAnime = state.entities.anime[randomEpisode.animeId];
-  console.log(randomEpisode);
-  console.log(episodesAnime);
   return "/anime/".concat(episodesAnime.slug, "/").concat(randomEpisode.slug);
 };
 var findSeasonsFromAnimeSlug = function findSeasonsFromAnimeSlug(state, slug) {

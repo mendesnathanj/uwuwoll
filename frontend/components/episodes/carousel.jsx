@@ -16,13 +16,13 @@ class Carousel extends React.Component {
   }
 
   render() {
-    // const episodes = this.props.episodes.reverse().map(episode => (
-    //   <EpisodeItem key={ episode.id } currentEpisodeId={ this.props.currentEpisodeId } animeSlug={ this.props.animeSlug } episode={ episode } />
-    // ));
+    const episodes = this.props.episodes.reverse().map(episode => (
+      <EpisodeItem key={ episode.id } currentEpisodeId={ this.props.currentEpisodeId } animeSlug={ this.props.animeSlug } episode={ episode } />
+    ));
 
     return (
       <div id="episode-carousel" className="episode-carousel">
-        {/* { episodes } */}
+        { episodes }
       </div>
     )
   }
