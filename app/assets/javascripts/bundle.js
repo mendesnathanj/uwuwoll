@@ -1162,20 +1162,13 @@ var Carousel = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this = this;
-
-      var episodes = this.props.episodes.reverse().map(function (episode) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_episode_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          key: episode.id,
-          currentEpisodeId: _this.props.currentEpisodeId,
-          animeSlug: _this.props.animeSlug,
-          episode: episode
-        });
-      });
+      // const episodes = this.props.episodes.reverse().map(episode => (
+      //   <EpisodeItem key={ episode.id } currentEpisodeId={ this.props.currentEpisodeId } animeSlug={ this.props.animeSlug } episode={ episode } />
+      // ));
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "episode-carousel",
         className: "episode-carousel"
-      }, episodes);
+      });
     }
   }]);
 
