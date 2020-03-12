@@ -880,7 +880,7 @@ var HoverItem = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "getPosition",
     value: function getPosition() {
-      var screenWidth = window.screen.width;
+      var screenWidth = window.innerWidth;
       var hoverItem = document.querySelector("#hover-".concat(this.props.elementId));
       var bounds = hoverItem.getBoundingClientRect();
       return bounds.right + hoverItem.offsetWidth > screenWidth;
@@ -888,8 +888,8 @@ var HoverItem = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var hoverPosClass = this.state.hoverLeft ? 'hover-item-left' : 'hover-item-right';
-      var description = this.props.description ? this.props.description.slice(0, 315) + '...' : '';
+      var hoverPosClass = this.state.hoverLeft ? "hover-item-left" : "hover-item-right";
+      var description = this.props.description ? this.props.description.slice(0, 315) + "..." : "";
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "hover-".concat(this.props.elementId),
         className: "hover-item ".concat(hoverPosClass)

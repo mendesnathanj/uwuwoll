@@ -8,7 +8,11 @@ json.anime do
 end
 
 json.seasons do
-
+  @episode.anime.seasons do |season|
+    json.set! season.id do
+      json.extract! :id, :season_num, :title, :anime_id
+    end
+  end
 end
 
 json.episodes do
