@@ -7,5 +7,7 @@ Rails.application.routes.draw do
     resources :anime, only: [:index, :show]
     resources :lists, only: [:index]
     resources :episodes, only: [:show]
+    resources :navbar, only: [:index]
+    resources :saved_anime, only: [:show, :create, :destroy]
   end
 end

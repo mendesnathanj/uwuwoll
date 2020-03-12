@@ -76,7 +76,7 @@ class SessionForm extends React.Component {
     if (this.props.formType === 'sign up!')
       return <h3 className="form-title">sign up for a free account today!</h3>;
     else
-      return <h3 className="form-title">uwu welcome back!</h3>
+      return <h3 className="form-title">uwu welcome back weeaboo!</h3>
   }
 
   loginAsGuest(e) {

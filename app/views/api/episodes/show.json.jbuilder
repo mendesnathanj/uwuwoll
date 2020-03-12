@@ -12,7 +12,7 @@ json.seasons do
 end
 
 json.episodes do
-  @episode.anime.episodes.each do |episode|
+  @episode.anime.episodes.with_attached_video.each do |episode|
     json.set! episode.id do
       json.extract! episode, :id, :title, :description, :episode_num, :season_id, :anime_id, :slug
       if episode.video.attached?

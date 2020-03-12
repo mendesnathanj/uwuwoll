@@ -1,9 +1,10 @@
 import { RECEIVE_EPISODE } from '../../actions/episode_actions';
 import { RECEIVE_ALL_ANIME, RECEIVE_ANIME } from '../../actions/anime_actions';
-
+import { RECEIVE_NAVBAR_ITEMS } from "../../actions/navbar_actions";
 
 const animeSlugsReducer = (state = {}, action) => {
   Object.freeze(state);
+  let newState = Object.assign({}, state);
 
   switch (action.type) {
     case RECEIVE_EPISODE:
@@ -14,6 +15,12 @@ const animeSlugsReducer = (state = {}, action) => {
 
     case RECEIVE_ANIME:
       return Object.assign({}, state, action.payload.slugs.anime);
+
+    case RECEIVE_NAVBAR_ITEMS:
+      let anime = Object.values(action.payload.slugs.anime).filter(anime => !newState[anime.id]);
+      anime.forEach(anime => newState[anime.id] = anime);
+
+    return newState;
 
     default:
       return state;

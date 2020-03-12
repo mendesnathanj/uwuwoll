@@ -199,6 +199,87 @@ var fetchList = function fetchList() {
 
 /***/ }),
 
+/***/ "./frontend/actions/navbar_actions.js":
+/*!********************************************!*\
+  !*** ./frontend/actions/navbar_actions.js ***!
+  \********************************************/
+/*! exports provided: RECEIVE_NAVBAR_ITEMS, fetchNavbarInfo */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_NAVBAR_ITEMS", function() { return RECEIVE_NAVBAR_ITEMS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchNavbarInfo", function() { return fetchNavbarInfo; });
+/* harmony import */ var _utils_navbar_api_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/navbar_api_utils */ "./frontend/utils/navbar_api_utils.js");
+
+var RECEIVE_NAVBAR_ITEMS = 'RECEIVE_NAVBAR_ITEMS';
+
+var receiveNavbarItems = function receiveNavbarItems(payload) {
+  return {
+    type: RECEIVE_NAVBAR_ITEMS,
+    payload: payload
+  };
+};
+
+var fetchNavbarInfo = function fetchNavbarInfo() {
+  return function (dispatch) {
+    return _utils_navbar_api_utils__WEBPACK_IMPORTED_MODULE_0__["fetchNavbarInfo"]().then(function (payload) {
+      return dispatch(receiveNavbarItems(payload));
+    });
+  };
+};
+
+/***/ }),
+
+/***/ "./frontend/actions/saved_anime_actions.js":
+/*!*************************************************!*\
+  !*** ./frontend/actions/saved_anime_actions.js ***!
+  \*************************************************/
+/*! exports provided: RECEIVE_SAVED_ANIME, RECEIVE_DELETED_ANIME, createSavedAnime, deleteSavedAnime */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_SAVED_ANIME", function() { return RECEIVE_SAVED_ANIME; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_DELETED_ANIME", function() { return RECEIVE_DELETED_ANIME; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createSavedAnime", function() { return createSavedAnime; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteSavedAnime", function() { return deleteSavedAnime; });
+/* harmony import */ var _utils_saved_anime_api_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/saved_anime_api_utils */ "./frontend/utils/saved_anime_api_utils.js");
+
+var RECEIVE_SAVED_ANIME = 'RECEIVE_SAVED_ANIME';
+var RECEIVE_DELETED_ANIME = 'RECEIVE_DELETED_ANIME';
+
+var receiveSavedAnime = function receiveSavedAnime(payload) {
+  return {
+    type: RECEIVE_SAVED_ANIME,
+    payload: payload
+  };
+};
+
+var receiveDeletedAnime = function receiveDeletedAnime(payload) {
+  return {
+    type: RECEIVE_DELETED_ANIME,
+    payload: payload
+  };
+};
+
+var createSavedAnime = function createSavedAnime(id) {
+  return function (dispatch) {
+    return _utils_saved_anime_api_utils__WEBPACK_IMPORTED_MODULE_0__["createSavedAnime"](id).then(function (saved_anime) {
+      return dispatch(receiveSavedAnime(saved_anime));
+    });
+  };
+};
+var deleteSavedAnime = function deleteSavedAnime(id) {
+  return function (dispatch) {
+    return _utils_saved_anime_api_utils__WEBPACK_IMPORTED_MODULE_0__["deleteSavedAnime"](id).then(function (saved_anime) {
+      return dispatch(receiveDeletedAnime(saved_anime));
+    });
+  };
+};
+
+/***/ }),
+
 /***/ "./frontend/actions/session_actions.js":
 /*!*********************************************!*\
   !*** ./frontend/actions/session_actions.js ***!
@@ -220,10 +301,10 @@ var RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER';
 var LOGOUT_CURRENT_USER = 'LOGOUT_CURRENT_USER';
 var RECEIVE_LOGIN_ERRORS = 'RECEIVE_LOGIN_ERRORS';
 
-var receiveCurrentUser = function receiveCurrentUser(user) {
+var receiveCurrentUser = function receiveCurrentUser(payload) {
   return {
     type: RECEIVE_CURRENT_USER,
-    user: user
+    payload: payload
   };
 };
 
@@ -307,10 +388,10 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 var AnimeIndex = /*#__PURE__*/function (_React$Component) {
   _inherits(AnimeIndex, _React$Component);
 
-  function AnimeIndex() {
+  function AnimeIndex(props) {
     _classCallCheck(this, AnimeIndex);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(AnimeIndex).apply(this, arguments));
+    return _possibleConstructorReturn(this, _getPrototypeOf(AnimeIndex).call(this, props));
   }
 
   _createClass(AnimeIndex, [{
@@ -321,10 +402,17 @@ var AnimeIndex = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this = this;
+
       var animeItems = this.props.anime.map(function (anime) {
+        var saved = _this.props.savedAnime.includes(Number(anime.id));
+
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_anime_index_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          createSavedAnime: _this.props.createSavedAnime,
+          deleteSavedAnime: _this.props.deleteSavedAnime,
           key: anime.id,
-          anime: anime
+          anime: anime,
+          saved: saved
         });
       });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -358,6 +446,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _anime_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./anime_index */ "./frontend/components/anime/anime_index.jsx");
 /* harmony import */ var _actions_anime_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/anime_actions */ "./frontend/actions/anime_actions.js");
+/* harmony import */ var _actions_saved_anime_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/saved_anime_actions */ "./frontend/actions/saved_anime_actions.js");
+
 
 
 
@@ -366,7 +456,10 @@ var mstp = function mstp(state) {
   return {
     anime: Object.values(state.entities.anime),
     seasons: Object.values(state.entities.seasons),
-    episodes: Object.values(state.entities.episodes)
+    episodes: Object.values(state.entities.episodes),
+    savedAnime: Object.values(state.entities.savedAnime).map(function (anime) {
+      return anime.animeId;
+    })
   };
 };
 
@@ -374,6 +467,12 @@ var mdtp = function mdtp(dispatch) {
   return {
     fetchAllAnime: function fetchAllAnime() {
       return dispatch(Object(_actions_anime_actions__WEBPACK_IMPORTED_MODULE_2__["fetchAllAnime"])());
+    },
+    createSavedAnime: function createSavedAnime(id) {
+      return dispatch(Object(_actions_saved_anime_actions__WEBPACK_IMPORTED_MODULE_3__["createSavedAnime"])(id));
+    },
+    deleteSavedAnime: function deleteSavedAnime(id) {
+      return dispatch(Object(_actions_saved_anime_actions__WEBPACK_IMPORTED_MODULE_3__["deleteSavedAnime"])(id));
     }
   };
 };
@@ -393,9 +492,10 @@ var mdtp = function mdtp(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _hover_item__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./hover_item */ "./frontend/components/anime/hover_item.jsx");
+/* harmony import */ var _poster_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./poster_item */ "./frontend/components/anime/poster_item.jsx");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -405,9 +505,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -416,40 +516,49 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-
 var AnimeIndexItem = /*#__PURE__*/function (_React$Component) {
   _inherits(AnimeIndexItem, _React$Component);
 
-  function AnimeIndexItem() {
+  function AnimeIndexItem(props) {
+    var _this;
+
     _classCallCheck(this, AnimeIndexItem);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(AnimeIndexItem).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(AnimeIndexItem).call(this, props));
+    _this.toggleAnime = _this.toggleAnime.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(AnimeIndexItem, [{
+    key: "toggleAnime",
+    value: function toggleAnime() {
+      var _this$props = this.props,
+          saved = _this$props.saved,
+          anime = _this$props.anime,
+          deleteSavedAnime = _this$props.deleteSavedAnime,
+          createSavedAnime = _this$props.createSavedAnime;
+      if (saved) deleteSavedAnime(anime.id);else createSavedAnime(anime.id);
+    }
+  }, {
     key: "render",
     value: function render() {
+      var icon;
+      if (this.props.saved) icon = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        onClick: this.toggleAnime,
+        className: "fas fa-orange title-bookmark fa-bookmark"
+      });else icon = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        onClick: this.toggleAnime,
+        className: "fa-orange title-bookmark far fa-bookmark"
+      });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "anime-item"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
         className: "anime-title"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fa-orange title-bookmark far fa-bookmark"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      }, icon, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "title-text"
-      }, this.props.anime.title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        to: "/anime/".concat(this.props.anime.slug)
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "poster-container"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        className: "small-poster",
-        src: this.props.anime.smallPoster,
-        alt: this.props.anime.title
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_hover_item__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        elementId: this.props.anime.id,
-        title: this.props.anime.title,
-        description: this.props.anime.description
-      }))));
+      }, this.props.anime.title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_poster_item__WEBPACK_IMPORTED_MODULE_1__["default"], _extends({}, this.props.anime, {
+        size: "small"
+      })));
     }
   }]);
 
@@ -483,9 +592,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -498,10 +607,14 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 var AnimePage = /*#__PURE__*/function (_React$Component) {
   _inherits(AnimePage, _React$Component);
 
-  function AnimePage() {
+  function AnimePage(props) {
+    var _this;
+
     _classCallCheck(this, AnimePage);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(AnimePage).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(AnimePage).call(this, props));
+    _this.toggleAnime = _this.toggleAnime.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(AnimePage, [{
@@ -510,9 +623,23 @@ var AnimePage = /*#__PURE__*/function (_React$Component) {
       this.props.fetchAnime(this.props.match.params.slug);
     }
   }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      if (prevProps.match.params.slug !== this.props.match.params.slug) this.props.fetchAnime(this.props.match.params.slug);
+    }
+  }, {
+    key: "toggleAnime",
+    value: function toggleAnime(saved) {
+      var _this$props = this.props,
+          anime = _this$props.anime,
+          deleteSavedAnime = _this$props.deleteSavedAnime,
+          createSavedAnime = _this$props.createSavedAnime;
+      if (saved) deleteSavedAnime(anime.id);else createSavedAnime(anime.id);
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this = this;
+      var _this2 = this;
 
       if (!this.props.anime) return null;
       var seasonItems;
@@ -521,10 +648,10 @@ var AnimePage = /*#__PURE__*/function (_React$Component) {
         seasonItems = this.props.seasons.map(function (season, i) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_season_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
             expanded: i === 0,
-            animeSlug: _this.props.anime.slug,
+            animeSlug: _this2.props.anime.slug,
             key: season.id,
             season: season,
-            episodes: _this.props.episodes
+            episodes: _this2.props.episodes
           });
         });
       } else {
@@ -535,13 +662,26 @@ var AnimePage = /*#__PURE__*/function (_React$Component) {
         });
       }
 
+      var saved = this.props.savedAnime.includes(this.props.anime.id);
+      var icon;
+      if (saved) icon = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        onClick: function onClick() {
+          return _this2.toggleAnime(saved);
+        },
+        className: "fas fa-orange title-bookmark fa-bookmark"
+      });else icon = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        onClick: function onClick() {
+          return _this2.toggleAnime(saved);
+        },
+        className: "fa-orange title-bookmark far fa-bookmark"
+      });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "anime-page-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "header-container anime-page-header-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
         className: "anime-header"
-      }, this.props.anime.title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.props.anime.title, " ", icon)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "left-col-anime-page"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "large-poster-container"
@@ -579,7 +719,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _reducers_selectors__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../reducers/selectors */ "./frontend/reducers/selectors.js");
 /* harmony import */ var _actions_anime_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/anime_actions */ "./frontend/actions/anime_actions.js");
-/* harmony import */ var _anime_page__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./anime_page */ "./frontend/components/anime/anime_page.jsx");
+/* harmony import */ var _actions_saved_anime_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/saved_anime_actions */ "./frontend/actions/saved_anime_actions.js");
+/* harmony import */ var _anime_page__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./anime_page */ "./frontend/components/anime/anime_page.jsx");
+
 
 
 
@@ -590,7 +732,10 @@ var mstp = function mstp(state, ownProps) {
   return {
     anime: Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_2__["findAnime"])(state, ownProps.match.params.slug),
     seasons: Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_2__["findSeasonsFromAnimeSlug"])(state, ownProps.match.params.slug),
-    episodes: Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_2__["findEpisodesFromAnimeSlug"])(state, ownProps.match.params.slug)
+    episodes: Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_2__["findEpisodesFromAnimeSlug"])(state, ownProps.match.params.slug),
+    savedAnime: Object.values(state.entities.savedAnime).map(function (anime) {
+      return anime.animeId;
+    })
   };
 };
 
@@ -598,11 +743,17 @@ var mdtp = function mdtp(dispatch) {
   return {
     fetchAnime: function fetchAnime(slug) {
       return dispatch(Object(_actions_anime_actions__WEBPACK_IMPORTED_MODULE_3__["fetchAnime"])(slug));
+    },
+    createSavedAnime: function createSavedAnime(id) {
+      return dispatch(Object(_actions_saved_anime_actions__WEBPACK_IMPORTED_MODULE_4__["createSavedAnime"])(id));
+    },
+    deleteSavedAnime: function deleteSavedAnime(id) {
+      return dispatch(Object(_actions_saved_anime_actions__WEBPACK_IMPORTED_MODULE_4__["deleteSavedAnime"])(id));
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mstp, mdtp)(_anime_page__WEBPACK_IMPORTED_MODULE_4__["default"])));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mstp, mdtp)(_anime_page__WEBPACK_IMPORTED_MODULE_5__["default"])));
 
 /***/ }),
 
@@ -755,6 +906,49 @@ var HoverItem = /*#__PURE__*/function (_React$Component) {
 
 ;
 /* harmony default export */ __webpack_exports__["default"] = (HoverItem);
+
+/***/ }),
+
+/***/ "./frontend/components/anime/poster_item.jsx":
+/*!***************************************************!*\
+  !*** ./frontend/components/anime/poster_item.jsx ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _hover_item__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./hover_item */ "./frontend/components/anime/hover_item.jsx");
+
+
+
+
+var PosterItem = function PosterItem(_ref) {
+  var id = _ref.id,
+      smallPoster = _ref.smallPoster,
+      largePoster = _ref.largePoster,
+      title = _ref.title,
+      size = _ref.size,
+      description = _ref.description,
+      slug = _ref.slug;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+    to: "/anime/".concat(slug)
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "".concat(size, "-poster-container")
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    src: size === 'small' ? smallPoster : largePoster,
+    alt: title
+  }), size === 'small' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_hover_item__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    elementId: id,
+    title: title,
+    description: description
+  }) : null));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (PosterItem);
 
 /***/ }),
 
@@ -958,6 +1152,14 @@ var Carousel = /*#__PURE__*/function (_React$Component) {
   }
 
   _createClass(Carousel, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      if (!this.props.currentEpisodeId) return;
+      var carousel = document.querySelector('#episode-carousel');
+      var currentEp = document.querySelector('.episode-container.active');
+      carousel.scrollLeft = currentEp.offsetLeft - carousel.offsetLeft;
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this = this;
@@ -971,6 +1173,7 @@ var Carousel = /*#__PURE__*/function (_React$Component) {
         });
       });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "episode-carousel",
         className: "episode-carousel"
       }, episodes);
     }
@@ -995,32 +1198,67 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 
 
-var EpisodeItem = function EpisodeItem(_ref) {
-  var animeSlug = _ref.animeSlug,
-      currentEpisodeId = _ref.currentEpisodeId,
-      episode = _ref.episode;
-  var active = '';
-  if (currentEpisodeId) if (currentEpisodeId === episode.id) active = 'active';
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "episode-wrapper"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "episode-container ".concat(active)
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-    to: "/anime/".concat(animeSlug, "/").concat(episode.slug)
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    className: "episode-thumbnail",
-    src: episode.thumbnail,
-    alt: episode.title
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
-    className: "episode-num"
-  }, "Episode ", episode.episodeNum), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: "episode-title"
-  }, episode.title))));
-};
 
+var EpisodeItem = /*#__PURE__*/function (_React$Component) {
+  _inherits(EpisodeItem, _React$Component);
+
+  function EpisodeItem(props) {
+    _classCallCheck(this, EpisodeItem);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(EpisodeItem).call(this, props));
+  }
+
+  _createClass(EpisodeItem, [{
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          currentEpisodeId = _this$props.currentEpisodeId,
+          episode = _this$props.episode,
+          animeSlug = _this$props.animeSlug;
+      var active = '';
+      if (currentEpisodeId) if (currentEpisodeId === episode.id) active = 'active';
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "episode-wrapper"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/anime/".concat(animeSlug, "/").concat(episode.slug)
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "episode-container ".concat(active)
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "episode-thumbnail",
+        src: episode.thumbnail,
+        alt: episode.title
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+        className: "episode-num"
+      }, "Episode ", episode.episodeNum), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "episode-title"
+      }, episode.title))));
+    }
+  }]);
+
+  return EpisodeItem;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+;
 /* harmony default export */ __webpack_exports__["default"] = (EpisodeItem);
 
 /***/ }),
@@ -1075,6 +1313,11 @@ var EpisodePage = /*#__PURE__*/function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.fetchAnime(this.props.match.params.animeSlug);
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      if (prevProps.match.params.animeSlug !== this.props.match.params.animeSlug) this.props.fetchAnime(this.props.match.params.animeSlug);
     }
   }, {
     key: "render",
@@ -1183,19 +1426,32 @@ var Video = /*#__PURE__*/function (_React$Component) {
   _inherits(Video, _React$Component);
 
   function Video(props) {
+    var _this;
+
     _classCallCheck(this, Video);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Video).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Video).call(this, props));
+    _this.video = null;
+    return _this;
   }
 
   _createClass(Video, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.video = document.querySelector('#episode-video');
+    }
+  }, {
     key: "componentDidUpdate",
-    value: function componentDidUpdate() {}
+    value: function componentDidUpdate(prevProps) {
+      var src = this.props.src;
+      if (prevProps && prevProps.src !== src) this.video.src = src;
+    }
   }, {
     key: "render",
     value: function render() {
       var src = this.props.src;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
+        id: "episode-video",
         className: "episode-video",
         autoPlay: "autoplay",
         controls: true
@@ -1390,6 +1646,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _search_results__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./search_results */ "./frontend/components/navbar/search_results.jsx");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1400,9 +1657,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -1411,27 +1668,76 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var Navbar = /*#__PURE__*/function (_React$Component) {
   _inherits(Navbar, _React$Component);
 
   function Navbar(props) {
+    var _this;
+
     _classCallCheck(this, Navbar);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Navbar).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Navbar).call(this, props));
+    _this.state = {
+      filteredAnime: [],
+      searchText: ''
+    };
+    _this.redirectToRandomAnime = _this.redirectToRandomAnime.bind(_assertThisInitialized(_this));
+    _this.searchForAnime = _this.searchForAnime.bind(_assertThisInitialized(_this));
+    _this.clearResults = _this.clearResults.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(Navbar, [{
     key: "componentDidMount",
-    value: function componentDidMount() {// fetch all anime titles and episode titles along with slugs
+    value: function componentDidMount() {
+      this.props.fetchNavbarInfo();
     }
   }, {
-    key: "searchForShow",
-    value: function searchForShow() {// search all anime
+    key: "searchForAnime",
+    value: function searchForAnime(e) {
+      if (e.target.value === '') {
+        this.setState({
+          filteredAnime: [],
+          searchText: e.target.value
+        });
+        return;
+      }
+
+      var filteredAnime = this.props.anime.filter(function (anime) {
+        return anime.title.toLowerCase().includes(e.target.value);
+      });
+      this.setState({
+        filteredAnime: filteredAnime,
+        searchText: e.target.value
+      });
+    }
+  }, {
+    key: "redirectToRandomAnime",
+    value: function redirectToRandomAnime() {
+      var _this$props = this.props,
+          anime = _this$props.anime,
+          episodes = _this$props.episodes,
+          seasons = _this$props.seasons;
+      var randomAnime = anime[Math.floor(Math.random() * anime.length)];
+      var episode = Object.values(episodes).find(function (ep) {
+        var season = seasons[ep.seasonId];
+        return ep.episodeNum === 1 && ep.animeId === randomAnime.id && (ep.seasonId === null || season.seasonNum === 1);
+      });
+      var url = "/anime/".concat(randomAnime.slug, "/").concat(episode.slug);
+      this.props.history.push(url);
+    }
+  }, {
+    key: "clearResults",
+    value: function clearResults() {
+      this.setState({
+        searchText: ''
+      });
     }
   }, {
     key: "render",
     value: function render() {
-      var _this = this;
+      var _this2 = this;
 
       if (["/", "/login", "/signup"].includes(this.props.location.pathname)) return null;
       if (!this.props.currentUser) return null;
@@ -1466,19 +1772,18 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
         className: "nav-text"
       }, "queue")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "nav-li",
-        key: "random"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        to: this.props.randomAnime()
+        key: "random",
+        onClick: this.redirectToRandomAnime
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fa-orange fas fa-dice-two"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "nav-text"
-      }, "random"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      }, "random")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "nav-li",
         key: "logout",
         onClick: function onClick() {
-          return _this.props.logout().then(function () {
-            return _this.props.history.push('/login');
+          return _this2.props.logout().then(function () {
+            return _this2.props.history.push("/login");
           });
         }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -1490,7 +1795,12 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         className: "search-bar",
         placeholder: "find your next anime...",
-        type: "text"
+        type: "text",
+        value: this.state.searchText,
+        onChange: this.searchForAnime,
+        onBlur: this.clearResults
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_search_results__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        anime: this.state.filteredAnime
       }))));
     }
   }]);
@@ -1515,7 +1825,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _reducers_selectors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../reducers/selectors */ "./frontend/reducers/selectors.js");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _navbar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./navbar */ "./frontend/components/navbar/navbar.jsx");
+/* harmony import */ var _actions_navbar_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/navbar_actions */ "./frontend/actions/navbar_actions.js");
+/* harmony import */ var _navbar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./navbar */ "./frontend/components/navbar/navbar.jsx");
+
 
 
 
@@ -1526,9 +1838,8 @@ var mstp = function mstp(state) {
   return {
     currentUser: Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_1__["findCurrentUser"])(state),
     anime: Object.values(state.entities.anime),
-    randomAnime: function randomAnime() {
-      return Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_1__["findRandomAnime"])(state);
-    }
+    episodes: Object.values(state.entities.episodes),
+    seasons: state.entities.seasons
   };
 };
 
@@ -1536,18 +1847,21 @@ var mdtp = function mdtp(dispatch) {
   return {
     logout: function logout() {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_2__["logout"])());
+    },
+    fetchNavbarInfo: function fetchNavbarInfo() {
+      return dispatch(Object(_actions_navbar_actions__WEBPACK_IMPORTED_MODULE_4__["fetchNavbarInfo"])());
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mstp, mdtp)(_navbar__WEBPACK_IMPORTED_MODULE_4__["default"])));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mstp, mdtp)(_navbar__WEBPACK_IMPORTED_MODULE_5__["default"])));
 
 /***/ }),
 
-/***/ "./frontend/components/queue/queue.jsx":
-/*!*********************************************!*\
-  !*** ./frontend/components/queue/queue.jsx ***!
-  \*********************************************/
+/***/ "./frontend/components/navbar/search_results.jsx":
+/*!*******************************************************!*\
+  !*** ./frontend/components/navbar/search_results.jsx ***!
+  \*******************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1577,6 +1891,100 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+var SearchResults = /*#__PURE__*/function (_React$Component) {
+  _inherits(SearchResults, _React$Component);
+
+  function SearchResults(props) {
+    _classCallCheck(this, SearchResults);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(SearchResults).call(this, props));
+  }
+
+  _createClass(SearchResults, [{
+    key: "render",
+    value: function render() {
+      var searchItems = this.props.anime.map(function (anime) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+          key: anime.id,
+          className: "result-link",
+          to: "/anime/".concat(anime.slug)
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "result-container"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "search-title"
+        }, anime.title)));
+      });
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "search-results"
+      }, searchItems);
+    }
+  }]);
+
+  return SearchResults;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (SearchResults);
+
+/***/ }),
+
+/***/ "./frontend/components/queue/empty_queue_item.jsx":
+/*!********************************************************!*\
+  !*** ./frontend/components/queue/empty_queue_item.jsx ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var EmptyQueueItem = function EmptyQueueItem() {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "empty-queue"
+  }, "Wuh woh your quwue is empty! :( Start saving some anime!");
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (EmptyQueueItem);
+
+/***/ }),
+
+/***/ "./frontend/components/queue/queue.jsx":
+/*!*********************************************!*\
+  !*** ./frontend/components/queue/queue.jsx ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _saved_anime_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./saved_anime_item */ "./frontend/components/queue/saved_anime_item.jsx");
+/* harmony import */ var _empty_queue_item__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./empty_queue_item */ "./frontend/components/queue/empty_queue_item.jsx");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
 var Queue = /*#__PURE__*/function (_React$Component) {
   _inherits(Queue, _React$Component);
 
@@ -1596,19 +2004,44 @@ var Queue = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this = this;
 
-      var savedAnime = this.props.savedAnime.map(function (anime) {
-        var episodes = anime.episodeIds.map(function (id) {
-          return _this.props.episodes[id];
-        }).map(function (ep) {
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-            className: "light-grey far fa-star"
-          })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-            to: "/anime/".concat(anime.slug, "/").concat(ep.slug)
-          }, ep.title));
-        });
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, anime.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, episodes));
-      });
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "hewwo i'm the quwu"), savedAnime);
+      var _this$props = this.props,
+          currentUser = _this$props.currentUser,
+          savedAnime = _this$props.savedAnime,
+          episodes = _this$props.episodes;
+      console.log('SAVED_ANIME: ', savedAnime);
+      var displayName = currentUser.username.endsWith('s') ? "".concat(currentUser.username, "'") : "".concat(currentUser.username, "'s");
+      var content;
+
+      if (!savedAnime) {
+        content = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_empty_queue_item__WEBPACK_IMPORTED_MODULE_2__["default"], null);
+      } else {
+        if (savedAnime.length === 0) {
+          content = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_empty_queue_item__WEBPACK_IMPORTED_MODULE_2__["default"], null);
+        } else {
+          var savedAnimeItems = savedAnime.map(function (anime) {
+            var filteredEpisodes = episodes.filter(function (episode) {
+              return episode.animeId === anime.id;
+            }).reverse();
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_saved_anime_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
+              deleteSavedAnime: _this.props.deleteSavedAnime,
+              key: anime.id,
+              anime: anime,
+              episodes: filteredEpisodes
+            });
+          });
+          content = savedAnimeItems;
+        }
+      }
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "queue-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "header-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+        className: "anime-header"
+      }, "".concat(displayName, " Queue"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "queue-items-container"
+      }, content));
     }
   }]);
 
@@ -1632,6 +2065,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _queue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./queue */ "./frontend/components/queue/queue.jsx");
 /* harmony import */ var _reducers_selectors__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../reducers/selectors */ "./frontend/reducers/selectors.js");
 /* harmony import */ var _actions_lists_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/lists_actions */ "./frontend/actions/lists_actions.js");
+/* harmony import */ var _actions_saved_anime_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/saved_anime_actions */ "./frontend/actions/saved_anime_actions.js");
+
 
 
 
@@ -1641,7 +2076,7 @@ var mstp = function mstp(state) {
   return {
     currentUser: Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_2__["findCurrentUser"])(state),
     savedAnime: Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_2__["findSavedAnime"])(state),
-    episodes: state.entities.episodes
+    episodes: Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_2__["findSavedEpisodes"])(state)
   };
 };
 
@@ -1649,11 +2084,112 @@ var mdtp = function mdtp(dispatch) {
   return {
     fetchList: function fetchList() {
       return dispatch(Object(_actions_lists_actions__WEBPACK_IMPORTED_MODULE_3__["fetchList"])());
+    },
+    deleteSavedAnime: function deleteSavedAnime(id) {
+      return dispatch(Object(_actions_saved_anime_actions__WEBPACK_IMPORTED_MODULE_4__["deleteSavedAnime"])(id));
     }
   };
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mstp, mdtp)(_queue__WEBPACK_IMPORTED_MODULE_1__["default"]));
+
+/***/ }),
+
+/***/ "./frontend/components/queue/saved_anime_item.jsx":
+/*!********************************************************!*\
+  !*** ./frontend/components/queue/saved_anime_item.jsx ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _anime_poster_item__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../anime/poster_item */ "./frontend/components/anime/poster_item.jsx");
+/* harmony import */ var _episodes_carousel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../episodes/carousel */ "./frontend/components/episodes/carousel.jsx");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+
+var SavedAnimeItem = /*#__PURE__*/function (_React$Component) {
+  _inherits(SavedAnimeItem, _React$Component);
+
+  function SavedAnimeItem(props) {
+    var _this;
+
+    _classCallCheck(this, SavedAnimeItem);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(SavedAnimeItem).call(this, props));
+    _this.removeAnimeFromQueue = _this.removeAnimeFromQueue.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(SavedAnimeItem, [{
+    key: "removeAnimeFromQueue",
+    value: function removeAnimeFromQueue() {
+      this.props.deleteSavedAnime(this.props.anime.id);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          anime = _this$props.anime,
+          episodes = _this$props.episodes;
+      var truncatedText = anime.description.length > 430 ? anime.description.slice(0, 430) + '...' : anime.description;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "queue-item"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "poster-wrapper"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_anime_poster_item__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({}, this.props.anime, {
+        size: "small"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "queue-item-details"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "details-text"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "details-title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        className: "anime-link",
+        to: "/anime/".concat(anime.slug)
+      }, anime.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        onClick: this.removeAnimeFromQueue,
+        className: "fas fa-orange title-bookmark fa-bookmark"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "anime-details"
+      }, truncatedText)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_episodes_carousel__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        animeSlug: anime.slug,
+        episodes: episodes
+      })));
+    }
+  }]);
+
+  return SavedAnimeItem;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (SavedAnimeItem);
 
 /***/ }),
 
@@ -1863,7 +2399,7 @@ var SessionForm = /*#__PURE__*/function (_React$Component) {
         className: "form-title"
       }, "sign up for a free account today!");else return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
         className: "form-title"
-      }, "uwu welcome back!");
+      }, "uwu welcome back weeaboo!");
     }
   }, {
     key: "loginAsGuest",
@@ -2068,7 +2604,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_anime_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/anime_actions */ "./frontend/actions/anime_actions.js");
 /* harmony import */ var _actions_lists_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/lists_actions */ "./frontend/actions/lists_actions.js");
 /* harmony import */ var _actions_episode_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/episode_actions */ "./frontend/actions/episode_actions.js");
+/* harmony import */ var _actions_navbar_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/navbar_actions */ "./frontend/actions/navbar_actions.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -2094,6 +2632,15 @@ var animeReducer = function animeReducer() {
     case _actions_episode_actions__WEBPACK_IMPORTED_MODULE_2__["RECEIVE_EPISODE"]:
       return Object.assign(newState, action.payload.anime);
 
+    case _actions_navbar_actions__WEBPACK_IMPORTED_MODULE_3__["RECEIVE_NAVBAR_ITEMS"]:
+      var anime = Object.values(action.payload.anime).filter(function (anime) {
+        return !newState[anime.id];
+      });
+      anime.forEach(function (anime) {
+        return newState[anime.id] = anime;
+      });
+      return newState;
+
     default:
       return state;
   }
@@ -2115,6 +2662,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_anime_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/anime_actions */ "./frontend/actions/anime_actions.js");
 /* harmony import */ var _actions_lists_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/lists_actions */ "./frontend/actions/lists_actions.js");
 /* harmony import */ var _actions_episode_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/episode_actions */ "./frontend/actions/episode_actions.js");
+/* harmony import */ var _actions_navbar_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/navbar_actions */ "./frontend/actions/navbar_actions.js");
+
 
 
 
@@ -2145,6 +2694,15 @@ var episodesReducer = function episodesReducer() {
     case _actions_episode_actions__WEBPACK_IMPORTED_MODULE_2__["RECEIVE_EPISODE"]:
       return Object.assign(newState, action.payload.episodes);
 
+    case _actions_navbar_actions__WEBPACK_IMPORTED_MODULE_3__["RECEIVE_NAVBAR_ITEMS"]:
+      var episodes = Object.values(action.payload.episodes).filter(function (episode) {
+        return !newState[episode.id];
+      });
+      episodes.forEach(function (episode) {
+        return newState[episode.id] = episode;
+      });
+      return newState;
+
     default:
       return state;
   }
@@ -2164,6 +2722,12 @@ var episodesReducer = function episodesReducer() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_lists_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/lists_actions */ "./frontend/actions/lists_actions.js");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
+/* harmony import */ var _actions_anime_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/anime_actions */ "./frontend/actions/anime_actions.js");
+/* harmony import */ var _actions_saved_anime_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/saved_anime_actions */ "./frontend/actions/saved_anime_actions.js");
+
+
+
 
 
 var listsReducer = function listsReducer() {
@@ -2173,6 +2737,21 @@ var listsReducer = function listsReducer() {
 
   switch (action.type) {
     case _actions_lists_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_LIST"]:
+      return action.payload.lists;
+
+    case _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_CURRENT_USER"]:
+      return action.payload.lists;
+
+    case _actions_saved_anime_actions__WEBPACK_IMPORTED_MODULE_3__["RECEIVE_SAVED_ANIME"]:
+      return action.payload.lists;
+
+    case _actions_saved_anime_actions__WEBPACK_IMPORTED_MODULE_3__["RECEIVE_DELETED_ANIME"]:
+      return action.payload.lists;
+
+    case _actions_anime_actions__WEBPACK_IMPORTED_MODULE_2__["RECEIVE_ANIME"]:
+      return action.payload.lists;
+
+    case _actions_anime_actions__WEBPACK_IMPORTED_MODULE_2__["RECEIVE_ALL_ANIME"]:
       return action.payload.lists;
 
     default:
@@ -2194,6 +2773,10 @@ var listsReducer = function listsReducer() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_lists_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/lists_actions */ "./frontend/actions/lists_actions.js");
+/* harmony import */ var _actions_anime_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/anime_actions */ "./frontend/actions/anime_actions.js");
+/* harmony import */ var _actions_saved_anime_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/saved_anime_actions */ "./frontend/actions/saved_anime_actions.js");
+
+
 
 
 var savedAnimeReducer = function savedAnimeReducer() {
@@ -2205,6 +2788,22 @@ var savedAnimeReducer = function savedAnimeReducer() {
     case _actions_lists_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_LIST"]:
       if (!action.payload.savedAnime) return state;
       return action.payload.savedAnime;
+
+    case _actions_anime_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_ALL_ANIME"]:
+      if (!action.payload.savedAnime) return state;
+      return action.payload.savedAnime;
+
+    case _actions_anime_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_ANIME"]:
+      if (!action.payload.savedAnime) return state;
+      return action.payload.savedAnime;
+
+    case _actions_saved_anime_actions__WEBPACK_IMPORTED_MODULE_2__["RECEIVE_SAVED_ANIME"]:
+      return Object.assign({}, state, action.payload.savedAnime);
+
+    case _actions_saved_anime_actions__WEBPACK_IMPORTED_MODULE_2__["RECEIVE_DELETED_ANIME"]:
+      var newState = Object.assign({}, state);
+      delete newState[Object.values(action.payload.savedAnime)[0].id];
+      return newState;
 
     default:
       return state;
@@ -2277,7 +2876,7 @@ var usersReducer = function usersReducer() {
 
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CURRENT_USER"]:
-      return Object.assign({}, _defineProperty({}, action.user.id, action.user));
+      return Object.assign({}, state, _defineProperty({}, action.payload.users.id, action.payload.users));
 
     default:
       return state;
@@ -2341,7 +2940,7 @@ var rootReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])(
 /*!****************************************!*\
   !*** ./frontend/reducers/selectors.js ***!
   \****************************************/
-/*! exports provided: findCurrentUser, findAnime, findEpisode, findRandomAnime, findSeasonsFromAnimeSlug, findEpisodesFromAnimeSlug, findSavedAnime */
+/*! exports provided: findCurrentUser, findAnime, findEpisode, findRandomAnime, findSeasonsFromAnimeSlug, findEpisodesFromAnimeSlug, findSavedAnime, findSavedEpisodes */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2353,6 +2952,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "findSeasonsFromAnimeSlug", function() { return findSeasonsFromAnimeSlug; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "findEpisodesFromAnimeSlug", function() { return findEpisodesFromAnimeSlug; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "findSavedAnime", function() { return findSavedAnime; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "findSavedEpisodes", function() { return findSavedEpisodes; });
 var findCurrentUser = function findCurrentUser(state) {
   return state.session.id ? state.entities.users[state.session.id] : null;
 };
@@ -2397,6 +2997,14 @@ var findSavedAnime = function findSavedAnime(state) {
   return savedAnime.map(function (saved) {
     return state.entities.anime[saved.animeId];
   });
+};
+var findSavedEpisodes = function findSavedEpisodes(state) {
+  var savedAnime = findSavedAnime(state);
+  return savedAnime.map(function (anime) {
+    return anime.episodeIds.map(function (id) {
+      return state.entities.episodes[id];
+    });
+  }).flat();
 };
 
 var findList = function findList(state) {
@@ -2461,10 +3069,13 @@ var sessionReducer = function sessionReducer() {
 
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CURRENT_USER"]:
-      return Object.assign({}, {
-        id: action.user.id,
-        listId: action.user.listId
-      });
+      var user = action.payload.users;
+      var data = {
+        id: user.id,
+        listId: user.listId
+      }; // debugger;
+
+      return Object.assign({}, data);
 
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["LOGOUT_CURRENT_USER"]:
       return {
@@ -2514,6 +3125,8 @@ var slugsReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_episode_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/episode_actions */ "./frontend/actions/episode_actions.js");
 /* harmony import */ var _actions_anime_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/anime_actions */ "./frontend/actions/anime_actions.js");
+/* harmony import */ var _actions_navbar_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/navbar_actions */ "./frontend/actions/navbar_actions.js");
+
 
 
 
@@ -2521,6 +3134,7 @@ var animeSlugsReducer = function animeSlugsReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments.length > 1 ? arguments[1] : undefined;
   Object.freeze(state);
+  var newState = Object.assign({}, state);
 
   switch (action.type) {
     case _actions_episode_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_EPISODE"]:
@@ -2531,6 +3145,15 @@ var animeSlugsReducer = function animeSlugsReducer() {
 
     case _actions_anime_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_ANIME"]:
       return Object.assign({}, state, action.payload.slugs.anime);
+
+    case _actions_navbar_actions__WEBPACK_IMPORTED_MODULE_2__["RECEIVE_NAVBAR_ITEMS"]:
+      var anime = Object.values(action.payload.slugs.anime).filter(function (anime) {
+        return !newState[anime.id];
+      });
+      anime.forEach(function (anime) {
+        return newState[anime.id] = anime;
+      });
+      return newState;
 
     default:
       return state;
@@ -2552,6 +3175,8 @@ var animeSlugsReducer = function animeSlugsReducer() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_episode_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/episode_actions */ "./frontend/actions/episode_actions.js");
 /* harmony import */ var _actions_anime_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/anime_actions */ "./frontend/actions/anime_actions.js");
+/* harmony import */ var _actions_navbar_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/navbar_actions */ "./frontend/actions/navbar_actions.js");
+
 
 
 
@@ -2559,6 +3184,7 @@ var episodeSlugsReducer = function episodeSlugsReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments.length > 1 ? arguments[1] : undefined;
   Object.freeze(state);
+  var newState = Object.assign({}, state);
 
   switch (action.type) {
     case _actions_episode_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_EPISODE"]:
@@ -2569,6 +3195,15 @@ var episodeSlugsReducer = function episodeSlugsReducer() {
 
     case _actions_anime_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_ANIME"]:
       return Object.assign({}, state, action.payload.slugs.episodes);
+
+    case _actions_navbar_actions__WEBPACK_IMPORTED_MODULE_2__["RECEIVE_NAVBAR_ITEMS"]:
+      var episodes = Object.values(action.payload.slugs.episodes).filter(function (episode) {
+        return !newState[episode.id];
+      });
+      episodes.forEach(function (episode) {
+        return newState[episode.id] = episode;
+      });
+      return newState;
 
     default:
       return state;
@@ -2671,6 +3306,25 @@ var fetchList = function fetchList() {
 
 /***/ }),
 
+/***/ "./frontend/utils/navbar_api_utils.js":
+/*!********************************************!*\
+  !*** ./frontend/utils/navbar_api_utils.js ***!
+  \********************************************/
+/*! exports provided: fetchNavbarInfo */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchNavbarInfo", function() { return fetchNavbarInfo; });
+var fetchNavbarInfo = function fetchNavbarInfo() {
+  return $.ajax({
+    method: 'GET',
+    url: '/api/navbar'
+  });
+};
+
+/***/ }),
+
 /***/ "./frontend/utils/route_utils.jsx":
 /*!****************************************!*\
   !*** ./frontend/utils/route_utils.jsx ***!
@@ -2726,6 +3380,35 @@ var Protected = function Protected(_ref2) {
 
 var AuthRoute = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mstp)(Auth));
 var ProtectedRoute = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mstp)(Protected));
+
+/***/ }),
+
+/***/ "./frontend/utils/saved_anime_api_utils.js":
+/*!*************************************************!*\
+  !*** ./frontend/utils/saved_anime_api_utils.js ***!
+  \*************************************************/
+/*! exports provided: createSavedAnime, deleteSavedAnime */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createSavedAnime", function() { return createSavedAnime; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteSavedAnime", function() { return deleteSavedAnime; });
+var createSavedAnime = function createSavedAnime(id) {
+  return $.ajax({
+    method: 'POST',
+    url: '/api/saved_anime',
+    data: {
+      id: id
+    }
+  });
+};
+var deleteSavedAnime = function deleteSavedAnime(id) {
+  return $.ajax({
+    method: 'DELETE',
+    url: "/api/saved_anime/".concat(id)
+  });
+};
 
 /***/ }),
 

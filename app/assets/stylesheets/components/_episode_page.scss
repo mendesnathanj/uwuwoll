@@ -4,17 +4,21 @@
   margin: 1.5em auto;
   display: flex;
   flex-direction: column;
+  animation: 750ms ease-in-out 0s 1 animatePageIn;
 }
 
 .episode-carousel {
   display: flex;
   overflow-x: auto;
+  overflow-y: hidden;
   width: 100%;
   margin: 0 auto;
+  transition: all 1s ease-in-out;
 }
 
 .episode-carousel .episode-wrapper {
   width: 12%;
+  padding: 8px 8px 0;
 }
 
 .episode-container.active {
@@ -46,4 +50,8 @@
 .anime-link:after {
   bottom: -1px;
   background-color: #38a3d9;
+}
+
+.episode-carousel .episode-container:hover {
+  transform: scale(1.1);
 }

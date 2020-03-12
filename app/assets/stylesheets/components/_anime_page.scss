@@ -127,7 +127,7 @@
 
 .episode-list-wrapper {
   transition: all 300ms ease-in-out;
-  max-height: 800px;
+  max-height: 1000px;
   overflow: hidden;
   height: auto;
 }
@@ -135,4 +135,14 @@
 .hide-episodes {
   transition: all 300ms ease-in-out;
   max-height: 0;
+}
+
+.anime-header {
+  display: flex;
+  align-items: center;
+}
+
+.anime-header > .fa-orange {
+  font-size: 0.7em;
+  margin-left: 0.6em;
 }

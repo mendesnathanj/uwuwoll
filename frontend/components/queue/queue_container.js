@@ -1,17 +1,19 @@
 import { connect } from "react-redux";
 import Queue from './queue';
-import { findCurrentUser, findSavedAnime } from "../../reducers/selectors";
+import { findCurrentUser, findSavedAnime, findSavedEpisodes } from "../../reducers/selectors";
 import { fetchList } from '../../actions/lists_actions';
+import { deleteSavedAnime } from '../../actions/saved_anime_actions';
 
 
 const mstp = state => ({
   currentUser: findCurrentUser(state),
   savedAnime: findSavedAnime(state),
-  episodes: state.entities.episodes
+  episodes: findSavedEpisodes(state)
 });
 
 const mdtp = dispatch => ({
-  fetchList: () => dispatch(fetchList())
+  fetchList: () => dispatch(fetchList()),
+  deleteSavedAnime: id => dispatch(deleteSavedAnime(id))
 });
 
 

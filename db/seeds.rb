@@ -1,11 +1,11 @@
 SEED_EPISODES = true
 SEED_POSTERS = true
-ANIME_LIMIT = 2
-EPISODE_LIMIT = 16
+ANIME_LIMIT = 100
+EPISODE_LIMIT = 20
 RESEED_EVERYTHING = true
 
-
-
+BUCKET = 'https://uwuwoll-seeds.s3-us-west-1.amazonaws.com/'
+FILE_FORMAT = '.mp4'
 
 
 return unless RESEED_EVERYTHING
@@ -115,6 +115,9 @@ small_portraits.length.times do |i|
           file_name_thumbnail = 'thumb_' + file_name_base
           thumbnail_file = episode_thumbnail[:src].nil? ? episode_thumbnail.values.last : episode_thumbnail[:src]
           episode.thumbnail.attach(io: open(thumbnail_file), filename: file_name_thumbnail)
+          video_name = "video#{rand(1..85)}"
+          video_file = "#{BUCKET}#{video_name}#{FILE_FORMAT}"
+          episode.video.attach(io: open(video_file), filename: video_name)
         end
       end
 
@@ -155,6 +158,6 @@ end
 # Seed saved anime
 anime = Anime.all
 User.all.each do |user|
-  # rand(5..15).times { user.save_anime(anime.sample) }
-  1.times { user.save_anime(anime.sample) }
+  rand(5..15).times { user.save_anime(anime.sample) }
+  # 1.times { user.save_anime(anime.sample) }
 end

@@ -1,6 +1,6 @@
-export const findCurrentUser = state => (
-  state.session.id ? state.entities.users[state.session.id] : null
-);
+export const findCurrentUser = state => {
+  return state.session.id ? state.entities.users[state.session.id] : null
+};
 
 export const findAnime = (state, slug) => {
   if (!state.slugs.anime[slug]) return undefined;
@@ -25,8 +25,8 @@ export const findRandomAnime = state => {
       ep.episodeNum === 1 &&
       ep.animeId === randomAnime.id &&
       (ep.seasonId === null || season.seasonNum === 1 )
-    );
-  });
+      );
+    });
 
   if (!episode) return '';
 
@@ -47,13 +47,23 @@ export const findEpisodesFromAnimeSlug = (state, slug) => {
   return anime.episodeIds.map(id => state.entities.episodes[id]);
 };
 
-export const findSavedAnime = (state) => {
+export const findSavedAnime = state => {
   const list = findList(state);
   const savedAnime = Object.values(state.entities.savedAnime)
                       .filter(anime => anime.listId === list.id);
 
   return savedAnime.map(saved => state.entities.anime[saved.animeId]);
 };
+
+export const findSavedEpisodes = state => {
+  const savedAnime = findSavedAnime(state);
+
+  return savedAnime.map(anime => (
+    anime.episodeIds.map(id => (
+      state.entities.episodes[id]
+    ))
+  )).flat();
+}
 
 const findList = state => (
   Object.values(state.entities.lists)

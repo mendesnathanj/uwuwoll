@@ -4,10 +4,19 @@ import React from 'react';
 class Video extends React.Component {
   constructor(props) {
     super(props);
+
+    this.video = null;
   }
 
-  componentDidUpdate() {
-    
+  componentDidMount() {
+    this.video = document.querySelector('#episode-video');
+  }
+
+  componentDidUpdate(prevProps) {
+    const { src } = this.props;
+
+    if (prevProps && prevProps.src !== src)
+      this.video.src = src;
   }
 
 
@@ -15,7 +24,7 @@ class Video extends React.Component {
     const { src } = this.props;
 
     return (
-      <video className="episode-video" autoPlay="autoplay" controls>
+      <video id="episode-video" className="episode-video" autoPlay="autoplay" controls>
         <source src={ src } />
       </video>
     );

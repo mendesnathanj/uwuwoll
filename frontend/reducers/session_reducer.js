@@ -5,7 +5,11 @@ const sessionReducer = (state = { id: null }, action) => {
 
   switch (action.type) {
     case RECEIVE_CURRENT_USER:
-      return Object.assign({}, { id: action.user.id, listId: action.user.listId });
+      let user = action.payload.users;
+      let data = { id: user.id, listId: user.listId };
+
+      // debugger;
+      return Object.assign({}, data);
 
     case LOGOUT_CURRENT_USER:
       return { id: null };

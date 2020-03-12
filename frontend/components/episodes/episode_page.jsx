@@ -9,6 +9,11 @@ class EpisodePage extends React.Component {
     this.props.fetchAnime(this.props.match.params.animeSlug);
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.match.params.animeSlug !== this.props.match.params.animeSlug)
+      this.props.fetchAnime(this.props.match.params.animeSlug);
+  }
+
   render() {
     if (!this.props.episode) return null;
 

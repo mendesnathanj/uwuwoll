@@ -24,7 +24,7 @@ end
 
 json.episodes do
   @anime.each do |anime|
-    anime.episodes.with_attached_thumbnail.each do |episode|
+    anime.episodes.each do |episode|
       json.set! episode.id do
         json.extract! episode, :id, :title, :description, :episode_num, :season_id, :anime_id, :slug
         # json.thumbnail url_for(episode.thumbnail)
@@ -49,6 +49,21 @@ json.slugs do
           json.id episode.id
         end
       end
+    end
+  end
+end
+
+json.lists do
+  list = current_user.list
+  json.set! list.id do
+    json.extract! list, :id, :user_id, :saved_anime_ids
+  end
+end
+
+json.saved_anime do
+  current_user.saved_anime.each do |saved_anime|
+    json.set! saved_anime.id do
+      json.extract! saved_anime, :id, :list_id, :anime_id, :favorited
     end
   end
 end

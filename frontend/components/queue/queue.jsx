@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import SavedAnimeItem from './saved_anime_item';
+import EmptyQueueItem from './empty_queue_item';
 
 class Queue extends React.Component {
   componentDidMount() {
@@ -7,31 +8,36 @@ class Queue extends React.Component {
   }
 
   render() {
-    const savedAnime = this.props.savedAnime.map(anime => {
-      const episodes = anime.episodeIds
-        .map(id => this.props.episodes[id])
-        .map(ep => (
-          <div>
-            <span>
-              <i className="light-grey far fa-star"></i>
-            </span>
-            <Link to={`/anime/${anime.slug}/${ep.slug}`}>{ep.title}</Link>
-          </div>
-        ));
+    let { currentUser, savedAnime, episodes } = this.props;
 
-      return (
-        <div>
-          <div>{anime.title}</div>
-          <div>
-            { episodes }
-          </div>
-        </div>
-      )
-    });
+    console.log('SAVED_ANIME: ', savedAnime);
+
+    const displayName = currentUser.username.endsWith('s') ? `${currentUser.username}'` : `${currentUser.username}'s`;
+
+    let content;
+    if (!savedAnime) {
+      content = <EmptyQueueItem />
+    } else {
+      if (savedAnime.length === 0) {
+        content = <EmptyQueueItem />
+      } else {
+        const savedAnimeItems = savedAnime.map(anime => {
+          const filteredEpisodes = episodes.filter(episode => episode.animeId === anime.id).reverse();
+            return <SavedAnimeItem deleteSavedAnime={this.props.deleteSavedAnime} key={ anime.id } anime={ anime } episodes={ filteredEpisodes } />;
+        });
+
+        content = savedAnimeItems;
+      }
+    }
+
     return (
-      <div>
-        <div>hewwo i'm the quwu</div>
-        {savedAnime}
+      <div className="queue-container">
+        <div className="header-container">
+          <h1 className="anime-header">{`${ displayName } Queue`}</h1>
+        </div>
+        <div className="queue-items-container">
+          { content }
+        </div>
       </div>
     );
   }

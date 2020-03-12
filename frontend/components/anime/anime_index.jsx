@@ -2,12 +2,27 @@ import React from 'react';
 import AnimeIndexItem from './anime_index_item';
 
 class AnimeIndex extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   componentDidMount() {
     this.props.fetchAllAnime();
   }
 
   render() {
-    const animeItems = this.props.anime.map(anime =>  <AnimeIndexItem key={anime.id} anime={anime} /> );
+    const animeItems = this.props.anime.map(anime => {
+      const saved = this.props.savedAnime.includes(Number(anime.id));
+
+      return (
+        <AnimeIndexItem
+          createSavedAnime={this.props.createSavedAnime}
+          deleteSavedAnime={this.props.deleteSavedAnime}
+          key={anime.id}
+          anime={anime}
+          saved={saved} />
+      );
+    });
 
     return (
       <div className="anime-container">

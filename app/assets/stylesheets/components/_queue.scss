@@ -1,0 +1,76 @@
+.queue-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 1.5em auto;
+  display: flex;
+  flex-direction: column;
+  animation: 750ms ease-in-out 0s 1 animatePageIn;
+}
+
+.poster-wrapper {
+  padding-right: 16px;
+}
+
+.queue-item {
+  display: flex;
+  padding: 1.5em 0;
+  border-bottom: 2px solid #ddd;
+}
+
+.queue-item:last-child {
+  border-bottom: none;
+}
+
+.details-text > .anime-link {
+  display: inline-block;
+  font-family: $title-fonts;
+  font-weight: 700;
+  margin-bottom: 0.25em;
+}
+
+.anime-details {
+  font-size: 0.75em;
+  line-height: 1.1em;
+  height: 92px;
+  overflow: hidden;
+}
+
+.queue-item-details {
+  overflow-x: hidden;
+}
+
+.queue-item-details > .episode-carousel > .episode-wrapper {
+  width: 18%;
+}
+
+.queue-item-details > .episode-carousel {
+  margin-left: -8px;
+}
+
+.details-text {
+  // display: flex;
+  // flex-direction: column;
+}
+
+.empty-queue {
+  display: flex;
+  justify-content: center;
+  font-family: $title-fonts;
+  font-size: 1.1em;
+  font-weight: 700;
+  min-height: 200px;
+  align-items: center;
+}
+
+.details-title {
+  padding-bottom: 4px;
+}
+
+.details-title > .anime-link:after {
+  bottom: 2px;
+}
+
+.details-title > .fa-orange {
+  font-size: 0.9em;
+  margin-left: 0.4em;
+}
