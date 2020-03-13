@@ -1717,15 +1717,16 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
     value: function redirectToRandomAnime() {
       var _this$props = this.props,
           anime = _this$props.anime,
-          episodes = _this$props.episodes,
-          seasons = _this$props.seasons;
-      var randomAnime = anime[Math.floor(Math.random() * anime.length)];
-      var episode = Object.values(episodes).find(function (ep) {
-        var season = seasons[ep.seasonId];
-        return ep.episodeNum === 1 && ep.animeId === randomAnime.id && (ep.seasonId === null || season.seasonNum === 1);
+          episodes = _this$props.episodes;
+      if (anime.length === 0 || episodes.length === 0) return "";
+      episodes = episodes.filter(function (episode) {
+        return episode.episodeNum === 1;
       });
-      var url = "/anime/".concat(randomAnime.slug, "/").concat(episode.slug);
-      this.props.history.push(url);
+      var randomEpisode = episodes[Math.floor(Math.random() * episodes.length)];
+      var episodesAnime = anime.find(function (a) {
+        return a.id === randomEpisode.animeId;
+      });
+      this.props.history.push("/anime/".concat(episodesAnime.slug, "/").concat(randomEpisode.slug)); // return `/anime/${episodesAnime.slug}/${randomEpisode.slug}`;
     }
   }, {
     key: "clearResults",
@@ -1771,6 +1772,14 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "nav-text"
       }, "queue")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "nav-li",
+        key: "random",
+        onClick: this.redirectToRandomAnime
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fa-orange fas fa-dice-two"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "nav-text"
+      }, "random")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "nav-li",
         key: "logout",
         onClick: function onClick() {

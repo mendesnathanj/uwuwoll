@@ -32,22 +32,17 @@ class Navbar extends React.Component {
   }
 
   redirectToRandomAnime() {
-    let { anime, episodes, seasons } = this.props;
+    let { anime, episodes } = this.props;
 
-    let randomAnime = anime[Math.floor(Math.random() * anime.length)];
+    if (anime.length === 0 || episodes.length === 0) return "";
 
-    let episode = Object.values(episodes).find(ep => {
-      let season = seasons[ep.seasonId];
+    episodes = episodes.filter(episode => episode.episodeNum === 1);
+    let randomEpisode = episodes[Math.floor(Math.random() * episodes.length)];
 
-      return (
-        ep.episodeNum === 1 &&
-        ep.animeId === randomAnime.id &&
-        (ep.seasonId === null || season.seasonNum === 1)
-      );
-    });
+    let episodesAnime = anime.find(a => a.id === randomEpisode.animeId);
 
-    let url = `/anime/${randomAnime.slug}/${episode.slug}`;
-    this.props.history.push(url);
+    this.props.history.push(`/anime/${episodesAnime.slug}/${randomEpisode.slug}`)
+    // return `/anime/${episodesAnime.slug}/${randomEpisode.slug}`;
   }
 
   clearResults() {
@@ -81,14 +76,14 @@ class Navbar extends React.Component {
             </Link>
             <span className="nav-text">queue</span>
           </li>
-          {/* <li
+          <li
             className="nav-li"
             key="random"
             onClick={this.redirectToRandomAnime}
           >
             <i className="fa-orange fas fa-dice-two"></i>
             <span className="nav-text">random</span>
-          </li> */}
+          </li>
           <li
             className="nav-li"
             key="logout"
