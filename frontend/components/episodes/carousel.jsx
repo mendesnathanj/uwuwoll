@@ -8,9 +8,8 @@ class Carousel extends React.Component {
   }
 
   componentDidMount() {
-    if (!this.props.currentEpisodeId) return;
+    if (!this.props.currentEpisodeId || this.props.episodes.includes(undefined)) return;
 
-    return;
     let carousel = document.querySelector('#episode-carousel');
     let currentEp = document.querySelector('.episode-container.active');
     carousel.scrollLeft = currentEp.offsetLeft - carousel.offsetLeft;
@@ -19,7 +18,6 @@ class Carousel extends React.Component {
   render() {
     if (this.props.episodes.includes(undefined)) return null;
 
-    console.log(this.props.episodes);
     const episodes = this.props.episodes.reverse().map(episode => (
       <EpisodeItem key={ episode.id } currentEpisodeId={ this.props.currentEpisodeId } animeSlug={ this.props.animeSlug } episode={ episode } />
     ));

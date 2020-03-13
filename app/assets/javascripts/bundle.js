@@ -1155,8 +1155,7 @@ var Carousel = /*#__PURE__*/function (_React$Component) {
   _createClass(Carousel, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      if (!this.props.currentEpisodeId) return;
-      return;
+      if (!this.props.currentEpisodeId || this.props.episodes.includes(undefined)) return;
       var carousel = document.querySelector('#episode-carousel');
       var currentEp = document.querySelector('.episode-container.active');
       carousel.scrollLeft = currentEp.offsetLeft - carousel.offsetLeft;
@@ -1167,7 +1166,6 @@ var Carousel = /*#__PURE__*/function (_React$Component) {
       var _this = this;
 
       if (this.props.episodes.includes(undefined)) return null;
-      console.log(this.props.episodes);
       var episodes = this.props.episodes.reverse().map(function (episode) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_episode_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
           key: episode.id,
