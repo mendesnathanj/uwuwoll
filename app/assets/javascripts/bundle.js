@@ -642,6 +642,7 @@ var AnimePage = /*#__PURE__*/function (_React$Component) {
       var _this2 = this;
 
       if (!this.props.anime) return null;
+      if (this.props.episodes.includes(undefined)) return null;
       var seasonItems;
 
       if (this.props.seasons.length > 0) {
@@ -1312,7 +1313,7 @@ var EpisodePage = /*#__PURE__*/function (_React$Component) {
   _createClass(EpisodePage, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchAnime(this.props.match.params.animeSlug);
+      this.props.fetchAnime(this.props.match.params.animeSlug); // let header = document.querySelector('.episode-header');
     }
   }, {
     key: "componentDidUpdate",

@@ -7,6 +7,7 @@ import Video from './video';
 class EpisodePage extends React.Component {
   componentDidMount() {
     this.props.fetchAnime(this.props.match.params.animeSlug);
+    // let header = document.querySelector('.episode-header');
   }
 
   componentDidUpdate(prevProps) {

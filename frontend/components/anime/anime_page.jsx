@@ -27,6 +27,7 @@ class AnimePage extends React.Component {
 
   render() {
     if (!this.props.anime) return null;
+    if (this.props.episodes.includes(undefined)) return null;
 
     let seasonItems;
     if (this.props.seasons.length > 0) {

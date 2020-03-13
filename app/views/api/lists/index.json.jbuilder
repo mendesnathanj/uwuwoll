@@ -28,7 +28,7 @@ end
 json.episodes do
   @list.episodes.with_attached_thumbnail.each do |episode|
     json.set! episode.id do
-      json.extract! episode, :id, :title, :description, :episode_num, :anime_id, :slug
+      json.extract! episode, :id, :title, :description, :episode_num, :anime_id, :season_id, :slug
       # json.video url_for(episode.video)
       json.thumbnail url_for(episode.thumbnail)
     end
