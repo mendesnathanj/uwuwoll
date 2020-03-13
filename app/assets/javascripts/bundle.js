@@ -1729,7 +1729,7 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
         return a.id === randomEpisode.animeId;
       });
       if (episodesAnime.slug === undefined || randomEpisode.slug === undefined) return;
-      this.props.history.push("/anime/".concat(episodesAnime.slug, "/").concat(randomEpisode.slug)); // return `/anime/${episodesAnime.slug}/${randomEpisode.slug}`;
+      this.props.history.push("/anime/".concat(episodesAnime.slug, "/").concat(randomEpisode.slug));
     }
   }, {
     key: "clearResults",

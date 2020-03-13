@@ -42,9 +42,8 @@ class Navbar extends React.Component {
     let episodesAnime = anime.find(a => a.id === randomEpisode.animeId);
 
     if (episodesAnime.slug === undefined || randomEpisode.slug === undefined) return;
-    
+
     this.props.history.push(`/anime/${episodesAnime.slug}/${randomEpisode.slug}`)
-    // return `/anime/${episodesAnime.slug}/${randomEpisode.slug}`;
   }
 
   clearResults() {
