@@ -1165,6 +1165,7 @@ var Carousel = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this = this;
 
+      if (this.props.episodes.includes(undefined)) return null;
       var episodes = this.props.episodes.reverse().map(function (episode) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_episode_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
           key: episode.id,
