@@ -34,13 +34,15 @@ class Navbar extends React.Component {
   redirectToRandomAnime() {
     let { anime, episodes } = this.props;
 
-    if (anime.length === 0 || episodes.length === 0) return "";
+    if (anime.length === 0 || episodes.length === 0) return;
 
     episodes = episodes.filter(episode => episode.episodeNum === 1);
     let randomEpisode = episodes[Math.floor(Math.random() * episodes.length)];
 
     let episodesAnime = anime.find(a => a.id === randomEpisode.animeId);
 
+    if (episodesAnime.slug === undefined || randomEpisode.slug === undefined) return;
+    
     this.props.history.push(`/anime/${episodesAnime.slug}/${randomEpisode.slug}`)
     // return `/anime/${episodesAnime.slug}/${randomEpisode.slug}`;
   }

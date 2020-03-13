@@ -10,8 +10,6 @@ class Queue extends React.Component {
   render() {
     let { currentUser, savedAnime, episodes } = this.props;
 
-    console.log('SAVED_ANIME: ', savedAnime);
-
     const displayName = currentUser.username.endsWith('s') ? `${currentUser.username}'` : `${currentUser.username}'s`;
 
     let content;

@@ -1720,7 +1720,7 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
       var _this$props = this.props,
           anime = _this$props.anime,
           episodes = _this$props.episodes;
-      if (anime.length === 0 || episodes.length === 0) return "";
+      if (anime.length === 0 || episodes.length === 0) return;
       episodes = episodes.filter(function (episode) {
         return episode.episodeNum === 1;
       });
@@ -1728,6 +1728,7 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
       var episodesAnime = anime.find(function (a) {
         return a.id === randomEpisode.animeId;
       });
+      if (episodesAnime.slug === undefined || randomEpisode.slug === undefined) return;
       this.props.history.push("/anime/".concat(episodesAnime.slug, "/").concat(randomEpisode.slug)); // return `/anime/${episodesAnime.slug}/${randomEpisode.slug}`;
     }
   }, {
@@ -2011,7 +2012,6 @@ var Queue = /*#__PURE__*/function (_React$Component) {
           currentUser = _this$props.currentUser,
           savedAnime = _this$props.savedAnime,
           episodes = _this$props.episodes;
-      console.log('SAVED_ANIME: ', savedAnime);
       var displayName = currentUser.username.endsWith('s') ? "".concat(currentUser.username, "'") : "".concat(currentUser.username, "'s");
       var content;
 
