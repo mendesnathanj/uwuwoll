@@ -30,7 +30,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack --watch --mode=development",
     "postinstall": "webpack",
-    "heroku-postbuild": "webpack -p"
+    "heroku-postbuild": "webpack -p",
+    "build:webpack": "webpack -p --define process.env.NODE_ENV='\"production\"'"
   },
   "repository": {
     "type": "git",
