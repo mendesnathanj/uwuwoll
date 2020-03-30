@@ -35,6 +35,24 @@ json.episodes do
   end
 end
 
+json.users do
+  User.all.each do |user|
+    json.set! user.id do
+      json.extract! user, :id, :username, :list_id
+    end
+  end
+end
+
+json.comments do
+  @anime.episodes.each do |episode|
+    episode.comments.each do |comment|
+      json.set! comment.id do
+        json.extract! comment, :id, :content, :spoiler, :user_id, :episode_id, :parent_id, :updated_at
+      end
+    end
+  end
+end
+
 json.slugs do
   json.anime do
     json.set! @anime.slug do

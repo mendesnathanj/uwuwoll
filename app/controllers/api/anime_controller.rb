@@ -4,6 +4,6 @@ class Api::AnimeController < ApplicationController
   end
 
   def show
-    @anime = Anime.includes(:episodes, seasons: :episodes).friendly.find(params[:id])
+    @anime = Anime.includes(episodes: :comments, seasons: :episodes).friendly.find(params[:id])
   end
 end
