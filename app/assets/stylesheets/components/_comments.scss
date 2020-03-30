@@ -1,0 +1,15 @@
+.children {
+  margin-left: 10px;
+  max-height: 0;
+  overflow: hidden;
+}
+
+.children.open {
+  max-height: none;
+}
+
+.show-replies {
+  font-size: 0.75em;
+  color: lightblue;
+  cursor: pointer;
+}

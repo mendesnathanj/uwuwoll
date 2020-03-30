@@ -1158,7 +1158,6 @@ var CommentSection = /*#__PURE__*/function (_React$Component) {
       var _this$props = this.props,
           comments = _this$props.comments,
           currentUser = _this$props.currentUser;
-      console.log('COMMENTS FROM COMMENT SECTION: ', comments);
       var commentThreads = comments.map(function (comment) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_comment_thread_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
           parent: comment,
@@ -1221,6 +1220,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _comment_thread_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./comment_thread_container */ "./frontend/components/comments/comment_thread_container.js");
+/* harmony import */ var _toggle_replies_btn__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./toggle_replies_btn */ "./frontend/components/comments/toggle_replies_btn.jsx");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1231,9 +1231,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -1242,36 +1242,59 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var CommentThread = /*#__PURE__*/function (_React$Component) {
   _inherits(CommentThread, _React$Component);
 
-  function CommentThread() {
+  function CommentThread(props) {
+    var _this;
+
     _classCallCheck(this, CommentThread);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(CommentThread).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(CommentThread).call(this, props));
+    _this.state = {
+      showChildren: false
+    };
+    _this.toggleChildren = _this.toggleChildren.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(CommentThread, [{
+    key: "toggleChildren",
+    value: function toggleChildren() {
+      this.setState({
+        showChildren: !this.state.showChildren
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this$props = this.props,
           author = _this$props.author,
           children = _this$props.children,
           parent = _this$props.parent;
-      console.log('CHILDREN FROM PROPS: ', children);
-      if (children === undefined) return null; // console.log(children);
-
       var childThreads = children.map(function (child) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_comment_thread_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
           parent: child
         });
       });
+      var childrenClasses = this.state.showChildren ? "open" : "";
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "thread"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "comment-info"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "comment-author"
+      }, author.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "date-written"
+      }, parent.updatedAt)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "comment"
-      }, parent.content), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "children"
+      }, parent.content), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_toggle_replies_btn__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        toggleChildren: this.toggleChildren,
+        showing: this.state.showChildren,
+        childCount: children.length
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "children ".concat(childrenClasses)
       }, childThreads));
     }
   }]);
@@ -1298,7 +1321,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var mstp = function mstp(state, ownProps) {
-  debugger;
   return {
     children: Object.values(state.entities.comments).filter(function (child) {
       return child.parentId === ownProps.parent.id;
@@ -1310,6 +1332,35 @@ var mstp = function mstp(state, ownProps) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mstp, null)(_comment_thread__WEBPACK_IMPORTED_MODULE_1__["default"]));
+
+/***/ }),
+
+/***/ "./frontend/components/comments/toggle_replies_btn.jsx":
+/*!*************************************************************!*\
+  !*** ./frontend/components/comments/toggle_replies_btn.jsx ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var ToggleRepliesBtn = function ToggleRepliesBtn(_ref) {
+  var toggleChildren = _ref.toggleChildren,
+      showing = _ref.showing,
+      childCount = _ref.childCount;
+  if (childCount === 0) return null;
+  var text = showing ? 'Hide Replies' : 'Show Replies';
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "show-replies",
+    onClick: toggleChildren
+  }, text);
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (ToggleRepliesBtn);
 
 /***/ }),
 

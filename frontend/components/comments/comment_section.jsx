@@ -9,7 +9,6 @@ class CommentSection extends React.Component {
 
   render() {
     const { comments, currentUser } = this.props;
-    console.log('COMMENTS FROM COMMENT SECTION: ', comments);
     const commentThreads = comments.map(comment => <CommentThreadContainer parent={comment} currentUser={currentUser} />);
 
     return (
