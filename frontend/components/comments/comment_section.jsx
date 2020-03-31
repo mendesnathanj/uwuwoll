@@ -1,5 +1,6 @@
 import React from 'react';
 import CommentThreadContainer from './comment_thread_container';
+import TextboxContainer from './textbox_container';
 
 class CommentSection extends React.Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class CommentSection extends React.Component {
 
     return (
       <div className="comment-section">
-        <div>hewwo i will be the textbox stuff</div>
+        <TextboxContainer />
         <div className="comments">
           { commentThreads }
         </div>

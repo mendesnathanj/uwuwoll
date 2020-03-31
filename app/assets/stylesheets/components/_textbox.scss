@@ -1,0 +1,21 @@
+.textbox-container {
+  width: 100%;
+  margin: 1em auto;
+}
+
+.new-comment-textarea {
+  width: 100%;
+  padding: 1em;
+  border: none;
+  border-radius: 10px;
+  resize: none;
+  min-height: 110px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 0.6em;
+  letter-spacing: 0.5px;
+  color: #555;
+}
+
+.new-comment-textarea:focus {
+  outline: none;
+}
