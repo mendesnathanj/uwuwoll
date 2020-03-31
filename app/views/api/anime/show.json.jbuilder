@@ -17,7 +17,7 @@ json.seasons do
 end
 
 json.episodes do
-  @anime.episodes.with_attached_thumbnail.sort.each do |episode|
+  @anime.episodes.with_attached_thumbnail.with_attached_video.sort.each do |episode|
     json.set! episode.id do
       json.extract! episode, :id, :title, :description, :episode_num, :anime_id, :season_id, :slug
       if episode.thumbnail.attached?
@@ -36,7 +36,7 @@ json.episodes do
 end
 
 json.users do
-  User.all.each do |user|
+  User.all.includes(:list).each do |user|
     json.set! user.id do
       json.extract! user, :id, :username, :list_id
     end

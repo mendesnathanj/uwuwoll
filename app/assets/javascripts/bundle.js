@@ -1267,6 +1267,15 @@ var CommentThread = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "formatDate",
+    value: function formatDate(date) {
+      return new Date(date).toLocaleDateString(undefined, {
+        dateStyle: 'short',
+        timeStyle: 'short',
+        hour12: true
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this$props = this.props,
@@ -1287,7 +1296,7 @@ var CommentThread = /*#__PURE__*/function (_React$Component) {
         className: "comment-author"
       }, author.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "date-written"
-      }, parent.updatedAt)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.formatDate(parent.updatedAt))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "comment"
       }, parent.content), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_toggle_replies_btn__WEBPACK_IMPORTED_MODULE_2__["default"], {
         toggleChildren: this.toggleChildren,
@@ -2248,22 +2257,35 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 var Queue = /*#__PURE__*/function (_React$Component) {
   _inherits(Queue, _React$Component);
 
-  function Queue() {
+  function Queue(props) {
+    var _this;
+
     _classCallCheck(this, Queue);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Queue).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Queue).call(this, props));
+    _this.state = {
+      render: false
+    };
+    return _this;
   }
 
   _createClass(Queue, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchList();
+      var _this2 = this;
+
+      this.props.fetchList().then(function () {
+        return _this2.setState({
+          render: true
+        });
+      });
     }
   }, {
     key: "render",
     value: function render() {
-      var _this = this;
+      var _this3 = this;
 
+      if (!this.state.render) return null;
       var _this$props = this.props,
           currentUser = _this$props.currentUser,
           savedAnime = _this$props.savedAnime,
@@ -2271,25 +2293,21 @@ var Queue = /*#__PURE__*/function (_React$Component) {
       var displayName = currentUser.username.endsWith('s') ? "".concat(currentUser.username, "'") : "".concat(currentUser.username, "'s");
       var content;
 
-      if (savedAnime === undefined) {
-        content = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
+      if (savedAnime.length === 0) {
+        content = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_empty_queue_item__WEBPACK_IMPORTED_MODULE_2__["default"], null);
       } else {
-        if (savedAnime.length === 0) {
-          content = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_empty_queue_item__WEBPACK_IMPORTED_MODULE_2__["default"], null);
-        } else {
-          var savedAnimeItems = savedAnime.map(function (anime) {
-            var filteredEpisodes = episodes.filter(function (episode) {
-              return episode.animeId === anime.id;
-            }).reverse();
-            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_saved_anime_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
-              deleteSavedAnime: _this.props.deleteSavedAnime,
-              key: anime.id,
-              anime: anime,
-              episodes: filteredEpisodes
-            });
+        var savedAnimeItems = savedAnime.map(function (anime) {
+          var filteredEpisodes = episodes.filter(function (episode) {
+            return episode.animeId === anime.id;
+          }).reverse();
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_saved_anime_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
+            deleteSavedAnime: _this3.props.deleteSavedAnime,
+            key: anime.id,
+            anime: anime,
+            episodes: filteredEpisodes
           });
-          content = savedAnimeItems;
-        }
+        });
+        content = savedAnimeItems;
       }
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

@@ -15,6 +15,10 @@ class CommentThread extends React.Component {
     this.setState({ showChildren: !this.state.showChildren });
   }
 
+  formatDate(date) {
+    return new Date(date).toLocaleDateString(undefined, { dateStyle: 'short', timeStyle: 'short', hour12: true })
+  }
+
   render() {
     const { author, children, parent } = this.props;
     const childThreads = children.map(child => <CommentThreadContainer parent={child} />);
@@ -24,7 +28,7 @@ class CommentThread extends React.Component {
       <div className="thread">
         <div className="comment-info">
           <div className="comment-author">{author.username}</div>
-          <div className="date-written">{parent.updatedAt}</div>
+          <div className="date-written">{this.formatDate(parent.updatedAt)}</div>
         </div>
         <div className="comment">{parent.content}</div>
         <ToggleRepliesBtn
