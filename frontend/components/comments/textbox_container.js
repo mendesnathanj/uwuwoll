@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { postComment } from '../../actions/comment_actions';
 import { findEpisode, findCurrentUser, findComment } from '../../reducers/selectors';
 import Textbox from './textbox';
 
@@ -15,7 +16,7 @@ const mstp = (state, ownProps) => {
 };
 
 const mdtp = dispatch => ({
-
+  postComment: comment => dispatch(postComment(comment))
 });
 
 

@@ -135,6 +135,63 @@ var fetchAnime = function fetchAnime(slug) {
 
 /***/ }),
 
+/***/ "./frontend/actions/comment_actions.js":
+/*!*********************************************!*\
+  !*** ./frontend/actions/comment_actions.js ***!
+  \*********************************************/
+/*! exports provided: RECEIVE_COMMENT, REMOVE_COMMENT, postComment, updateComment, deleteComment */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_COMMENT", function() { return RECEIVE_COMMENT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_COMMENT", function() { return REMOVE_COMMENT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "postComment", function() { return postComment; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateComment", function() { return updateComment; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteComment", function() { return deleteComment; });
+/* harmony import */ var _utils_comment_api_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/comment_api_utils */ "./frontend/utils/comment_api_utils.js");
+
+var RECEIVE_COMMENT = 'RECEIVE_COMMENT';
+var REMOVE_COMMENT = 'REMOVE_COMMENT';
+
+var receiveComment = function receiveComment(comment) {
+  return {
+    type: RECEIVE_COMMENT,
+    comment: comment
+  };
+};
+
+var removeComment = function removeComment(comment) {
+  return {
+    type: REMOVE_COMMENT,
+    comment: comment
+  };
+};
+
+var postComment = function postComment(comment) {
+  return function (dispatch) {
+    return _utils_comment_api_utils__WEBPACK_IMPORTED_MODULE_0__["postComment"](comment).then(function (comment) {
+      return dispatch(receiveComment(comment));
+    });
+  };
+};
+var updateComment = function updateComment(comment) {
+  return function (dispatch) {
+    return _utils_comment_api_utils__WEBPACK_IMPORTED_MODULE_0__["updateComment"](comment).then(function (comment) {
+      return dispatch(receiveComment(comment));
+    });
+  };
+};
+var deleteComment = function deleteComment(comment) {
+  return function (dispatch) {
+    return _utils_comment_api_utils__WEBPACK_IMPORTED_MODULE_0__["deleteComment"](comment.id).then(function (comment) {
+      return dispatch(removeComment(comment));
+    });
+  };
+};
+
+/***/ }),
+
 /***/ "./frontend/actions/episode_actions.js":
 /*!*********************************************!*\
   !*** ./frontend/actions/episode_actions.js ***!
@@ -1484,8 +1541,10 @@ var Textbox = /*#__PURE__*/function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _reducers_selectors__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../reducers/selectors */ "./frontend/reducers/selectors.js");
-/* harmony import */ var _textbox__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./textbox */ "./frontend/components/comments/textbox.jsx");
+/* harmony import */ var _actions_comment_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/comment_actions */ "./frontend/actions/comment_actions.js");
+/* harmony import */ var _reducers_selectors__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../reducers/selectors */ "./frontend/reducers/selectors.js");
+/* harmony import */ var _textbox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./textbox */ "./frontend/components/comments/textbox.jsx");
+
 
 
 
@@ -1496,17 +1555,21 @@ var dummyParent = {
 
 var mstp = function mstp(state, ownProps) {
   return {
-    currentUser: Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_2__["findCurrentUser"])(state),
-    episode: Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_2__["findEpisode"])(state, ownProps.match.params.episodeSlug),
-    parent: !!ownProps.parent ? Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_2__["findComment"])(state, ownProps.parent.id) : dummyParent
+    currentUser: Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["findCurrentUser"])(state),
+    episode: Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["findEpisode"])(state, ownProps.match.params.episodeSlug),
+    parent: !!ownProps.parent ? Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["findComment"])(state, ownProps.parent.id) : dummyParent
   };
 };
 
 var mdtp = function mdtp(dispatch) {
-  return {};
+  return {
+    postComment: function postComment(comment) {
+      return dispatch(Object(_actions_comment_actions__WEBPACK_IMPORTED_MODULE_2__["postComment"])(comment));
+    }
+  };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mstp, mdtp)(_textbox__WEBPACK_IMPORTED_MODULE_3__["default"])));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mstp, mdtp)(_textbox__WEBPACK_IMPORTED_MODULE_4__["default"])));
 
 /***/ }),
 
@@ -3106,6 +3169,8 @@ var animeReducer = function animeReducer() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_anime_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/anime_actions */ "./frontend/actions/anime_actions.js");
+/* harmony import */ var _actions_comment_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/comment_actions */ "./frontend/actions/comment_actions.js");
+
 
 /* harmony default export */ __webpack_exports__["default"] = (function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -3115,6 +3180,9 @@ __webpack_require__.r(__webpack_exports__);
   switch (action.type) {
     case _actions_anime_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_ANIME"]:
       return Object.assign({}, state, action.payload.comments);
+
+    case _actions_comment_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_COMMENT"]:
+      return Object.assign({}, state, action.comment);
 
     default:
       return state;
@@ -3730,6 +3798,45 @@ var fetchAnime = function fetchAnime(slug) {
   return $.ajax({
     method: 'GET',
     url: "/api/anime/".concat(slug)
+  });
+};
+
+/***/ }),
+
+/***/ "./frontend/utils/comment_api_utils.js":
+/*!*********************************************!*\
+  !*** ./frontend/utils/comment_api_utils.js ***!
+  \*********************************************/
+/*! exports provided: postComment, updateComment, deleteComment */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "postComment", function() { return postComment; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateComment", function() { return updateComment; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteComment", function() { return deleteComment; });
+var postComment = function postComment(comment) {
+  return $.ajax({
+    method: 'POST',
+    url: '/api/comments',
+    data: {
+      comment: comment
+    }
+  });
+};
+var updateComment = function updateComment(comment) {
+  return $.ajax({
+    method: 'PATCH',
+    url: "/api/comments/".concat(comment.id),
+    data: {
+      comment: comment
+    }
+  });
+};
+var deleteComment = function deleteComment(id) {
+  return $.ajax({
+    method: 'DELETE',
+    url: "/api/comments/".concat(id)
   });
 };
 
