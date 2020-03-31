@@ -13,9 +13,9 @@
 #
 
 class Comment < ApplicationRecord
-  validates :content, presence: true
+  validates :content, presence: true, if: :user_id
 
   belongs_to :episode
   belongs_to :parent, class_name: 'Comment', optional: true
-  belongs_to :author, foreign_key: :user_id, class_name: 'User'
+  belongs_to :author, foreign_key: :user_id, class_name: 'User', optional: true
 end
