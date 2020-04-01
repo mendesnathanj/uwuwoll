@@ -1362,7 +1362,8 @@ var CommentThread = /*#__PURE__*/function (_React$Component) {
         closeTextbox: this.closeTextbox('edit'),
         review: this.props.parent
       });
-      return this.props.parent.content;
+      var content = this.props.parent.userId === null ? 'Comment removed by user' : this.props.parent.content;
+      return content;
     }
   }, {
     key: "toggleEdit",
@@ -1383,7 +1384,6 @@ var CommentThread = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "deleteComment",
     value: function deleteComment() {
-      console.log('Now deleting: ', this.props.parent);
       this.props.deleteComment(this.props.parent);
     }
   }, {
@@ -1398,7 +1398,8 @@ var CommentThread = /*#__PURE__*/function (_React$Component) {
         onClick: this.toggleEdit,
         className: "edit"
       }, text), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        onClick: this.deleteComment
+        onClick: this.deleteComment,
+        className: "delete"
       }, "Delete"));
     }
   }, {
@@ -1423,25 +1424,32 @@ var CommentThread = /*#__PURE__*/function (_React$Component) {
         parent: parent
       }) : null;
       var replyText = this.state["new"] ? "Don't Reply" : 'Reply';
+      var threadOpen = this.state.showChildren ? 'open' : '';
+      var username = author.id === -1 ? null : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "comment-author"
+      }, author.username);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "thread"
+        className: "thread ".concat(threadOpen)
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "comment-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "comment-info"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "comment-author"
-      }, author.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "user-info"
+      }, username, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "date-written"
-      }, this.formatDate(parent.updatedAt)), this.edit()), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.formatDate(parent.updatedAt))), this.edit()), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "comment"
       }, this.content()), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "comment-options"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "reply-btn",
         onClick: this.toggleTextbox
-      }, replyText), textbox, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_toggle_replies_btn__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      }, replyText), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_toggle_replies_btn__WEBPACK_IMPORTED_MODULE_2__["default"], {
         toggleChildren: this.toggleChildren,
         showing: this.state.showChildren,
         childCount: children.length
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(SpoilerBtn, null)), textbox), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "children"
       }, childThreads));
     }
@@ -1642,7 +1650,6 @@ var Textbox = /*#__PURE__*/function (_React$Component) {
       episode_id: props.episode.id,
       user_id: props.currentUser.id
     }, props.review);
-    console.log(props);
     _this.handleTextarea = _this.handleTextarea.bind(_assertThisInitialized(_this));
     _this.handleCheckbox = _this.handleCheckbox.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
@@ -1682,10 +1689,7 @@ var Textbox = /*#__PURE__*/function (_React$Component) {
         if (_this2.props.formType === 'new') _this2.setState({
           content: '',
           spoiler: false
-        }); // if (this.props.toggleEdit !== undefined)
-        //   this.props.toggleEdit();
-
-        console.log('Success!');
+        });
       });
     }
   }, {
@@ -1700,11 +1704,17 @@ var Textbox = /*#__PURE__*/function (_React$Component) {
         value: this.state.content,
         onChange: this.handleTextarea,
         placeholder: "Add to the conversation"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Spoiler?", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "textbox-controls"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "spoiler-check"
+      }, "Spoiler?", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         onChange: this.handleCheckbox,
         checked: this.state.spoiler,
         type: "checkbox"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, "Submit")));
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "textbox-submit"
+      }, "Submit"))));
     }
   }]);
 
@@ -1734,7 +1744,7 @@ var ToggleRepliesBtn = function ToggleRepliesBtn(_ref) {
       childCount = _ref.childCount;
   if (childCount === 0) return null;
   var text = showing ? 'Hide Replies' : 'Show Replies';
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     className: "show-replies",
     onClick: toggleChildren
   }, text);

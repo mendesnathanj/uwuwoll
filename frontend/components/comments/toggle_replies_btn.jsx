@@ -6,7 +6,7 @@ const ToggleRepliesBtn = ({ toggleChildren, showing, childCount }) => {
 
   const text = showing ? 'Hide Replies' : 'Show Replies';
 
-  return <div className="show-replies" onClick={toggleChildren}>{ text }</div>;
+  return <span className="show-replies" onClick={toggleChildren}>{ text }</span>;
 };
 
 

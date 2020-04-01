@@ -1,9 +1,81 @@
+.thread.open > .comment-container {
+  border-bottom: 1px solid #ccc;
+}
+
+.comment-container {
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
 .children {
-  margin-left: 10px;
+  margin-left: 1rem;
+}
+
+.comment-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-info {
+  display: flex;
+  align-items: baseline;
+  font-family: $title-fonts;
+}
+
+.comment-author {
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding-right: 1rem;
+}
+
+.date-written {
+  font-size: 0.7rem;
+  color: #999;
+}
+
+.comment {
+  font-size: 0.8rem;
+  min-height: 60px;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  line-height: 1.2rem;
+}
+
+.thread {
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-options {
+  display: flex;
+  align-items: center;
+  font-size: 0.75rem;
+}
+
+.reply-btn, .show-replies {
+  color: #38a3d9;
+  cursor: pointer;
 }
 
 .show-replies {
-  font-size: 0.75em;
-  color: lightblue;
+  margin-left: 1em;
+}
+
+.comment-actions {
+  display: flex;
+  align-items: center;
+}
+
+.edit, .delete {
+  color: #38a3d9;
+  font-size: 0.9rem;
   cursor: pointer;
 }
+
+.edit {
+  margin-right: 0.75rem;
+}
+
+
+

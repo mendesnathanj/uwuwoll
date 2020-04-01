@@ -11,7 +11,6 @@ class Textbox extends React.Component {
                    ...props.review
                   };
 
-    console.log(props);
     this.handleTextarea = this.handleTextarea.bind(this);
     this.handleCheckbox = this.handleCheckbox.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -37,9 +36,6 @@ class Textbox extends React.Component {
       .then(() => {
         if (this.props.formType === 'edit') this.props.closeTextbox();
         if (this.props.formType === 'new') this.setState({ content: '', spoiler: false });
-        // if (this.props.toggleEdit !== undefined)
-        //   this.props.toggleEdit();
-        console.log('Success!');
       });
   }
 
@@ -53,14 +49,16 @@ class Textbox extends React.Component {
             onChange={this.handleTextarea}
             placeholder="Add to the conversation">
           </textarea>
-          <label>
-          Spoiler?
-          <input
-            onChange={this.handleCheckbox}
-            checked={this.state.spoiler}
-            type="checkbox" />
-          </label>
-          <button>Submit</button>
+          <div className="textbox-controls">
+            <label className="spoiler-check">
+              Spoiler?
+              <input
+                onChange={this.handleCheckbox}
+                checked={this.state.spoiler}
+                type="checkbox" />
+            </label>
+            <button className="textbox-submit">Submit</button>
+          </div>
         </form>
       </div>
     )

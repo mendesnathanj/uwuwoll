@@ -36,7 +36,8 @@ class CommentThread extends React.Component {
     if (this.state.edit)
       return <EditTextboxContainer closeTextbox={this.closeTextbox('edit')} review={this.props.parent} />;
 
-    return this.props.parent.content;
+    const content = this.props.parent.userId === null ? 'Comment removed by user' : this.props.parent.content;
+    return content;
   }
 
   toggleEdit() {
@@ -48,7 +49,6 @@ class CommentThread extends React.Component {
   }
 
   deleteComment() {
-    console.log('Now deleting: ', this.props.parent);
     this.props.deleteComment(this.props.parent);
   }
 
@@ -61,7 +61,7 @@ class CommentThread extends React.Component {
     return (
       <div className="comment-actions">
         <span onClick={this.toggleEdit} className="edit">{ text }</span>
-        <span onClick={this.deleteComment}>Delete</span>
+        <span onClick={this.deleteComment} className="delete">Delete</span>
       </div>
     )
   }
@@ -75,23 +75,29 @@ class CommentThread extends React.Component {
     const childThreads = this.state.showChildren ? children.map((child, i) => <CommentThreadContainer key={i} parent={child} />) : null;
     const textbox = this.state.new ? <NewTextboxContainer closeTextbox={this.closeTextbox('new')} parent={parent} /> : null;
     const replyText = this.state.new ? "Don't Reply" : 'Reply';
-
+    const threadOpen = this.state.showChildren ? 'open' : '';
+    const username = author.id === -1 ? null : <div className="comment-author">{author.username}</div>;
 
     return (
-      <div className="thread">
-        <div className="comment-info">
-          <div className="comment-author">{author.username}</div>
-          <div className="date-written">{this.formatDate(parent.updatedAt)}</div>
-          { this.edit() }
+      <div className={`thread ${threadOpen}`}>
+        <div className="comment-container">
+          <div className="comment-info">
+            <div className="user-info">
+              { username }
+              <div className="date-written">{this.formatDate(parent.updatedAt)}</div>
+            </div>
+            {this.edit()}
+          </div>
+          <div className="comment">{this.content()}</div>
+          <div className="comment-options">
+            <span className="reply-btn" onClick={this.toggleTextbox}>{replyText}</span>
+            <ToggleRepliesBtn
+              toggleChildren={this.toggleChildren}
+              showing={this.state.showChildren}
+              childCount={children.length} />
+            <SpoilerBtn />
         </div>
-        <div className="comment">{this.content()}</div>
-        <div className="comment-options">
-          <span onClick={this.toggleTextbox}>{ replyText }</span>
-          { textbox }
-          <ToggleRepliesBtn
-            toggleChildren={this.toggleChildren}
-            showing={this.state.showChildren}
-            childCount={children.length} />
+          {textbox}
         </div>
         <div className={`children`}>
           { childThreads }
