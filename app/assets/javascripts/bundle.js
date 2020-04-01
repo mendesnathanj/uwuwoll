@@ -2033,7 +2033,9 @@ var EpisodePage = /*#__PURE__*/function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         className: "anime-link",
         to: "/anime/".concat(anime.slug)
-      }, anime.title), " ", "Episode ".concat(episode.episodeNum, " - ").concat(episode.title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_carousel__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      }, anime.title), " ", "Episode ".concat(episode.episodeNum, " - ").concat(episode.title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_video__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        src: episode.video
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_carousel__WEBPACK_IMPORTED_MODULE_2__["default"], {
         currentEpisodeId: episode.id,
         animeSlug: anime.slug,
         episodes: episodes
