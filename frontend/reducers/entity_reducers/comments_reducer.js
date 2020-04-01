@@ -10,6 +10,8 @@ export default function(state = {}, action) {
       return Object.assign({}, state, action.payload.comments);
     case RECEIVE_COMMENT:
       return Object.assign({}, state, action.comment);
+    case REMOVE_COMMENT:
+      return Object.assign({}, state, action.comment);
     default:
       return state;
   }

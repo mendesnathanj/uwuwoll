@@ -22,7 +22,7 @@ class Api::CommentsController < ApplicationController
 
   def destroy
     @comment = Comment.find_by(id: params[:id])
-    @comment.user = nil
+    @comment.author = nil
     @comment.content = ''
     @comment.save
 

@@ -1179,7 +1179,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _comment_thread_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./comment_thread_container */ "./frontend/components/comments/comment_thread_container.js");
-/* harmony import */ var _textbox_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./textbox_container */ "./frontend/components/comments/textbox_container.js");
+/* harmony import */ var _new_textbox_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./new_textbox_container */ "./frontend/components/comments/new_textbox_container.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1225,7 +1225,7 @@ var CommentSection = /*#__PURE__*/function (_React$Component) {
       });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "comment-section"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_textbox_container__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_new_textbox_container__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "comments"
       }, commentThreads));
     }
@@ -1280,8 +1280,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _comment_thread_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./comment_thread_container */ "./frontend/components/comments/comment_thread_container.js");
 /* harmony import */ var _toggle_replies_btn__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./toggle_replies_btn */ "./frontend/components/comments/toggle_replies_btn.jsx");
-/* harmony import */ var _textbox_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./textbox_container */ "./frontend/components/comments/textbox_container.js");
+/* harmony import */ var _new_textbox_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./new_textbox_container */ "./frontend/components/comments/new_textbox_container.js");
+/* harmony import */ var _edit_textbox_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./edit_textbox_container */ "./frontend/components/comments/edit_textbox_container.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1304,6 +1307,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var CommentThread = /*#__PURE__*/function (_React$Component) {
   _inherits(CommentThread, _React$Component);
 
@@ -1315,10 +1319,16 @@ var CommentThread = /*#__PURE__*/function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(CommentThread).call(this, props));
     _this.state = {
       showChildren: false,
-      showTextbox: false
+      "new": false,
+      edit: false
     };
     _this.toggleChildren = _this.toggleChildren.bind(_assertThisInitialized(_this));
     _this.toggleTextbox = _this.toggleTextbox.bind(_assertThisInitialized(_this));
+    _this.toggleEdit = _this.toggleEdit.bind(_assertThisInitialized(_this));
+    _this.deleteComment = _this.deleteComment.bind(_assertThisInitialized(_this));
+    _this.closeTextbox = _this.closeTextbox.bind(_assertThisInitialized(_this));
+    _this.content = _this.content.bind(_assertThisInitialized(_this));
+    _this.edit = _this.edit.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1333,7 +1343,7 @@ var CommentThread = /*#__PURE__*/function (_React$Component) {
     key: "toggleTextbox",
     value: function toggleTextbox() {
       this.setState({
-        showTextbox: !this.state.showTextbox
+        "new": !this.state["new"]
       });
     }
   }, {
@@ -1346,22 +1356,75 @@ var CommentThread = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "content",
+    value: function content() {
+      if (this.state.edit) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_edit_textbox_container__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        closeTextbox: this.closeTextbox('edit'),
+        review: this.props.parent
+      });
+      return this.props.parent.content;
+    }
+  }, {
+    key: "toggleEdit",
+    value: function toggleEdit() {
+      this.setState({
+        edit: !this.state.edit
+      });
+    }
+  }, {
+    key: "closeTextbox",
+    value: function closeTextbox(type) {
+      var _this2 = this;
+
+      return function () {
+        return _this2.setState(_defineProperty({}, type, false));
+      };
+    }
+  }, {
+    key: "deleteComment",
+    value: function deleteComment() {
+      console.log('Now deleting: ', this.props.parent);
+      this.props.deleteComment(this.props.parent);
+    }
+  }, {
+    key: "edit",
+    value: function edit() {
+      if (this.props.author === undefined) return null; // debugger;
+
+      if (this.props.author.id !== this.props.currentUser.id) return null;
+      var text = this.state.edit ? 'Stop editing' : 'Edit';
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "comment-actions"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        onClick: this.toggleEdit,
+        className: "edit"
+      }, text), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        onClick: this.deleteComment
+      }, "Delete"));
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this$props = this.props,
-          author = _this$props.author,
           children = _this$props.children,
           parent = _this$props.parent;
+      var author = this.props.author;
+      if (author === undefined) author = {
+        id: -1,
+        username: ''
+      };
       var childThreads = this.state.showChildren ? children.map(function (child, i) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_comment_thread_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
           key: i,
           parent: child
         });
       }) : null;
-      var textbox = this.state.showTextbox ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_textbox_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      var textbox = this.state["new"] ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_new_textbox_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        closeTextbox: this.closeTextbox('new'),
         parent: parent
       }) : null;
-      var replyText = this.state.showTextbox ? "Don't Reply" : 'Reply';
+      var replyText = this.state["new"] ? "Don't Reply" : 'Reply';
+      console.log(author);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "thread"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1370,9 +1433,9 @@ var CommentThread = /*#__PURE__*/function (_React$Component) {
         className: "comment-author"
       }, author.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "date-written"
-      }, this.formatDate(parent.updatedAt))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.formatDate(parent.updatedAt)), this.edit()), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "comment"
-      }, parent.content), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.content()), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "comment-options"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         onClick: this.toggleTextbox
@@ -1404,6 +1467,10 @@ var CommentThread = /*#__PURE__*/function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _comment_thread__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./comment_thread */ "./frontend/components/comments/comment_thread.jsx");
+/* harmony import */ var _reducers_selectors__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../reducers/selectors */ "./frontend/reducers/selectors.js");
+/* harmony import */ var _actions_comment_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/comment_actions */ "./frontend/actions/comment_actions.js");
+
+
 
 
 
@@ -1414,11 +1481,116 @@ var mstp = function mstp(state, ownProps) {
     }),
     author: Object.values(state.entities.users).find(function (user) {
       return user.id === ownProps.parent.userId;
-    })
+    }),
+    currentUser: Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_2__["findCurrentUser"])(state)
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mstp, null)(_comment_thread__WEBPACK_IMPORTED_MODULE_1__["default"]));
+var mdtp = function mdtp(dispatch) {
+  return {
+    deleteComment: function deleteComment(comment) {
+      return dispatch(Object(_actions_comment_actions__WEBPACK_IMPORTED_MODULE_3__["deleteComment"])(comment));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mstp, mdtp)(_comment_thread__WEBPACK_IMPORTED_MODULE_1__["default"]));
+
+/***/ }),
+
+/***/ "./frontend/components/comments/edit_textbox_container.js":
+/*!****************************************************************!*\
+  !*** ./frontend/components/comments/edit_textbox_container.js ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _actions_comment_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/comment_actions */ "./frontend/actions/comment_actions.js");
+/* harmony import */ var _reducers_selectors__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../reducers/selectors */ "./frontend/reducers/selectors.js");
+/* harmony import */ var _textbox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./textbox */ "./frontend/components/comments/textbox.jsx");
+
+
+
+
+
+var dummyParent = {
+  id: null
+};
+
+var mstp = function mstp(state, ownProps) {
+  return {
+    review: ownProps.review,
+    toggleEdit: ownProps.toggleEdit,
+    currentUser: Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["findCurrentUser"])(state),
+    episode: Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["findEpisode"])(state, ownProps.match.params.episodeSlug),
+    parent: !!ownProps.parent ? Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["findComment"])(state, ownProps.parent.id) : dummyParent
+  };
+};
+
+var mdtp = function mdtp(dispatch) {
+  return {
+    action: function action(comment) {
+      return dispatch(Object(_actions_comment_actions__WEBPACK_IMPORTED_MODULE_2__["updateComment"])(comment));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mstp, mdtp)(_textbox__WEBPACK_IMPORTED_MODULE_4__["default"])));
+
+/***/ }),
+
+/***/ "./frontend/components/comments/new_textbox_container.js":
+/*!***************************************************************!*\
+  !*** ./frontend/components/comments/new_textbox_container.js ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _actions_comment_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/comment_actions */ "./frontend/actions/comment_actions.js");
+/* harmony import */ var _reducers_selectors__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../reducers/selectors */ "./frontend/reducers/selectors.js");
+/* harmony import */ var _textbox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./textbox */ "./frontend/components/comments/textbox.jsx");
+
+
+
+
+
+var dummyParent = {
+  id: null
+};
+var review = {
+  content: '',
+  spoiler: false
+};
+
+var mstp = function mstp(state, ownProps) {
+  return {
+    review: review,
+    currentUser: Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["findCurrentUser"])(state),
+    episode: Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["findEpisode"])(state, ownProps.match.params.episodeSlug),
+    parent: !!ownProps.parent ? Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["findComment"])(state, ownProps.parent.id) : dummyParent,
+    closeTextbox: function closeTextbox() {
+      return ownProps.closeTextbox();
+    }
+  };
+};
+
+var mdtp = function mdtp(dispatch) {
+  return {
+    action: function action(comment) {
+      return dispatch(Object(_actions_comment_actions__WEBPACK_IMPORTED_MODULE_2__["postComment"])(comment));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mstp, mdtp)(_textbox__WEBPACK_IMPORTED_MODULE_4__["default"])));
 
 /***/ }),
 
@@ -1434,6 +1606,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1462,13 +1640,12 @@ var Textbox = /*#__PURE__*/function (_React$Component) {
     _classCallCheck(this, Textbox);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Textbox).call(this, props));
-    _this.state = {
+    _this.state = _objectSpread({
       parent_id: props.parent.id,
       episode_id: props.episode.id,
-      user_id: props.currentUser.id,
-      content: '',
-      spoiler: false
-    };
+      user_id: props.currentUser.id
+    }, props.review);
+    console.log(props);
     _this.handleTextarea = _this.handleTextarea.bind(_assertThisInitialized(_this));
     _this.handleCheckbox = _this.handleCheckbox.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
@@ -1494,6 +1671,8 @@ var Textbox = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
+      var _this2 = this;
+
       e.preventDefault();
 
       if (this.state.content.trim().length === 0) {
@@ -1501,12 +1680,17 @@ var Textbox = /*#__PURE__*/function (_React$Component) {
         return;
       }
 
-      console.log(this.state);
+      this.props.action(this.state).then(function () {
+        _this2.props.closeTextbox(); // if (this.props.toggleEdit !== undefined)
+        //   this.props.toggleEdit();
+
+
+        console.log('Success!');
+      });
     }
   }, {
     key: "render",
     value: function render() {
-      console.log(this.state);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "textbox-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
@@ -1527,49 +1711,6 @@ var Textbox = /*#__PURE__*/function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 /* harmony default export */ __webpack_exports__["default"] = (Textbox);
-
-/***/ }),
-
-/***/ "./frontend/components/comments/textbox_container.js":
-/*!***********************************************************!*\
-  !*** ./frontend/components/comments/textbox_container.js ***!
-  \***********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _actions_comment_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/comment_actions */ "./frontend/actions/comment_actions.js");
-/* harmony import */ var _reducers_selectors__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../reducers/selectors */ "./frontend/reducers/selectors.js");
-/* harmony import */ var _textbox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./textbox */ "./frontend/components/comments/textbox.jsx");
-
-
-
-
-
-var dummyParent = {
-  id: null
-};
-
-var mstp = function mstp(state, ownProps) {
-  return {
-    currentUser: Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["findCurrentUser"])(state),
-    episode: Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["findEpisode"])(state, ownProps.match.params.episodeSlug),
-    parent: !!ownProps.parent ? Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["findComment"])(state, ownProps.parent.id) : dummyParent
-  };
-};
-
-var mdtp = function mdtp(dispatch) {
-  return {
-    postComment: function postComment(comment) {
-      return dispatch(Object(_actions_comment_actions__WEBPACK_IMPORTED_MODULE_2__["postComment"])(comment));
-    }
-  };
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mstp, mdtp)(_textbox__WEBPACK_IMPORTED_MODULE_4__["default"])));
 
 /***/ }),
 
@@ -3182,6 +3323,9 @@ __webpack_require__.r(__webpack_exports__);
       return Object.assign({}, state, action.payload.comments);
 
     case _actions_comment_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_COMMENT"]:
+      return Object.assign({}, state, action.comment);
+
+    case _actions_comment_actions__WEBPACK_IMPORTED_MODULE_1__["REMOVE_COMMENT"]:
       return Object.assign({}, state, action.comment);
 
     default:

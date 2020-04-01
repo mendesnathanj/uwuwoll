@@ -8,9 +8,10 @@ class Textbox extends React.Component {
     this.state = { parent_id: props.parent.id,
                    episode_id: props.episode.id,
                    user_id: props.currentUser.id,
-                   content: '',
-                   spoiler: false };
+                   ...props.review
+                  };
 
+    console.log(props);
     this.handleTextarea = this.handleTextarea.bind(this);
     this.handleCheckbox = this.handleCheckbox.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -32,12 +33,16 @@ class Textbox extends React.Component {
       return;
     }
 
-    console.log(this.state);
+    this.props.action(this.state)
+      .then(() => {
+        this.props.closeTextbox();
+        // if (this.props.toggleEdit !== undefined)
+        //   this.props.toggleEdit();
+        console.log('Success!')
+      });
   }
 
   render() {
-    console.log(this.state);
-
     return (
       <div className="textbox-container">
         <form onSubmit={this.handleSubmit}>
