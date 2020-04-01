@@ -23,7 +23,7 @@ class EpisodePage extends React.Component {
     return (
       <div className="episode-page-container">
         <h1 className="episode-header"><Link className="anime-link" to={`/anime/${anime.slug}`}>{ anime.title }</Link> { `Episode ${ episode.episodeNum } - ${ episode.title }` }</h1>
-        {/* <Video src={ episode.video } /> */}
+        <Video src={ episode.video } />
         <Carousel currentEpisodeId={ episode.id } animeSlug={ anime.slug } episodes={ episodes } />
         <CommentSectionContainer episode={ episode } />
       </div>
