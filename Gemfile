@@ -50,7 +50,6 @@ group :development do
   gem 'binding_of_caller'
   gem 'pry-rails'
   gem 'annotate'
-  gem 'faker'
 end
 
 group :test do
@@ -61,6 +60,7 @@ group :test do
   gem 'chromedriver-helper'
 end
 
+gem 'faker'
 gem 'jquery-rails'
 gem 'aws-sdk-s3'
 gem 'friendly_id'
