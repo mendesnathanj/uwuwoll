@@ -1,0 +1,57 @@
+.textbox-container {
+  width: 100%;
+  margin: 1em auto;
+}
+
+.new-comment-textarea {
+  width: 100%;
+  padding: 1em;
+  border: none;
+  border-radius: 10px;
+  resize: none;
+  min-height: 110px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+  color: #555;
+}
+
+.new-comment-textarea:focus {
+  outline: none;
+}
+
+.textbox-controls {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 0.5em;
+}
+
+.spoiler-check, .textbox-submit {
+  letter-spacing: 0.25px;
+  cursor: pointer;
+}
+
+.spoiler-check {
+  font-size: 0.9rem;
+}
+
+$btn-color: #38a3d9;
+
+.textbox-submit {
+  border: 2px solid $btn-color;
+  border-radius: 5px;
+  font-size: 1rem;
+  color: $btn-color;
+  padding: 0.25em 0.75em;
+  background-color: transparent;
+  transition: all 250ms ease-in-out;
+}
+
+.textbox-submit:hover {
+  color: #fff;
+  background-color: $btn-color;
+}
+
+.textbox-submit:focus {
+  outline: none;
+}

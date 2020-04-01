@@ -23,11 +23,11 @@ json.episodes do
 
     json.set! episode.id do
       json.extract! episode, :id, :slug, :season_id, :episode_num, :anime_id, :title
-      if episode.video.attached?
-          json.video url_for(episode.video)
-        else
-          json.video nil
-        end
+      # if episode.video.attached?
+      #   json.video url_for(episode.video)
+      # else
+      #   json.video nil
+      # end
     end
   end
 end
