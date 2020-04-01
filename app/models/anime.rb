@@ -8,6 +8,7 @@
 #  publisher   :string           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  slug        :string
 #
 
 class Anime < ApplicationRecord
@@ -19,6 +20,7 @@ class Anime < ApplicationRecord
 
   has_many :seasons, dependent: :destroy
   has_many :episodes
+  has_many :comments, through: :episodes
 
   has_one_attached :large_poster
   has_one_attached :small_poster

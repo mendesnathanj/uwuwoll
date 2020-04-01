@@ -2,18 +2,56 @@ SEED_EPISODES = true
 SEED_POSTERS = true
 ANIME_LIMIT = 20
 EPISODE_LIMIT = 20
-RESEED_EVERYTHING = true
-
+RESEED_EVERYTHING = false
+SEED_COMMENTS = true
 BUCKET = 'https://uwuwoll-seeds.s3-us-west-1.amazonaws.com/'
 FILE_FORMAT = '.mp4'
 
 
-anime = Anime.all
-User.all.each do |user|
-  rand(5..15).times { user.save_anime(anime.sample) }
+if SEED_COMMENTS
+  Comment.destroy_all
+
+  # seed initial parent comments
+  500.times do
+    Comment.create(content: Faker::Lorem.paragraph_by_chars(number: rand(1..128), supplemental: false),
+                   author: User.all.sample,
+                   episode: Episode.all.sample,
+                   spoiler: rand(0..10) == 0)
+  end
+
+  # seed 2nd level child comments
+  750.times do
+    parent = Comment.all.sample
+    Comment.create(content: Faker::Lorem.paragraph_by_chars(number: rand(1..128), supplemental: false),
+                   author: User.all.sample,
+                   episode: parent.episode,
+                   parent: parent,
+                   spoiler: rand(0..10) == 0)
+  end
+
+  # seed 3rd level child comments
+  850.times do
+    parent = Comment.where.not(parent_id: nil).sample
+    Comment.create(content: Faker::Lorem.paragraph_by_chars(number: rand(1..128), supplemental: false),
+                   author: User.all.sample,
+                   episode: parent.episode,
+                   parent: parent,
+                   spoiler: rand(0..10) == 0)
+  end
 end
 
-return
+
+
+
+
+# anime = Anime.all
+# User.all.each do |user|
+#   rand(5..15).times { user.save_anime(anime.sample) }
+# end
+
+
+
+
 
 return unless RESEED_EVERYTHING
 

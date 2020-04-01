@@ -3,29 +3,33 @@ import SavedAnimeItem from './saved_anime_item';
 import EmptyQueueItem from './empty_queue_item';
 
 class Queue extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { render: false };
+  }
+
   componentDidMount() {
-    this.props.fetchList();
+    this.props.fetchList()
+    .then(() => this.setState({ render: true }));
   }
 
   render() {
-    let { currentUser, savedAnime, episodes } = this.props;
+    if (!this.state.render) return null;
 
+    let { currentUser, savedAnime, episodes } = this.props;
     const displayName = currentUser.username.endsWith('s') ? `${currentUser.username}'` : `${currentUser.username}'s`;
 
     let content;
-    if (savedAnime === undefined) {
-      content = <div></div>
+    if (savedAnime.length === 0) {
+      content = <EmptyQueueItem />
     } else {
-      if (savedAnime.length === 0) {
-        content = <EmptyQueueItem />
-      } else {
-        const savedAnimeItems = savedAnime.map(anime => {
-          const filteredEpisodes = episodes.filter(episode => episode.animeId === anime.id).reverse();
-            return <SavedAnimeItem deleteSavedAnime={this.props.deleteSavedAnime} key={ anime.id } anime={ anime } episodes={ filteredEpisodes } />;
-        });
+      const savedAnimeItems = savedAnime.map(anime => {
+        const filteredEpisodes = episodes.filter(episode => episode.animeId === anime.id).reverse();
+          return <SavedAnimeItem deleteSavedAnime={this.props.deleteSavedAnime} key={ anime.id } anime={ anime } episodes={ filteredEpisodes } />;
+      });
 
-        content = savedAnimeItems;
-      }
+      content = savedAnimeItems;
     }
 
     return (

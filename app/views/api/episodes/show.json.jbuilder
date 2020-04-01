@@ -24,6 +24,26 @@ json.episodes do
       else
         json.video_url nil
       end
+      json.comment_ids episode.comment_ids
+    end
+  end
+end
+
+# json.episodes do
+#   @episode.anime.episodes.each do |episode|
+#     json.set! episode.id do
+#       json.extract! episode, :id, :title, :description, :episode_num, :season_id, :anime_id, :slug
+#       json.comment_ids episode.comment_ids
+#     end
+#   end
+# end
+
+json.comments do
+  @episode.anime.episodes.each do |episode|
+    episode.comments.each do |comment|
+      json.set! comment.id do
+        json.extract! comment, :id, :content, :spoiler, :user_id, :episode_id, :parent_id, :updated_at
+      end
     end
   end
 end

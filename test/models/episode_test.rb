@@ -10,6 +10,7 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  anime_id    :integer          not null
+#  slug        :string
 #
 
 require 'test_helper'
