@@ -35,10 +35,11 @@ class Textbox extends React.Component {
 
     this.props.action(this.state)
       .then(() => {
-        this.props.closeTextbox();
+        if (this.props.formType === 'edit') this.props.closeTextbox();
+        if (this.props.formType === 'new') this.setState({ content: '', spoiler: false });
         // if (this.props.toggleEdit !== undefined)
         //   this.props.toggleEdit();
-        console.log('Success!')
+        console.log('Success!');
       });
   }
 
@@ -56,6 +57,7 @@ class Textbox extends React.Component {
           Spoiler?
           <input
             onChange={this.handleCheckbox}
+            checked={this.state.spoiler}
             type="checkbox" />
           </label>
           <button>Submit</button>

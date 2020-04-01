@@ -1389,8 +1389,7 @@ var CommentThread = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "edit",
     value: function edit() {
-      if (this.props.author === undefined) return null; // debugger;
-
+      if (this.props.author === undefined) return null;
       if (this.props.author.id !== this.props.currentUser.id) return null;
       var text = this.state.edit ? 'Stop editing' : 'Edit';
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1424,7 +1423,6 @@ var CommentThread = /*#__PURE__*/function (_React$Component) {
         parent: parent
       }) : null;
       var replyText = this.state["new"] ? "Don't Reply" : 'Reply';
-      console.log(author);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "thread"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1527,6 +1525,7 @@ var mstp = function mstp(state, ownProps) {
     toggleEdit: ownProps.toggleEdit,
     currentUser: Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["findCurrentUser"])(state),
     episode: Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["findEpisode"])(state, ownProps.match.params.episodeSlug),
+    formType: 'edit',
     parent: !!ownProps.parent ? Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["findComment"])(state, ownProps.parent.id) : dummyParent
   };
 };
@@ -1576,9 +1575,7 @@ var mstp = function mstp(state, ownProps) {
     currentUser: Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["findCurrentUser"])(state),
     episode: Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["findEpisode"])(state, ownProps.match.params.episodeSlug),
     parent: !!ownProps.parent ? Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["findComment"])(state, ownProps.parent.id) : dummyParent,
-    closeTextbox: function closeTextbox() {
-      return ownProps.closeTextbox();
-    }
+    formType: 'new'
   };
 };
 
@@ -1681,9 +1678,12 @@ var Textbox = /*#__PURE__*/function (_React$Component) {
       }
 
       this.props.action(this.state).then(function () {
-        _this2.props.closeTextbox(); // if (this.props.toggleEdit !== undefined)
+        if (_this2.props.formType === 'edit') _this2.props.closeTextbox();
+        if (_this2.props.formType === 'new') _this2.setState({
+          content: '',
+          spoiler: false
+        }); // if (this.props.toggleEdit !== undefined)
         //   this.props.toggleEdit();
-
 
         console.log('Success!');
       });
@@ -1702,6 +1702,7 @@ var Textbox = /*#__PURE__*/function (_React$Component) {
         placeholder: "Add to the conversation"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Spoiler?", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         onChange: this.handleCheckbox,
+        checked: this.state.spoiler,
         type: "checkbox"
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, "Submit")));
     }

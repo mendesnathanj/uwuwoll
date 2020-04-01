@@ -54,7 +54,7 @@ class CommentThread extends React.Component {
 
   edit() {
     if (this.props.author === undefined) return null;
-    // debugger;
+
     if (this.props.author.id !== this.props.currentUser.id) return null;
 
     const text = this.state.edit ? 'Stop editing' : 'Edit';
@@ -76,8 +76,6 @@ class CommentThread extends React.Component {
     const textbox = this.state.new ? <NewTextboxContainer closeTextbox={this.closeTextbox('new')} parent={parent} /> : null;
     const replyText = this.state.new ? "Don't Reply" : 'Reply';
 
-
-    console.log(author);
 
     return (
       <div className="thread">

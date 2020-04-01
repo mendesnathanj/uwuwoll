@@ -14,7 +14,7 @@ const mstp = (state, ownProps) => {
     currentUser: findCurrentUser(state),
     episode: findEpisode(state, ownProps.match.params.episodeSlug),
     parent: !!ownProps.parent ? findComment(state, ownProps.parent.id) : dummyParent,
-    closeTextbox: () => ownProps.closeTextbox()
+    formType: 'new'
   }
 };
 

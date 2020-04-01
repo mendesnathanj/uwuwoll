@@ -13,6 +13,7 @@ const mstp = (state, ownProps) => {
     toggleEdit: ownProps.toggleEdit,
     currentUser: findCurrentUser(state),
     episode: findEpisode(state, ownProps.match.params.episodeSlug),
+    formType: 'edit',
     parent: !!ownProps.parent ? findComment(state, ownProps.parent.id) : dummyParent
   }
 };
