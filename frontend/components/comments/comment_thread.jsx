@@ -1,6 +1,7 @@
 import React from 'react';
 import CommentThreadContainer from './comment_thread_container';
 import ToggleRepliesBtn from './toggle_replies_btn';
+import SpoilerBtn from './spoiler_btn';
 import NewTextboxContainer from './new_textbox_container';
 import EditTextboxContainer from './edit_textbox_container';
 
@@ -9,9 +10,10 @@ class CommentThread extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { showChildren: false, new: false, edit: false };
+    this.state = { showChildren: false, showSpoiler: false, new: false, edit: false };
     this.toggleChildren = this.toggleChildren.bind(this);
     this.toggleTextbox = this.toggleTextbox.bind(this);
+    this.toggleSpoilerComment = this.toggleSpoilerComment.bind(this);
     this.toggleEdit = this.toggleEdit.bind(this);
     this.deleteComment = this.deleteComment.bind(this);
     this.closeTextbox = this.closeTextbox.bind(this);
@@ -28,6 +30,10 @@ class CommentThread extends React.Component {
     this.setState({ new: !this.state.new });
   }
 
+  toggleSpoilerComment() {
+    this.setState({ showSpoiler: !this.state.showSpoiler });
+  }
+
   formatDate(date) {
     return new Date(date).toLocaleDateString(undefined, { dateStyle: 'short', timeStyle: 'short', hour12: true })
   }
@@ -36,7 +42,7 @@ class CommentThread extends React.Component {
     if (this.state.edit)
       return <EditTextboxContainer closeTextbox={this.closeTextbox('edit')} review={this.props.parent} />;
 
-    const content = this.props.parent.userId === null ? 'Comment removed by user' : this.props.parent.content;
+    const content = this.props.parent.userId === null ? 'Comment removed by user' : <span className="comment-content">{this.props.parent.content}</span>;
     return content;
   }
 
@@ -78,6 +84,13 @@ class CommentThread extends React.Component {
     const threadOpen = this.state.showChildren ? 'open' : '';
     const username = author.id === -1 ? null : <div className="comment-author">{author.username}</div>;
 
+    let spoilerClass = '';
+    if (parent.spoiler)
+      if (this.state.showSpoiler)
+        spoilerClass = 'show';
+      else
+        spoilerClass = 'hide';
+
     return (
       <div className={`thread ${threadOpen}`}>
         <div className="comment-container">
@@ -88,14 +101,17 @@ class CommentThread extends React.Component {
             </div>
             {this.edit()}
           </div>
-          <div className="comment">{this.content()}</div>
+          <div className={`comment ${spoilerClass}`}>{this.content()}</div>
           <div className="comment-options">
             <span className="reply-btn" onClick={this.toggleTextbox}>{replyText}</span>
             <ToggleRepliesBtn
               toggleChildren={this.toggleChildren}
               showing={this.state.showChildren}
               childCount={children.length} />
-            <SpoilerBtn />
+            <SpoilerBtn
+              spoiler={parent.spoiler}
+              show={this.state.showSpoiler}
+              toggle={this.toggleSpoilerComment} />
         </div>
           {textbox}
         </div>

@@ -53,13 +53,13 @@
   font-size: 0.75rem;
 }
 
-.reply-btn, .show-replies {
+.reply-btn, .show-replies, .show-spoiler {
   color: #38a3d9;
   cursor: pointer;
 }
 
-.show-replies {
-  margin-left: 1em;
+.show-replies, .reply-btn {
+  margin-right: 0.75rem;
 }
 
 .comment-actions {
@@ -77,5 +77,21 @@
   margin-right: 0.75rem;
 }
 
+.comment-content {
+  transition: all 350ms ease-in-out;
+}
 
+.comment.hide > .comment-content {
+  background-color: #ccc;
+  color: #ccc;
+  border-radius: 3px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.no-comments {
+  text-align: center;
+  font-weight: 700;
+}
 

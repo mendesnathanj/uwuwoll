@@ -1217,7 +1217,10 @@ var CommentSection = /*#__PURE__*/function (_React$Component) {
       var _this$props = this.props,
           comments = _this$props.comments,
           currentUser = _this$props.currentUser;
-      var commentThreads = comments.map(function (comment) {
+      var commentThreads = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+        className: "no-comments"
+      }, "No comments here yet! :(");
+      if (comments.length > 0) commentThreads = comments.map(function (comment) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_comment_thread_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
           parent: comment,
           currentUser: currentUser
@@ -1280,8 +1283,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _comment_thread_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./comment_thread_container */ "./frontend/components/comments/comment_thread_container.js");
 /* harmony import */ var _toggle_replies_btn__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./toggle_replies_btn */ "./frontend/components/comments/toggle_replies_btn.jsx");
-/* harmony import */ var _new_textbox_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./new_textbox_container */ "./frontend/components/comments/new_textbox_container.js");
-/* harmony import */ var _edit_textbox_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./edit_textbox_container */ "./frontend/components/comments/edit_textbox_container.js");
+/* harmony import */ var _spoiler_btn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./spoiler_btn */ "./frontend/components/comments/spoiler_btn.jsx");
+/* harmony import */ var _new_textbox_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./new_textbox_container */ "./frontend/components/comments/new_textbox_container.js");
+/* harmony import */ var _edit_textbox_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./edit_textbox_container */ "./frontend/components/comments/edit_textbox_container.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -1308,6 +1312,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var CommentThread = /*#__PURE__*/function (_React$Component) {
   _inherits(CommentThread, _React$Component);
 
@@ -1319,11 +1324,13 @@ var CommentThread = /*#__PURE__*/function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(CommentThread).call(this, props));
     _this.state = {
       showChildren: false,
+      showSpoiler: false,
       "new": false,
       edit: false
     };
     _this.toggleChildren = _this.toggleChildren.bind(_assertThisInitialized(_this));
     _this.toggleTextbox = _this.toggleTextbox.bind(_assertThisInitialized(_this));
+    _this.toggleSpoilerComment = _this.toggleSpoilerComment.bind(_assertThisInitialized(_this));
     _this.toggleEdit = _this.toggleEdit.bind(_assertThisInitialized(_this));
     _this.deleteComment = _this.deleteComment.bind(_assertThisInitialized(_this));
     _this.closeTextbox = _this.closeTextbox.bind(_assertThisInitialized(_this));
@@ -1347,6 +1354,13 @@ var CommentThread = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "toggleSpoilerComment",
+    value: function toggleSpoilerComment() {
+      this.setState({
+        showSpoiler: !this.state.showSpoiler
+      });
+    }
+  }, {
     key: "formatDate",
     value: function formatDate(date) {
       return new Date(date).toLocaleDateString(undefined, {
@@ -1358,11 +1372,13 @@ var CommentThread = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "content",
     value: function content() {
-      if (this.state.edit) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_edit_textbox_container__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      if (this.state.edit) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_edit_textbox_container__WEBPACK_IMPORTED_MODULE_5__["default"], {
         closeTextbox: this.closeTextbox('edit'),
         review: this.props.parent
       });
-      var content = this.props.parent.userId === null ? 'Comment removed by user' : this.props.parent.content;
+      var content = this.props.parent.userId === null ? 'Comment removed by user' : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "comment-content"
+      }, this.props.parent.content);
       return content;
     }
   }, {
@@ -1419,7 +1435,7 @@ var CommentThread = /*#__PURE__*/function (_React$Component) {
           parent: child
         });
       }) : null;
-      var textbox = this.state["new"] ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_new_textbox_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      var textbox = this.state["new"] ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_new_textbox_container__WEBPACK_IMPORTED_MODULE_4__["default"], {
         closeTextbox: this.closeTextbox('new'),
         parent: parent
       }) : null;
@@ -1428,6 +1444,8 @@ var CommentThread = /*#__PURE__*/function (_React$Component) {
       var username = author.id === -1 ? null : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "comment-author"
       }, author.username);
+      var spoilerClass = '';
+      if (parent.spoiler) if (this.state.showSpoiler) spoilerClass = 'show';else spoilerClass = 'hide';
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "thread ".concat(threadOpen)
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1439,7 +1457,7 @@ var CommentThread = /*#__PURE__*/function (_React$Component) {
       }, username, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "date-written"
       }, this.formatDate(parent.updatedAt))), this.edit()), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "comment"
+        className: "comment ".concat(spoilerClass)
       }, this.content()), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "comment-options"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -1449,7 +1467,11 @@ var CommentThread = /*#__PURE__*/function (_React$Component) {
         toggleChildren: this.toggleChildren,
         showing: this.state.showChildren,
         childCount: children.length
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(SpoilerBtn, null)), textbox), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_spoiler_btn__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        spoiler: parent.spoiler,
+        show: this.state.showSpoiler,
+        toggle: this.toggleSpoilerComment
+      })), textbox), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "children"
       }, childThreads));
     }
@@ -1596,6 +1618,35 @@ var mdtp = function mdtp(dispatch) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mstp, mdtp)(_textbox__WEBPACK_IMPORTED_MODULE_4__["default"])));
+
+/***/ }),
+
+/***/ "./frontend/components/comments/spoiler_btn.jsx":
+/*!******************************************************!*\
+  !*** ./frontend/components/comments/spoiler_btn.jsx ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var SpoilerBtn = function SpoilerBtn(_ref) {
+  var spoiler = _ref.spoiler,
+      show = _ref.show,
+      toggle = _ref.toggle;
+  if (!spoiler) return null;
+  var text = show ? "Hide Spoiler" : 'Show Spoiler';
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    onClick: toggle,
+    className: "show-spoiler"
+  }, text);
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (SpoilerBtn);
 
 /***/ }),
 

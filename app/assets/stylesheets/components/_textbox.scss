@@ -38,7 +38,7 @@
 $btn-color: #38a3d9;
 
 .textbox-submit {
-  border: 1px solid $btn-color;
+  border: 2px solid $btn-color;
   border-radius: 5px;
   font-size: 1rem;
   color: $btn-color;
@@ -50,4 +50,8 @@ $btn-color: #38a3d9;
 .textbox-submit:hover {
   color: #fff;
   background-color: $btn-color;
+}
+
+.textbox-submit:focus {
+  outline: none;
 }

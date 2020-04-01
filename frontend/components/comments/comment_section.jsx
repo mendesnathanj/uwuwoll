@@ -10,7 +10,9 @@ class CommentSection extends React.Component {
 
   render() {
     const { comments, currentUser } = this.props;
-    const commentThreads = comments.map(comment => <CommentThreadContainer parent={comment} currentUser={currentUser} />);
+    let commentThreads = <h1 className="no-comments">No comments here yet! :(</h1>;
+    if (comments.length > 0)
+      commentThreads = comments.map(comment => <CommentThreadContainer parent={comment} currentUser={currentUser} />);
 
     return (
       <div className="comment-section">

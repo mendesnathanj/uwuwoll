@@ -12,7 +12,7 @@ if SEED_COMMENTS
   Comment.destroy_all
 
   # seed initial parent comments
-  300.times do
+  500.times do
     Comment.create(content: Faker::Lorem.paragraph_by_chars(number: rand(1..128), supplemental: false),
                    author: User.all.sample,
                    episode: Episode.all.sample,
@@ -20,7 +20,7 @@ if SEED_COMMENTS
   end
 
   # seed 2nd level child comments
-  350.times do
+  750.times do
     parent = Comment.all.sample
     Comment.create(content: Faker::Lorem.paragraph_by_chars(number: rand(1..128), supplemental: false),
                    author: User.all.sample,
@@ -30,7 +30,7 @@ if SEED_COMMENTS
   end
 
   # seed 3rd level child comments
-  400.times do
+  850.times do
     parent = Comment.where.not(parent_id: nil).sample
     Comment.create(content: Faker::Lorem.paragraph_by_chars(number: rand(1..128), supplemental: false),
                    author: User.all.sample,
