@@ -13,6 +13,10 @@ export const findEpisode = (state, slug) => {
   return state.entities.episodes[state.slugs.episodes[slug].id];
 }
 
+export const findComment = (state, id) => {
+  return state.entities.comments[id]
+};
+
 export const findRandomAnime = state => {
   let anime = Object.values(state.entities.anime);
   let episodes = Object.values(state.entities.episodes);

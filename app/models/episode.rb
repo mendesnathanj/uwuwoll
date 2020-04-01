@@ -10,6 +10,7 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  anime_id    :integer          not null
+#  slug        :string
 #
 
 class Episode < ApplicationRecord
@@ -25,4 +26,6 @@ class Episode < ApplicationRecord
 
   has_one_attached :video
   has_one_attached :thumbnail
+
+  has_many :comments
 end

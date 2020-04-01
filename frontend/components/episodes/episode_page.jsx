@@ -2,12 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Carousel from './carousel';
 import Video from './video';
+import CommentSectionContainer from '../comments/comment_section_container';
 
 
 class EpisodePage extends React.Component {
   componentDidMount() {
     this.props.fetchAnime(this.props.match.params.animeSlug);
-    // let header = document.querySelector('.episode-header');
   }
 
   componentDidUpdate(prevProps) {
@@ -25,6 +25,7 @@ class EpisodePage extends React.Component {
         <h1 className="episode-header"><Link className="anime-link" to={`/anime/${anime.slug}`}>{ anime.title }</Link> { `Episode ${ episode.episodeNum } - ${ episode.title }` }</h1>
         <Video src={ episode.video } />
         <Carousel currentEpisodeId={ episode.id } animeSlug={ anime.slug } episodes={ episodes } />
+        <CommentSectionContainer episode={ episode } />
       </div>
     );
   }
