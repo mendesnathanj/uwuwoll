@@ -23,12 +23,37 @@
   vertical-align: middle;
 }
 
+.nav-home-link-container {
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+  color: $primary-orange;
+}
+
+.social-links {
+  padding-left: 1rem;
+  color: inherit;
+}
+
+.social-link {
+  margin-top: -0.5rem;
+  padding: 0.5rem;
+  font-size: 1.5rem;
+}
+
+.social-icon {
+  transition: all 200ms ease-in-out;
+}
+
+.social-icon:hover {
+  transform: scale(1.25);
+}
+
 .nav-home-link {
   font-size: 1.2em;
-  margin-right: auto;
   font-family: $title-fonts;
   font-weight: 700;
-  color: $primary-orange;
+  color: inherit;
   transition: all 200ms ease-in-out;
 }
 

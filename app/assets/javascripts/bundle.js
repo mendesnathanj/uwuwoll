@@ -2449,13 +2449,35 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "nav-list"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "nav-home-link-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "nav-home-link"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "nav-home-link-logo",
         src: window.orangeLogo
-      }), "uwuwoll!")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      }), "uwuwoll!")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "social-links"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "https://www.linkedin.com/in/mendesnathanj/",
+        className: "social-link",
+        target: "_blank"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fab social-icon fa-linkedin"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "https://angel.co/u/nathanmendes",
+        className: "social-link",
+        target: "_blank"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fab social-icon fa-angellist"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "https://github.com/mendesnathanj/uwuwoll",
+        className: "social-link",
+        target: "_blank"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fab social-icon fa-github-square"
+      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "nav-li",
         key: "anime"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {

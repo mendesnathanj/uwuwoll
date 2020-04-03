@@ -59,11 +59,18 @@ class Navbar extends React.Component {
     return (
       <nav className="nav">
         <ul className="nav-list">
-          <li className="nav-home-link">
-            <Link to="/">
-              <img className="nav-home-link-logo" src={window.orangeLogo} />
-              uwuwoll!
-            </Link>
+          <li className="nav-home-link-container">
+            <div className="nav-home-link">
+              <Link to="/">
+                <img className="nav-home-link-logo" src={window.orangeLogo} />
+                uwuwoll!
+              </Link>
+            </div>
+            <div className="social-links">
+              <a href="https://www.linkedin.com/in/mendesnathanj/" className="social-link" target="_blank"><i className="fab social-icon fa-linkedin"></i></a>
+              <a href="https://angel.co/u/nathanmendes" className="social-link" target="_blank"><i className="fab social-icon fa-angellist"></i></a>
+              <a href="https://github.com/mendesnathanj/uwuwoll" className="social-link" target="_blank"><i className="fab social-icon fa-github-square"></i></a>
+            </div>
           </li>
           <li className="nav-li" key="anime">
             <Link to="/anime">
