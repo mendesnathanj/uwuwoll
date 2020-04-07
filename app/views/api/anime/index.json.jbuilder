@@ -52,17 +52,17 @@ json.slugs do
   end
 end
 
-json.lists do
-  list = current_user.list
-  json.set! list.id do
-    json.extract! list, :id, :user_id, :saved_anime_ids
-  end
-end
+# json.lists do
+#   list = current_user.list
+#   json.set! list.id do
+#     json.extract! list, :id, :user_id, :saved_anime_ids
+#   end
+# end
 
-json.saved_anime do
-  current_user.saved_anime.each do |saved_anime|
-    json.set! saved_anime.id do
-      json.extract! saved_anime, :id, :list_id, :anime_id, :favorited
-    end
-  end
-end
+# json.saved_anime do
+#   current_user.saved_anime.each do |saved_anime|
+#     json.set! saved_anime.id do
+#       json.extract! saved_anime, :id, :list_id, :anime_id, :favorited
+#     end
+#   end
+# end
