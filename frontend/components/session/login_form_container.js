@@ -5,7 +5,7 @@ import SessionForm from "./session_form";
 
 
 const mstp = () => ({
-  formType: 'wogin!'
+  formType: 'login!'
 });
 
 const mdtp = dispatch => ({

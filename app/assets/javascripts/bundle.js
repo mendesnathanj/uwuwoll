@@ -2976,7 +2976,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var mstp = function mstp() {
   return {
-    formType: 'wogin!'
+    formType: 'login!'
   };
 };
 
@@ -3115,7 +3115,7 @@ var SessionForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "swapForms",
     value: function swapForms() {
-      if (this.props.formType === 'sign up!') this.props.swapForms('wogin!');else this.props.swapForms('sign up!');
+      if (this.props.formType === 'sign up!') this.props.swapForms('login!');else this.props.swapForms('sign up!');
     }
   }, {
     key: "renderCta",
@@ -3123,7 +3123,7 @@ var SessionForm = /*#__PURE__*/function (_React$Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
         className: "form-cta",
         to: this.props.formType === "sign up!" ? "/login" : "/signup"
-      }, this.props.formType === "sign up!" ? "already have an account? wogin!" : "don't have an account yet? sign up today!");
+      }, this.props.formType === "sign up!" ? "already have an account? login!" : "don't have an account yet? sign up today!");
     }
   }, {
     key: "renderFormTitle",
@@ -3132,7 +3132,7 @@ var SessionForm = /*#__PURE__*/function (_React$Component) {
         className: "form-title"
       }, "sign up for a free account today!");else return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
         className: "form-title"
-      }, "uwu welcome back weeaboo!");
+      }, "welcome back!");
     }
   }, {
     key: "loginAsGuest",
@@ -3143,10 +3143,10 @@ var SessionForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderDemoLogin",
     value: function renderDemoLogin() {
-      if (this.props.formType === 'wogin!') return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      if (this.props.formType === 'login!') return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-btn larger-btn",
         onClick: this.loginAsGuest
-      }, "guest wogin!");
+      }, "guest login!");
       return null;
     }
   }, {

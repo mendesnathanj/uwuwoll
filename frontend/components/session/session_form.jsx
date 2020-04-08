@@ -55,7 +55,7 @@ class SessionForm extends React.Component {
   }
 
   swapForms() {
-    if (this.props.formType === 'sign up!') this.props.swapForms('wogin!');
+    if (this.props.formType === 'sign up!') this.props.swapForms('login!');
     else this.props.swapForms('sign up!');
   }
 
@@ -66,7 +66,7 @@ class SessionForm extends React.Component {
         to={this.props.formType === "sign up!" ? "/login" : "/signup"}
       >
         {this.props.formType === "sign up!"
-          ? "already have an account? wogin!"
+          ? "already have an account? login!"
           : "don't have an account yet? sign up today!"}
       </Link>
     );
@@ -76,7 +76,7 @@ class SessionForm extends React.Component {
     if (this.props.formType === 'sign up!')
       return <h3 className="form-title">sign up for a free account today!</h3>;
     else
-      return <h3 className="form-title">uwu welcome back weeaboo!</h3>
+      return <h3 className="form-title">welcome back!</h3>
   }
 
   loginAsGuest(e) {
@@ -86,8 +86,8 @@ class SessionForm extends React.Component {
   }
 
   renderDemoLogin() {
-    if (this.props.formType === 'wogin!')
-      return <div className="form-btn larger-btn" onClick={ this.loginAsGuest }>guest wogin!</div>;
+    if (this.props.formType === 'login!')
+      return <div className="form-btn larger-btn" onClick={ this.loginAsGuest }>guest login!</div>;
 
     return null;
   }
