@@ -1228,7 +1228,9 @@ var CommentSection = /*#__PURE__*/function (_React$Component) {
       });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "comment-section"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_new_textbox_container__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_new_textbox_container__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        closeTextbox: null
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "comments"
       }, commentThreads));
     }
@@ -1262,7 +1264,7 @@ var mstp = function mstp(state, ownProps) {
     currentUser: Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_1__["findCurrentUser"])(state),
     comments: Object.values(state.entities.comments).filter(function (comment) {
       return comment.episodeId === ownProps.episode.id && comment.parentId === null;
-    })
+    }).reverse()
   };
 };
 
@@ -1393,6 +1395,11 @@ var CommentThread = /*#__PURE__*/function (_React$Component) {
     value: function closeTextbox(type) {
       var _this2 = this;
 
+      if (type === 'new') return function () {
+        var _this2$setState;
+
+        return _this2.setState((_this2$setState = {}, _defineProperty(_this2$setState, type, false), _defineProperty(_this2$setState, "showChildren", true), _this2$setState));
+      };
       return function () {
         return _this2.setState(_defineProperty({}, type, false));
       };
@@ -1506,7 +1513,7 @@ var mstp = function mstp(state, ownProps) {
   return {
     children: Object.values(state.entities.comments).filter(function (child) {
       return child.parentId === ownProps.parent.id;
-    }),
+    }).reverse(),
     author: Object.values(state.entities.users).find(function (user) {
       return user.id === ownProps.parent.userId;
     }),
@@ -1552,11 +1559,11 @@ var dummyParent = {
 var mstp = function mstp(state, ownProps) {
   return {
     review: ownProps.review,
-    toggleEdit: ownProps.toggleEdit,
+    closeTextbox: ownProps.closeTextbox,
     currentUser: Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["findCurrentUser"])(state),
     episode: Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["findEpisode"])(state, ownProps.match.params.episodeSlug),
     formType: 'edit',
-    parent: !!ownProps.parent ? Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["findComment"])(state, ownProps.parent.id) : dummyParent
+    parent: ownProps.review.parentId !== null ? Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["findComment"])(state, ownProps.review.parentId) : dummyParent
   };
 };
 
@@ -1602,6 +1609,7 @@ var review = {
 var mstp = function mstp(state, ownProps) {
   return {
     review: review,
+    closeTextbox: ownProps.closeTextbox,
     currentUser: Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["findCurrentUser"])(state),
     episode: Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["findEpisode"])(state, ownProps.match.params.episodeSlug),
     parent: !!ownProps.parent ? Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["findComment"])(state, ownProps.parent.id) : dummyParent,
@@ -1736,7 +1744,8 @@ var Textbox = /*#__PURE__*/function (_React$Component) {
       }
 
       this.props.action(this.state).then(function () {
-        if (_this2.props.formType === 'edit') _this2.props.closeTextbox();
+        if (_this2.props.closeTextbox !== null) _this2.props.closeTextbox(); // if (this.props.formType === 'edit') this.props.closeTextbox();
+
         if (_this2.props.formType === 'new') _this2.setState({
           content: '',
           spoiler: false
@@ -2293,19 +2302,12 @@ var LandingPage = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderForm",
     value: function renderForm() {
-      if (this.props.match.path === '/') {
-        if (this.state.formType === 'sign up!') return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_session_signup_form_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          swapForms: this.swapForms
-        });else return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_session_login_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], {
-          swapForms: this.swapForms
-        });
-      } else {
-        if (this.props.match.path === '/login') return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_session_login_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], {
-          swapForms: this.swapForms
-        });else return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_session_signup_form_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          swapForms: this.swapForms
-        });
-      }
+      var path = this.props.match.path;
+      if (path === '/' || path === '/login') return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_session_login_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        swapForms: this.swapForms
+      });else return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_session_signup_form_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        swapForms: this.swapForms
+      });
     }
   }, {
     key: "render",

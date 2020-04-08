@@ -34,7 +34,8 @@ class Textbox extends React.Component {
 
     this.props.action(this.state)
       .then(() => {
-        if (this.props.formType === 'edit') this.props.closeTextbox();
+        if (this.props.closeTextbox !== null) this.props.closeTextbox();
+        // if (this.props.formType === 'edit') this.props.closeTextbox();
         if (this.props.formType === 'new') this.setState({ content: '', spoiler: false });
       });
   }

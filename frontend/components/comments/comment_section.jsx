@@ -16,7 +16,7 @@ class CommentSection extends React.Component {
 
     return (
       <div className="comment-section">
-        <NewTextboxContainer />
+        <NewTextboxContainer closeTextbox={null} />
         <div className="comments">
           { commentThreads }
         </div>

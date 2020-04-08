@@ -7,14 +7,13 @@ import Textbox from './textbox';
 const dummyParent = { id: null };
 
 const mstp = (state, ownProps) => {
-
   return {
     review: ownProps.review,
-    toggleEdit: ownProps.toggleEdit,
+    closeTextbox: ownProps.closeTextbox,
     currentUser: findCurrentUser(state),
     episode: findEpisode(state, ownProps.match.params.episodeSlug),
     formType: 'edit',
-    parent: !!ownProps.parent ? findComment(state, ownProps.parent.id) : dummyParent
+    parent: ownProps.review.parentId !== null ? findComment(state, ownProps.review.parentId) : dummyParent
   }
 };
 

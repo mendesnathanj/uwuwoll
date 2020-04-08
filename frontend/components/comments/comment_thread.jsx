@@ -51,6 +51,8 @@ class CommentThread extends React.Component {
   }
 
   closeTextbox(type) {
+    if (type === 'new') return () => this.setState({ [type]: false, showChildren: true });
+
     return () => this.setState({ [type]: false });
   }
 

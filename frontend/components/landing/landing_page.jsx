@@ -18,17 +18,9 @@ class LandingPage extends React.Component {
   }
 
   renderForm() {
-    if (this.props.match.path === '/') {
-      if (this.state.formType === 'sign up!')
-        return <SignupFormContainer swapForms={this.swapForms} />;
-      else
-        return <LoginFormContainer swapForms={this.swapForms} />;
-    } else {
-      if (this.props.match.path === '/login')
-        return <LoginFormContainer swapForms={this.swapForms} />;
-      else
-        return <SignupFormContainer swapForms={this.swapForms} />;
-    }
+    const path = this.props.match.path;
+    if (path === '/' || path === '/login') return <LoginFormContainer swapForms={this.swapForms} />;
+    else return <SignupFormContainer swapForms={this.swapForms} />;
   }
 
   render() {

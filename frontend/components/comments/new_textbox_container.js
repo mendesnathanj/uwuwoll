@@ -11,6 +11,7 @@ const mstp = (state, ownProps) => {
 
   return {
     review,
+    closeTextbox: ownProps.closeTextbox,
     currentUser: findCurrentUser(state),
     episode: findEpisode(state, ownProps.match.params.episodeSlug),
     parent: !!ownProps.parent ? findComment(state, ownProps.parent.id) : dummyParent,
