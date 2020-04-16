@@ -11,4 +11,12 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :update, :destroy]
     resources :saved_anime, only: [:show, :create, :destroy]
   end
+
+  # get '*path', to: 'static_pages#root', defaults: { format: :html }
+
+  get '/login', to: 'static_pages#root'
+  get '/signup', to: 'static_pages#root'
+  get '/anime', to: 'static_pages#root'
+  get '/queue', to: 'static_pages#root'
+  get '/anime/*all', to: 'static_pages#root'
 end
