@@ -454,7 +454,9 @@ var AnimeIndex = /*#__PURE__*/function (_React$Component) {
   _createClass(AnimeIndex, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchAllAnime();
+      this.props.fetchAllAnime().then(function () {
+        return console.log('Done fetching anime');
+      });
     }
   }, {
     key: "render",
@@ -3814,6 +3816,7 @@ var sessionErrorsReducer = function sessionErrorsReducer() {
 
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_LOGIN_ERRORS"]:
+      debugger;
       return action.errors;
 
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CURRENT_USER"]:
