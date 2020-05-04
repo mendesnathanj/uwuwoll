@@ -7,7 +7,7 @@ class AnimeIndex extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchAllAnime().then(() => console.log('Done fetching anime'));
+    this.props.fetchAllAnime();
   }
 
   render() {

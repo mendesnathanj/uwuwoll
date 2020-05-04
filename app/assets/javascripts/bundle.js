@@ -454,9 +454,7 @@ var AnimeIndex = /*#__PURE__*/function (_React$Component) {
   _createClass(AnimeIndex, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchAllAnime().then(function () {
-        return console.log('Done fetching anime');
-      });
+      this.props.fetchAllAnime();
     }
   }, {
     key: "render",
