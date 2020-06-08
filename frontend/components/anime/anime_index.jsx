@@ -7,8 +7,6 @@ class AnimeIndex extends React.Component {
   }
 
   componentDidMount() {
-    const start = new Date().getTime();
-
     this.props.fetchAllAnime();
   }
 
