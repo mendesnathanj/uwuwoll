@@ -409,6 +409,88 @@ var signup = function signup(user) {
 
 /***/ }),
 
+/***/ "./frontend/components/anime/anime_index.jsx":
+/*!***************************************************!*\
+  !*** ./frontend/components/anime/anime_index.jsx ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _anime_index_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./anime_index_item */ "./frontend/components/anime/anime_index_item.jsx");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var AnimeIndex = /*#__PURE__*/function (_React$Component) {
+  _inherits(AnimeIndex, _React$Component);
+
+  function AnimeIndex(props) {
+    _classCallCheck(this, AnimeIndex);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(AnimeIndex).call(this, props));
+  }
+
+  _createClass(AnimeIndex, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.fetchAllAnime();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this = this;
+
+      var animeItems = this.props.anime.map(function (anime) {
+        var saved = _this.props.savedAnime.includes(Number(anime.id));
+
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_anime_index_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          createSavedAnime: _this.props.createSavedAnime,
+          deleteSavedAnime: _this.props.deleteSavedAnime,
+          key: anime.id,
+          anime: anime,
+          saved: saved
+        });
+      });
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "anime-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "header-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+        className: "anime-header"
+      }, "Anime")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "anime-container"
+      }, animeItems));
+    }
+  }]);
+
+  return AnimeIndex;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (AnimeIndex);
+
+/***/ }),
+
 /***/ "./frontend/components/anime/anime_index2.jsx":
 /*!****************************************************!*\
   !*** ./frontend/components/anime/anime_index2.jsx ***!
@@ -434,14 +516,14 @@ var AnimeIndex = function AnimeIndex() {
   var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["useDispatch"])();
   var anime = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["useSelector"])(function (state) {
     return Object.values(state.entities.anime);
-  });
+  }, react_redux__WEBPACK_IMPORTED_MODULE_1__["shallowEqual"]);
   var savedAnime = new Set(Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["useSelector"])(function (state) {
     return Object.values(state.entities.savedAnime).map(function (saved) {
       return saved.animeId;
     });
   }));
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    dispatch(Object(_actions_anime_actions__WEBPACK_IMPORTED_MODULE_2__["fetchAllAnime"])());
+    return dispatch(Object(_actions_anime_actions__WEBPACK_IMPORTED_MODULE_2__["fetchAllAnime"])());
   }, []);
   var animeItems = anime.map(function (anime) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_anime_index_item__WEBPACK_IMPORTED_MODULE_4__["default"], {
@@ -477,7 +559,7 @@ var AnimeIndex = function AnimeIndex() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _anime_index2__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./anime_index2 */ "./frontend/components/anime/anime_index2.jsx");
+/* harmony import */ var _anime_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./anime_index */ "./frontend/components/anime/anime_index.jsx");
 /* harmony import */ var _actions_anime_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/anime_actions */ "./frontend/actions/anime_actions.js");
 /* harmony import */ var _actions_saved_anime_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/saved_anime_actions */ "./frontend/actions/saved_anime_actions.js");
 
@@ -510,7 +592,7 @@ var mdtp = function mdtp(dispatch) {
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mstp, mdtp)(_anime_index2__WEBPACK_IMPORTED_MODULE_1__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mstp, mdtp)(_anime_index__WEBPACK_IMPORTED_MODULE_1__["default"]));
 
 /***/ }),
 

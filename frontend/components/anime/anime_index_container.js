@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import AnimeIndex from './anime_index2';
+import AnimeIndex from './anime_index';
 import { fetchAllAnime } from '../../actions/anime_actions';
 import { createSavedAnime, deleteSavedAnime } from '../../actions/saved_anime_actions';
 

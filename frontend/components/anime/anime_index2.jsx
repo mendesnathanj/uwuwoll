@@ -7,15 +7,13 @@ import AnimeIndexItem from './anime_index_item';
 const AnimeIndex = () => {
   const dispatch = useDispatch();
 
-  const anime = useSelector(state => Object.values(state.entities.anime));
+  const anime = useSelector(state => Object.values(state.entities.anime), shallowEqual);
 
   const savedAnime = new Set(useSelector(state => (
     Object.values(state.entities.savedAnime).map(saved => saved.animeId))
   ));
 
-  useEffect(() => {
-    dispatch(fetchAllAnime());
-  }, []);
+  useEffect(() => dispatch(fetchAllAnime()), []);
 
   const animeItems = anime.map(anime => (
     <AnimeIndexItem
