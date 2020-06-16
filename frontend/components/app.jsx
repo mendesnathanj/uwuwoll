@@ -5,6 +5,7 @@ import { Switch, Route } from "react-router-dom";
 import LoginFormContainer from "../components/session/login_form_container";
 import SignupFormContainer from "../components/session/signup_form_container";
 import AnimeIndexContainer from "./anime/anime_index_container";
+import AnimeIndex from './anime/anime_index2';
 import AnimePageContainer from './anime/anime_page_container';
 import EpisodePageContainer from './episodes/episode_page_container';
 import QueueContainer from './queue/queue_container';
@@ -21,7 +22,7 @@ const App = () => {
         <ProtectedRoute path='/queue' component={QueueContainer} />
         <AuthRoute path="/login" component={LandingPage} />
         <AuthRoute path="/signup" component={LandingPage} />
-        <ProtectedRoute path="/anime" component={AnimeIndexContainer} />
+        <ProtectedRoute path="/anime" component={AnimeIndex} />
         <AuthRoute path='/' component={LandingPage} />
       </Switch>
     </div>
