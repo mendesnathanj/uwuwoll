@@ -35,7 +35,7 @@ class CommentThread extends React.Component {
   }
 
   formatDate(date) {
-    return new Date(date).toLocaleDateString(undefined, { dateStyle: 'short', timeStyle: 'short', hour12: true })
+    return new Date(date).toLocaleDateString(undefined, { hour12: true })
   }
 
   content() {
