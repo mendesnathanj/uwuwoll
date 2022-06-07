@@ -119,7 +119,7 @@ GEM
       activesupport (>= 5.0.0)
     jbuilder_pagination (1.0.0)
       jbuilder (~> 2.2, >= 2.2.0)
-    jmespath (1.4.0)
+    jmespath (1.6.1)
     jquery-rails (4.3.5)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
